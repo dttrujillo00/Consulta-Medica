@@ -152,8 +152,8 @@
 
 				<ul>
 					<li class="active"><a href="#" class="fa fa-user"></a></li>
-					<li><a href="pages/nucleos.html" class="fa fa-home"></a></li>
-					<li><a href="pages/graficos.html" class="fa fa-calendar-o"> C/T</a></li>
+					<li><a href="pages/nucleos.php" class="fa fa-home"></a></li>
+					<li><a href="pages/graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
 	        </div>
@@ -168,17 +168,17 @@
 
 					<h2 class="col-md-12">Agregar Paciente</h2>
 
-					<input class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
+					<input required="" class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
 
-					<input class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
+					<input required="" class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
 
-					<input class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
+					<input required="" class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
 
-					<input class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
+					<input required="" class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
 
 					<input class="col-md-8" name="diagnostico" id="diagnostico" placeholder="Diagnóstico..." type="text">
 
-					<input class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
+					<input required="" class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
 
 					<input class="col-md-8" name="labor" id="labor" placeholder="Labor..." type="text">
 
