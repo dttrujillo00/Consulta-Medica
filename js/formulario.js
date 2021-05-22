@@ -14,7 +14,6 @@ formAgregar.addEventListener('submit', (e) => {
 
     var radioSexoMasculino = document.querySelector('#hombre').checked;
     var radioSexoFemenino = document.querySelector('#mujer').checked;
-    console.log(radioSexoMasculino);
 
 
     // CAMPOS DEL FORMULARIO
@@ -24,6 +23,7 @@ formAgregar.addEventListener('submit', (e) => {
         nivel_educacional = inputs[3].value,
         diagnostico = inputs[4].value,
         manzana = inputs[5].value,
+        labor = inputs[6].value,
         grupo_disp = document.querySelector('#grupo_disp').value;
 
     var sexo;
@@ -41,12 +41,17 @@ formAgregar.addEventListener('submit', (e) => {
     if(diagnostico === '') {
         diagnostico = 'Sano';
     }
+
+    if(labor === '') {
+        labor = 'Sin trabajar';
+    }
     console.log(nombre_apellido);
     console.log(fecha_nacimiento);
     console.log(direccion);
     console.log(nivel_educacional);
     console.log(diagnostico);
     console.log(manzana);
+    console.log(labor);
     console.log(grupo_disp);
     console.log(sexo);
 
@@ -56,7 +61,8 @@ formAgregar.addEventListener('submit', (e) => {
     	infoPaciente.append('direccion', direccion);
     	infoPaciente.append('nivel_educacional', nivel_educacional);
     	infoPaciente.append('diagnostico', diagnostico);
-    	infoPaciente.append('manzana', manzana);
+        infoPaciente.append('manzana', manzana);
+        infoPaciente.append('labor', labor);
     	infoPaciente.append('grupo_disp', grupo_disp);
     	infoPaciente.append('sexo', sexo);
 
@@ -67,11 +73,16 @@ const agregarPaciente = (datos) => {
 
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('POST', 'modelos/modelo_paciente.php', true);
+	xhr.open('POST', 'modelos/modelo_Test.php', true);
 
 	xhr.onload = function() {
 		if(this.status === 200){
-			console.log(xhr.responseText);
+            if(xhr.responseText === 'Correcto') {
+                alert('El paciente se guardó correctamente');
+            } else {
+                alert('Hubo un error al guardar el paciente');
+            }
+            
 		}
 	}
 
