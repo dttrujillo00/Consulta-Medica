@@ -239,6 +239,7 @@
 									<th>Dirección</th>
 									<th>Edad</th>
 									<th>Nivel</th>
+									<th>Ocupación</th>
 									<th>Manzana</th>
 									<th>Diagnóstico</th>
 									<th></th>
@@ -253,6 +254,7 @@
 									<td>67 #13613 % 136 y 138</td>
 									<td>21</td>
 									<td>Preuniversitario</td>
+									<td>Estudiante</td>
 									<td>100</td>
 									<td>Sano</td>
 									<td>
@@ -266,107 +268,6 @@
 										</span>
 									</td>
 		                        </tr>
-		                        <tr data-id="2">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="3">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        
 		                    </tbody>
 						</table>
 						

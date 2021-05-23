@@ -1,5 +1,7 @@
 <?php 
 
+// ESTE ARCHIVO ES SOLO PARA SIMULAR UNA RESPUESTA DEL SERVIDOR
+
 echo 'Correcto';
 
 ?>

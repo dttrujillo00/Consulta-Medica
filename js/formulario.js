@@ -7,6 +7,7 @@
 
 const formAgregar = document.querySelector('.form-agregar');
 const inputs = document.querySelectorAll('.form-agregar input');
+const tablaPacientes = document.querySelector('.table tbody');
  
 
 formAgregar.addEventListener('submit', (e) => {
@@ -30,7 +31,7 @@ formAgregar.addEventListener('submit', (e) => {
 
     if(!radioSexoFemenino && !radioSexoMasculino) {
          // notificacion de error
-         console.error('Todos los campos son obligatorios');
+         console.error('Recuerde seleccionar el sexo del paciente');
          return;
     } else if(radioSexoMasculino) {
         sexo = 'M';
@@ -45,15 +46,6 @@ formAgregar.addEventListener('submit', (e) => {
     if(labor === '') {
         labor = 'Sin trabajar';
     }
-    console.log(nombre_apellido);
-    console.log(fecha_nacimiento);
-    console.log(direccion);
-    console.log(nivel_educacional);
-    console.log(diagnostico);
-    console.log(manzana);
-    console.log(labor);
-    console.log(grupo_disp);
-    console.log(sexo);
 
     var infoPaciente = new FormData();
     	infoPaciente.append('nombre_apellido', nombre_apellido);
@@ -79,6 +71,53 @@ const agregarPaciente = (datos) => {
 		if(this.status === 200){
             if(xhr.responseText === 'Correcto') {
                 alert('El paciente se guardó correctamente');
+                var nuevaFila = document.createElement('tr');
+
+                nuevaFila.innerHTML = `
+                <td>${datos.get('nombre_apellido')}</td>
+				<td>${datos.get('sexo')}</td>
+				<td>${romanize(datos.get('grupo_disp'))}</td>
+				<td>${datos.get('direccion')}</td>
+				<td>21</td>
+                <td>${datos.get('nivel_educacional')}</td>
+                <td>${datos.get('labor')}</td>
+				<td>${datos.get('manzana')}</td>
+				<td>${datos.get('diagnostico')}</td>
+                `;
+
+                // COLUMNA EDITAR CON ICONO Y TODO
+                var tdEditar = document.createElement('td');
+
+                var spanEditar = document.createElement('span');
+                spanEditar.classList.add('icono-editar');
+
+                var iconoEditar = document.createElement('i');
+                iconoEditar.classList.add('fa', 'fa-pencil');
+
+                spanEditar.appendChild(iconoEditar);
+                tdEditar.appendChild(spanEditar);
+
+                nuevaFila.appendChild(tdEditar);
+
+                // COLUMNA ELIMINAR CON ICONO Y TODO
+                var tdEliminar = document.createElement('td');
+
+                var spanEliminar = document.createElement('span');
+                spanEliminar.classList.add('icono-editar');
+
+                var iconoEliminar = document.createElement('i');
+                iconoEliminar.classList.add('fa', 'fa-trash-o');
+
+                spanEliminar.appendChild(iconoEliminar);
+                tdEliminar.appendChild(spanEliminar);
+
+                nuevaFila.appendChild(tdEliminar);
+
+                
+
+                tablaPacientes.appendChild(nuevaFila);
+
+                formAgregar.reset();
             } else {
                 alert('Hubo un error al guardar el paciente');
             }
@@ -87,4 +126,24 @@ const agregarPaciente = (datos) => {
 	}
 
 	xhr.send(datos);
+}
+
+const romanize = (number) => {
+    switch (number) {
+        case '1':
+            return 'I';
+            break;
+        case '2':
+            return 'II';
+            break;
+        case '3':
+            return 'III';
+            break;
+        case '4':
+            return 'IV';
+            break;
+    
+        default:
+            return false;
+    }
 }
