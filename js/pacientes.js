@@ -103,7 +103,7 @@ const agregarPaciente = (datos) => {
                 var tdEliminar = document.createElement('td');
 
                 var spanEliminar = document.createElement('span');
-                spanEliminar.classList.add('icono-editar');
+                spanEliminar.classList.add('icono-eliminar');
 
                 var iconoEliminar = document.createElement('i');
                 iconoEliminar.classList.add('fa', 'fa-trash-o');
@@ -127,6 +127,30 @@ const agregarPaciente = (datos) => {
 
 	xhr.send(datos);
 }
+
+// EDITAR PACIENTE
+tablaPacientes.addEventListener('click', (e) => {
+    if(e.target.parentElement.classList.contains('icono-eliminar')){
+        var fila = e.target.parentElement.parentElement.parentElement;
+        if(confirm('¿Quiere eliminar a un paciente?')){
+            var idPaciente = e.target.parentElement.getAttribute('data-id');
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'modelos/modelo_Test.php', true);
+
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    if (xhr.responseText === 'Correcto') {
+                        fila.remove();
+                    }
+                }
+            }
+
+            xhr.send(idPaciente);
+        }
+    }
+});
 
 const romanize = (number) => {
     switch (number) {
