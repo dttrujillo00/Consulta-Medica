@@ -152,8 +152,8 @@
 
 				<ul>
 					<li class="active"><a href="#" class="fa fa-user"></a></li>
-					<li><a href="pages/nucleos.html" class="fa fa-home"></a></li>
-					<li><a href="pages/graficos.html" class="fa fa-calendar-o"> C/T</a></li>
+					<li><a href="pages/nucleos.php" class="fa fa-home"></a></li>
+					<li><a href="pages/graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
 	        </div>
@@ -164,21 +164,22 @@
 				<p>Colapsar</p>
 			</div>
 			<div class="body-desplegable container">
+				<?php if(!$_GET): ?>
 				<form class="form-agregar">
 
 					<h2 class="col-md-12">Agregar Paciente</h2>
 
-					<input class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
+					<input required="" class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
 
-					<input class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
+					<input required="" class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
 
-					<input class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
+					<input required="" class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
 
-					<input class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
+					<input required="" class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
 
 					<input class="col-md-8" name="diagnostico" id="diagnostico" placeholder="Diagnóstico..." type="text">
 
-					<input class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
+					<input required="" class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
 
 					<input class="col-md-8" name="labor" id="labor" placeholder="Labor..." type="text">
 
@@ -215,12 +216,64 @@
 					</div>
 
 				</form>	
+				<?php endif ?>
+
+				<?php if($_GET): ?>
+				<form class="form-agregar editar">
+
+					<h2 class="col-md-12">Editar Paciente</h2>
+
+					<input required="" class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
+
+					<input required="" class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
+
+					<input required="" class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
+
+					<input required="" class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
+
+					<input class="col-md-8" name="diagnostico" id="diagnostico" placeholder="Diagnóstico..." type="text">
+
+					<input required="" class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
+
+					<input class="col-md-8" name="labor" id="labor" placeholder="Labor..." type="text">
+
+
+					<div class="contenedor-flex-select col-md-4">
+						<div class="contenedor-select">
+							<legend>Grupo Disp.</legend>
+
+							<select name="grupo_disp" id="grupo_disp">
+									<option value="1">I</option>
+									<option value="2">II</option>
+									<option value="3">III</option>
+									<option value="4">IV</option>
+							</select>
+						</div>
+
+						<div class="col-md-8">
+							<div class="flex">
+								<div class="radio-container">
+									<label for="hombre">Hombre</label>
+									<input type="radio" name="sexo" id="hombre">
+								</div>
+								<div class="radio-container">
+									<label for="mujer">Mujer</label>
+									<input type="radio" name="sexo" id="mujer">
+								</div>		
+							</div>	
+						</div>
+						
+					</div>
+
+					<div class="div-button col-md-4">
+						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
+					</div>
+
+				</form>
+				<?php endif ?>
 			</div>
 
-	        
-	    
-
-  ...  </div>
+    </div>
 
 
     <main>
@@ -239,6 +292,7 @@
 									<th>Dirección</th>
 									<th>Edad</th>
 									<th>Nivel</th>
+									<th>Ocupación</th>
 									<th>Manzana</th>
 									<th>Diagnóstico</th>
 									<th></th>
@@ -246,127 +300,29 @@
 		                        </tr>
 		                    </thead>
 		                    <tbody>
-		                        <tr data-id="1">
+		                        <tr>
 		                            <td>Daniel Alberto Tamayo Trujillo</td>
 									<td>M</td>
 									<td>I</td>
 									<td>67 #13613 % 136 y 138</td>
 									<td>21</td>
 									<td>Preuniversitario</td>
+									<td>Estudiante</td>
 									<td>100</td>
 									<td>Sano</td>
 									<td>
 										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
+											<a href="index.php?id=<?php echo 1 ?>" >
+												<i class="fa fa-pencil"></i>
+											</a>
 										</span>
 									</td>
 									<td>
-										<span class="icono-eliminar">
+										<span class="icono-eliminar" data-id="1">
 											<i class="fa fa-trash-o"></i>
 										</span>
 									</td>
 		                        </tr>
-		                        <tr data-id="2">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="3">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>100</td>
-									<td>Sano</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        
 		                    </tbody>
 						</table>
 						
@@ -722,7 +678,7 @@
 
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 	<script src="js/script.js"></script>
-	<script src="js/formulario.js"></script>
+	<script src="js/pacientes.js"></script>
     
 </body>
 </html>

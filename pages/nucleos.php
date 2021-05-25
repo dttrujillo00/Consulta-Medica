@@ -130,7 +130,7 @@
 	<header>
         <div class="contenido-header container">
             <div class="logo">
-                <a href="../index.html"><h1>Mi Consulta</h1></a>
+                <a href="../index.php"><h1>Mi Consulta</h1></a>
             </div>
             
             <nav class="nav-botones-header">
@@ -148,9 +148,9 @@
 	        <div class="contenido-sub-header">
 
 				<ul>
-					<li><a href="../index.html" class="fa fa-user"></a></li>
+					<li><a href="../index.php" class="fa fa-user"></a></li>
 					<li class="active"><a href="#" class="fa fa-home"></a></li>
-					<li><a href="./graficos.html" class="fa fa-calendar-o"> C/T</a></li>
+					<li><a href="./graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
 	        </div>
