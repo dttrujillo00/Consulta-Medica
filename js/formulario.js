@@ -24,6 +24,7 @@ formAgregar.addEventListener('submit', (e) => {
         nivel_educacional = inputs[3].value,
         diagnostico = inputs[4].value,
         manzana = inputs[5].value,
+        labor = inputs[6].value,
         grupo_disp = document.querySelector('#grupo_disp').value;
 
     var sexo;
@@ -47,6 +48,7 @@ formAgregar.addEventListener('submit', (e) => {
     console.log(nivel_educacional);
     console.log(diagnostico);
     console.log(manzana);
+    console.log(labor);
     console.log(grupo_disp);
     console.log(sexo);
 
@@ -57,6 +59,7 @@ formAgregar.addEventListener('submit', (e) => {
     	infoPaciente.append('nivel_educacional', nivel_educacional);
     	infoPaciente.append('diagnostico', diagnostico);
     	infoPaciente.append('manzana', manzana);
+    	infoPaciente.append('labor', labor);
     	infoPaciente.append('grupo_disp', grupo_disp);
     	infoPaciente.append('sexo', sexo);
 
