@@ -34,9 +34,9 @@ formAgregar.addEventListener('submit', (e) => {
          console.error('Recuerde seleccionar el sexo del paciente');
          return;
     } else if(radioSexoMasculino) {
-        sexo = 'M';
+        sexo = 1;//id del registro masculino
     } else {
-        sexo = 'F';
+        sexo = 2;//id del resgistro femenino
     }
 
     if(diagnostico === '') {

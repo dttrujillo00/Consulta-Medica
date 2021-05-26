@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-04-2021 a las 19:47:41
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.9
+-- Tiempo de generación: 26-05-2021 a las 17:40:40
+-- Versión del servidor: 10.3.16-MariaDB
+-- Versión de PHP: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `consultorio`
+-- Base de datos: `consultamedica`
 --
 
 -- --------------------------------------------------------
@@ -272,8 +273,21 @@ CREATE TABLE `intervencion_nucleo` (
 
 CREATE TABLE `nivel_educacional` (
   `id_ne` int(10) UNSIGNED NOT NULL,
-  `nivel` varchar(15) NOT NULL
+  `nivel` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `nivel_educacional`
+--
+
+INSERT INTO `nivel_educacional` (`id_ne`, `nivel`) VALUES
+(1, 'Primaria'),
+(2, 'Secundaria'),
+(3, 'Preuniversitario'),
+(4, 'Obrero calificado'),
+(5, 'Técnico medio'),
+(6, 'Técnico medio superior'),
+(7, 'Nivel superior');
 
 -- --------------------------------------------------------
 
@@ -286,6 +300,16 @@ CREATE TABLE `nivel_educacional_paciente` (
   `id_ne` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `nivel_educacional_paciente`
+--
+
+INSERT INTO `nivel_educacional_paciente` (`id_pac`, `id_ne`) VALUES
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -294,8 +318,20 @@ CREATE TABLE `nivel_educacional_paciente` (
 
 CREATE TABLE `nucleo` (
   `id_nuc` int(10) UNSIGNED NOT NULL,
-  `no_nuc` int(10) UNSIGNED NOT NULL
+  `dir_nuc` text NOT NULL,
+  `no_nuc` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `nucleo`
+--
+
+INSERT INTO `nucleo` (`id_nuc`, `dir_nuc`, `no_nuc`) VALUES
+(1, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(2, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
+(3, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
+(4, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
+(5, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 9);
 
 -- --------------------------------------------------------
 
@@ -308,6 +344,15 @@ CREATE TABLE `nucleo_pac` (
   `id_nuc` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `nucleo_pac`
+--
+
+INSERT INTO `nucleo_pac` (`id_pac`, `id_nuc`) VALUES
+(8, 2),
+(9, 2),
+(10, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -316,21 +361,27 @@ CREATE TABLE `nucleo_pac` (
 
 CREATE TABLE `paciente` (
   `id_pac` int(10) UNSIGNED NOT NULL,
-  `nombre_pac` varchar(60) NOT NULL,
-  `apellido_pac` varchar(60) NOT NULL,
+  `nombre_comp_pac` varchar(60) NOT NULL,
   `edad_pac` int(10) UNSIGNED NOT NULL,
   `fecha_nac_pac` date NOT NULL,
-  `labor_pac` varchar(120) DEFAULT NULL
+  `labor_pac` varchar(120) DEFAULT NULL,
+  `diagnostico_pac` varchar(250) NOT NULL,
+  `grupo_disponible_pac` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`id_pac`, `nombre_pac`, `apellido_pac`, `edad_pac`, `fecha_nac_pac`, `labor_pac`) VALUES
-(1, 'Henri', 'Penha', 21, '2000-03-31', 'Estudiar'),
-(2, 'Daniel', 'Tamayo', 21, '2000-02-07', 'Estudiar'),
-(3, 'Thalia', 'Perez', 21, '2000-06-02', 'Estudiar');
+INSERT INTO `paciente` (`id_pac`, `nombre_comp_pac`, `edad_pac`, `fecha_nac_pac`, `labor_pac`, `diagnostico_pac`, `grupo_disponible_pac`) VALUES
+(1, 'Henri', 21, '2000-03-31', 'Estudiar', '', NULL),
+(2, 'Daniel', 21, '2000-02-07', 'Estudiar', '', NULL),
+(3, 'Thalia', 21, '2000-06-02', 'Estudiar', '', NULL),
+(6, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '1'),
+(7, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
+(8, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
+(9, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
+(10, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', 'Estudiante', 'paracetamol y abundante agua', '3');
 
 -- --------------------------------------------------------
 
@@ -405,6 +456,8 @@ CREATE TABLE `sexo` (
 INSERT INTO `sexo` (`pac`, `gen`) VALUES
 (1, 1),
 (2, 1),
+(9, 1),
+(10, 1),
 (3, 2);
 
 -- --------------------------------------------------------
@@ -728,19 +781,19 @@ ALTER TABLE `intervencion`
 -- AUTO_INCREMENT de la tabla `nivel_educacional`
 --
 ALTER TABLE `nivel_educacional`
-  MODIFY `id_ne` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ne` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `nucleo`
 --
 ALTER TABLE `nucleo`
-  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `planificacion`
