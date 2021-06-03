@@ -1,5 +1,12 @@
-<?php include 'database/conexion.php' ?>
+<?php include 'database/conexion.php' ;
+// INSTANCIANDO LA CONEXION 
+	require_once('database/conexion.php');
 
+    
+    $statement = $pdo->prepare('SELECT p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne');
+    $statement->execute();		
+    $result = $statement->fetchAll();
+	?>		
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -300,16 +307,17 @@
 		                        </tr>
 		                    </thead>
 		                    <tbody>
+								<?php foreach($result as $dato): ?>
 		                        <tr>
-		                            <td>Daniel Alberto Tamayo Trujillo</td>
-									<td>M</td>
-									<td>I</td>
-									<td>67 #13613 % 136 y 138</td>
-									<td>21</td>
-									<td>Preuniversitario</td>
-									<td>Estudiante</td>
-									<td>100</td>
-									<td>Sano</td>
+		                            <td><?php echo $dato['nombre_comp_pac'] ?></td>
+									<td><?php echo $dato['genero'] ?></td>
+									<td><?php echo $dato['grupo_disponible_pac'] ?></td>
+									<td><?php echo $dato['dir_nuc'] ?></td>
+									<td><?php echo $dato['edad_pac'] ?></td>
+									<td><?php echo $dato['nivel'] ?></td>
+									<td><?php echo $dato['labor_pac'] ?></td>
+									<td><?php echo $dato['no_nuc'] ?></td>
+									<td><?php echo $dato['diagnostico_pac'] ?></td>
 									<td>
 										<span class="icono-editar">
 											<a href="index.php?id=<?php echo 1 ?>" >
@@ -323,6 +331,7 @@
 										</span>
 									</td>
 		                        </tr>
+								<?php endforeach ?>
 		                    </tbody>
 						</table>
 						
