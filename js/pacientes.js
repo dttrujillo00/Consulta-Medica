@@ -30,7 +30,7 @@ formAgregar.addEventListener('submit', (e) => {
 
     if(!radioSexoFemenino && !radioSexoMasculino) {
          // notificacion de error
-         console.error('Recuerde seleccionar el sexo del paciente');
+         mostrarNotificacion('Lo sentimos','Debe seleccionar el sexo del paciente', 'error');
          return;
     } else if(radioSexoMasculino) {
         sexo = 1;//id del registro masculino
@@ -61,7 +61,7 @@ formAgregar.addEventListener('submit', (e) => {
 });
 
 const agregarPaciente = (datos) => {
-    console.log(typeof datos.get('nivel_educacional'));
+    // console.log(typeof datos.get('nivel_educacional'));
     
     var sexoVistaPaciente, nivelEducacionalVistaPaciente;
     if(datos.get('sexo') == 1) {
@@ -102,9 +102,8 @@ const agregarPaciente = (datos) => {
 	xhr.onload = function() {
 		if(this.status === 200){
             var respuesta = JSON.parse(xhr.responseText);
-            console.log(respuesta);
+            // console.log(respuesta);
             if(respuesta.respuesta === 'Correcto') {
-                alert('El paciente se guardó correctamente');
                 var nuevaFila = document.createElement('tr');
                 nuevaFila.classList.add(`grupo${datos.get('grupo_disp')}`);
 
@@ -151,10 +150,11 @@ const agregarPaciente = (datos) => {
                 
 
                 tablaPacientes.appendChild(nuevaFila);
+                mostrarNotificacion('OK', 'Paciente guardado exitosamente', 'success');
 
                 formAgregar.reset();
             } else {
-                alert('Hubo un error al guardar el paciente');
+                mostrarNotificacion('ERROR', 'Ha ocurrido un error al guardar este paciente', 'error');
             }
             
 		}
@@ -163,7 +163,7 @@ const agregarPaciente = (datos) => {
 	xhr.send(datos);
 }
 
-// EDITAR PACIENTE
+// ELIMINAR PACIENTE
 tablaPacientes.addEventListener('click', (e) => {
     if(e.target.parentElement.classList.contains('icono-eliminar')){
         var fila = e.target.parentElement.parentElement.parentElement;
@@ -205,4 +205,13 @@ const romanize = (number) => {
         default:
             return false;
     }
+}
+
+const mostrarNotificacion = (title, description, type) => {
+    Swal.fire(
+        title,
+        description,
+        type
+
+    )
 }
