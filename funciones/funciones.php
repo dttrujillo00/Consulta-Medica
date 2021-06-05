@@ -7,9 +7,9 @@ function calcularEdad($nacimiento, $hoy)
     $valoresNacimiento = explode("-", $nacimiento);
     $valoresHoy = explode("-", $hoy);
 
-    $diaNacimiento = $valoresNacimiento[0];
+    $diaNacimiento = $valoresNacimiento[2];
     $mesNacimiento = $valoresNacimiento[1];
-    $anyoNacimiento = $valoresNacimiento[2];
+    $anyoNacimiento = $valoresNacimiento[0];
 
     $diaHoy = $valoresHoy[0];
     $mesHoy = $valoresHoy[1];

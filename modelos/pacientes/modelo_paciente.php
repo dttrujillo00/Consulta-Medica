@@ -1,7 +1,7 @@
 <?php 
 	// INSTANCIANDO LA CONEXION 
-	require_once('../database/conexion.php');
-	require_once('../funciones/funciones.php');
+	require_once('../../database/conexion.php');
+	require_once('../../funciones/funciones.php');
 
 
 	$nombre_apellido = filter_var($_POST['nombre_apellido'], FILTER_SANITIZE_STRING);
@@ -27,16 +27,24 @@
 		$statement = $pdo->prepare('INSERT INTO nucleo_pac (id_pac, id_nuc) VALUES (?, ?)');
 		$statement->execute(array($id_pac, $id_nuc));			
 		$statement = $pdo->prepare('INSERT INTO sexo (pac, gen) VALUES (?, ?)');
-		$statement->execute(array($id_pac, $sexo));					
+		$statement->execute(array($id_pac, $id_sexo));					
 		$statement = $pdo->prepare('INSERT INTO nivel_educacional_paciente (id_pac, id_ne) VALUES (?, ?)');
 		$statement->execute(array($id_pac, $nivel_educacional));			
-		echo "Correcto";
+		// $respuesta = 'Correcto';
+		$respuesta = array(
+			'respuesta' => 'Correcto',
+			'datos' => array(
+				'edad' => $edad
+			)
+		);
 	}
 	catch (Exception $e) {
+		// $respuesta = 'Error'.$e->getMessage();
 		$respuesta = array(
-            'error' => $e->getMessage()
-        );
-		echo $respuesta;
+			'respuesta' => 'Error'.$e->getMessage()
+		);
 	}
+
+	echo json_encode($respuesta);
 
 ?>

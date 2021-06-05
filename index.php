@@ -1,9 +1,10 @@
-<?php include 'database/conexion.php' ;
+<?php 
+// include 'database/conexion.php' ;
 // INSTANCIANDO LA CONEXION 
 	require_once('database/conexion.php');
 
     
-    $statement = $pdo->prepare('SELECT p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne');
+    $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne');
     $statement->execute();		
     $result = $statement->fetchAll();
 	?>		
@@ -176,46 +177,70 @@
 
 					<h2 class="col-md-12">Agregar Paciente</h2>
 
-					<input required="" class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
+					<div class="campo-container col-md-8">
+						<label for="nombre_apellido">Nombre completo:</label>
+						<input required="" type="text" id="nombre_apellido">
+					</div>
 
-					<input required="" class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
+					<div class="campo-container col-md-4">
+						<label for="fecha_nacimiento">Fecha de nacimiento</label>
+						<input required="" type="date" id="fecha_nacimiento">
+					</div>
 
-					<input required="" class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
+					<div class="campo-container col-md-8">
+						<label for="direccion">Dirección</label>
+						<input required="" type="text" id="direccion">
+					</div>
 
-					<input required="" class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
+					<div class="campo-container col-md-4">
+						<label>Nivel Educacional</label>
+						<select id="nivel_educacional">
+							<option value="1">Primaria</option>
+							<option value="2">Secundaria</option>
+							<option value="3">Preuniversitario</option>
+							<option value="4">Obrero calificado</option>
+							<option value="5">Técnico medio</option>
+							<option value="6">Técnico medio superior</option>
+							<option value="7">Nivel superior</option>
+						</select>
+					</div>
 
-					<input class="col-md-8" name="diagnostico" id="diagnostico" placeholder="Diagnóstico..." type="text">
+					<div class="campo-container col-md-8">
+						<label for="diagnostico">Diagnóstico</label>
+						<input id="diagnostico" type="text">
+					</div>
 
-					<input required="" class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
+					<div class="campo-container col-md-2">
+						<label for="manzana">Manzana</label>
+						<input required="" type="text" id="manzana">
+					</div>
 
-					<input class="col-md-8" name="labor" id="labor" placeholder="Labor..." type="text">
+					<div class="campo-container col-md-2">
+						<label>Grupo Disp.</label>
+						<select id="grupo_disp">
+								<option value="1">I</option>
+								<option value="2">II</option>
+								<option value="3">III</option>
+								<option value="4">IV</option>
+						</select>
+					</div>
 
+					<div class="campo-container col-md-8">
+						<label for="labor">Ocupación</label>
+						<input id="labor" type="text">
+					</div>
 
-					<div class="contenedor-flex-select col-md-4">
-						<div class="contenedor-select">
-							<legend>Grupo Disp.</legend>
-
-							<select name="grupo_disp" id="grupo_disp">
-									<option value="1">I</option>
-									<option value="2">II</option>
-									<option value="3">III</option>
-									<option value="4">IV</option>
-							</select>
-						</div>
-
-						<div class="col-md-8">
-							<div class="flex">
-								<div class="radio-container">
-									<label for="hombre">Hombre</label>
-									<input type="radio" name="sexo" id="hombre">
-								</div>
-								<div class="radio-container">
-									<label for="mujer">Mujer</label>
-									<input type="radio" name="sexo" id="mujer">
-								</div>		
-							</div>	
-						</div>
-						
+					<div class="col-md-4">
+						<div class="flex">
+							<div class="radio-container">
+								<label for="hombre">Masculino</label>
+								<input type="radio" name="sexo" id="hombre">
+							</div>
+							<div class="radio-container">
+								<label for="mujer">Femenino</label>
+								<input type="radio" name="sexo" id="mujer">
+							</div>		
+						</div>	
 					</div>
 
 					<div class="div-button col-md-4">
@@ -230,46 +255,70 @@
 
 					<h2 class="col-md-12">Editar Paciente</h2>
 
-					<input required="" class="col-md-8" type="text" name="nombre_apellido" id="nombre_apellido" placeholder="Nombre y Apellido...">
+					<div class="campo-container col-md-8">
+						<label for="nombre_apellido">Nombre completo:</label>
+						<input required="" type="text" id="nombre_apellido">
+					</div>
 
-					<input required="" class="col-md-4"  placeholder="Fecha Nacimiento..." type="text" name="fecha_nacimiento" id="fecha_nacimiento">
+					<div class="campo-container col-md-4">
+						<label for="fecha_nacimiento">Fecha de nacimiento</label>
+						<input required="" type="date" id="fecha_nacimiento">
+					</div>
 
-					<input required="" class="col-md-8"  placeholder="Dirección..." type="text" name="direccion" id="direccion">
+					<div class="campo-container col-md-8">
+						<label for="direccion">Dirección</label>
+						<input required="" type="text" id="direccion">
+					</div>
 
-					<input required="" class="col-md-4"  placeholder="Nivel Educacional..." type="text" name="nivel_educacional" id="nivel_educacional">
+					<div class="campo-container col-md-4">
+						<label>Nivel Educacional</label>
+						<select id="nivel_educacional">
+							<option value="1">Primaria</option>
+							<option value="2">Secundaria</option>
+							<option value="3">Preuniversitario</option>
+							<option value="4">Obrero calificado</option>
+							<option value="5">Técnico medio</option>
+							<option value="6">Técnico medio superior</option>
+							<option value="7">Nivel superior</option>
+						</select>
+					</div>
 
-					<input class="col-md-8" name="diagnostico" id="diagnostico" placeholder="Diagnóstico..." type="text">
+					<div class="campo-container col-md-8">
+						<label for="diagnostico">Diagnóstico</label>
+						<input id="diagnostico" type="text">
+					</div>
 
-					<input required="" class="col-md-4"  type="number" name="manzana" id="manzana" placeholder="Manzana...">
+					<div class="campo-container col-md-2">
+						<label for="manzana">Manzana</label>
+						<input required="" type="text" id="manzana">
+					</div>
 
-					<input class="col-md-8" name="labor" id="labor" placeholder="Labor..." type="text">
+					<div class="campo-container col-md-2">
+						<label>Grupo Disp.</label>
+						<select id="grupo_disp">
+								<option value="1">I</option>
+								<option value="2">II</option>
+								<option value="3">III</option>
+								<option value="4">IV</option>
+						</select>
+					</div>
 
+					<div class="campo-container col-md-8">
+						<label for="labor">Ocupación</label>
+						<input id="labor" type="text">
+					</div>
 
-					<div class="contenedor-flex-select col-md-4">
-						<div class="contenedor-select">
-							<legend>Grupo Disp.</legend>
-
-							<select name="grupo_disp" id="grupo_disp">
-									<option value="1">I</option>
-									<option value="2">II</option>
-									<option value="3">III</option>
-									<option value="4">IV</option>
-							</select>
-						</div>
-
-						<div class="col-md-8">
-							<div class="flex">
-								<div class="radio-container">
-									<label for="hombre">Hombre</label>
-									<input type="radio" name="sexo" id="hombre">
-								</div>
-								<div class="radio-container">
-									<label for="mujer">Mujer</label>
-									<input type="radio" name="sexo" id="mujer">
-								</div>		
-							</div>	
-						</div>
-						
+					<div class="col-md-4">
+						<div class="flex">
+							<div class="radio-container">
+								<label for="hombre">Masculino</label>
+								<input type="radio" name="sexo" id="hombre">
+							</div>
+							<div class="radio-container">
+								<label for="mujer">Femenino</label>
+								<input type="radio" name="sexo" id="mujer">
+							</div>		
+						</div>	
 					</div>
 
 					<div class="div-button col-md-4">
@@ -308,10 +357,31 @@
 		                    </thead>
 		                    <tbody>
 								<?php foreach($result as $dato): ?>
-		                        <tr>
+		                        <tr class="grupo<?php echo($dato['grupo_disponible_pac']) ?>">
 		                            <td><?php echo $dato['nombre_comp_pac'] ?></td>
 									<td><?php echo $dato['genero'] ?></td>
-									<td><?php echo $dato['grupo_disponible_pac'] ?></td>
+									<td>
+										<?php
+										 	switch ($dato['grupo_disponible_pac']) {
+										 		case 1:
+										 			echo "I";
+										 			break;
+										 		case 2:
+										 			echo "II";
+										 			break;
+										 		case 3:
+										 			echo "III";
+										 			break;
+										 		case 4:
+										 			echo "IV";
+										 			break;
+										 		
+										 		default:
+										 			echo "undefined";
+										 			break;
+										 	} 
+										?>
+									 </td>
 									<td><?php echo $dato['dir_nuc'] ?></td>
 									<td><?php echo $dato['edad_pac'] ?></td>
 									<td><?php echo $dato['nivel'] ?></td>
@@ -320,13 +390,13 @@
 									<td><?php echo $dato['diagnostico_pac'] ?></td>
 									<td>
 										<span class="icono-editar">
-											<a href="index.php?id=<?php echo 1 ?>" >
+											<a href="index.php?id=<?php echo $dato['id_pac'] ?>" >
 												<i class="fa fa-pencil"></i>
 											</a>
 										</span>
 									</td>
 									<td>
-										<span class="icono-eliminar" data-id="1">
+										<span class="icono-eliminar" data-id="<?php echo $dato['id_pac'] ?>">
 											<i class="fa fa-trash-o"></i>
 										</span>
 									</td>

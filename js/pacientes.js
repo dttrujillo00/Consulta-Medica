@@ -6,7 +6,6 @@
 
 
 const formAgregar = document.querySelector('.form-agregar');
-const inputs = document.querySelectorAll('.form-agregar input');
 const tablaPacientes = document.querySelector('.table tbody');
  
 
@@ -18,13 +17,13 @@ formAgregar.addEventListener('submit', (e) => {
 
 
     // CAMPOS DEL FORMULARIO
-    var nombre_apellido = inputs[0].value,
-        fecha_nacimiento = inputs[1].value,
-        direccion = inputs[2].value,
-        nivel_educacional = inputs[3].value,
-        diagnostico = inputs[4].value,
-        manzana = inputs[5].value,
-        labor = inputs[6].value,
+    var nombre_apellido = document.querySelector('#nombre_apellido').value,
+        fecha_nacimiento = document.querySelector('#fecha_nacimiento').value,
+        direccion = document.querySelector('#direccion').value,
+        nivel_educacional = document.querySelector('#nivel_educacional').value,
+        diagnostico = document.querySelector('#diagnostico').value,
+        manzana = document.querySelector('#manzana').value,
+        labor = document.querySelector('#labor').value,
         grupo_disp = document.querySelector('#grupo_disp').value;
 
     var sexo;
@@ -62,24 +61,60 @@ formAgregar.addEventListener('submit', (e) => {
 });
 
 const agregarPaciente = (datos) => {
+    console.log(typeof datos.get('nivel_educacional'));
+    
+    var sexoVistaPaciente, nivelEducacionalVistaPaciente;
+    if(datos.get('sexo') == 1) {
+        sexoVistaPaciente = 'M';
+    } else {
+        sexoVistaPaciente = 'F';
+    }
+
+    switch(+datos.get('nivel_educacional')){
+        case 1:
+            nivelEducacionalVistaPaciente = 'Primaria';
+            break;
+        case 2:
+            nivelEducacionalVistaPaciente = 'Secundaria';
+            break;
+        case 3:
+            nivelEducacionalVistaPaciente = 'Preuniversitario';
+            break;
+        case 4:
+            nivelEducacionalVistaPaciente = 'Obrero calificado';
+            break;
+        case 5:
+            nivelEducacionalVistaPaciente = 'Técnico medio';
+            break;
+        case 6:
+            nivelEducacionalVistaPaciente = 'Técnico medio superior';
+            break;
+        case 7:
+            nivelEducacionalVistaPaciente = 'Nivel superior';
+            break;
+    }
+
 
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('POST', 'modelos/modelo_Test.php', true);
+	xhr.open('POST', 'modelos/pacientes/modelo_paciente.php', true);
 
 	xhr.onload = function() {
 		if(this.status === 200){
-            if(xhr.responseText === 'Correcto') {
+            var respuesta = JSON.parse(xhr.responseText);
+            console.log(respuesta);
+            if(respuesta.respuesta === 'Correcto') {
                 alert('El paciente se guardó correctamente');
                 var nuevaFila = document.createElement('tr');
+                nuevaFila.classList.add(`grupo${datos.get('grupo_disp')}`);
 
                 nuevaFila.innerHTML = `
                 <td>${datos.get('nombre_apellido')}</td>
-				<td>${datos.get('sexo')}</td>
+				<td>${sexoVistaPaciente}</td>
 				<td>${romanize(datos.get('grupo_disp'))}</td>
 				<td>${datos.get('direccion')}</td>
-				<td>21</td>
-                <td>${datos.get('nivel_educacional')}</td>
+				<td>${respuesta.datos.edad}</td>
+                <td>${nivelEducacionalVistaPaciente}</td>
                 <td>${datos.get('labor')}</td>
 				<td>${datos.get('manzana')}</td>
 				<td>${datos.get('diagnostico')}</td>

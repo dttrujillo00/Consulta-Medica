@@ -1,8 +1,13 @@
 :root{
     --colorPrincipal: rgb(6, 152, 87);
     --efectoHover: rgba(6, 152, 86, 0.486);
+    --sano: #28a745;
+    --enfermo: #dc3545;
+    --riesgo: #ffc107;
+    --discapacitado: #007bff;
 }
 
+/*Utiles*/
 @font-face{
     font-family: 'Open-sans-bold';
     src: url(../tipografia/open-sans/OpenSans-Bold.ttf);
@@ -41,6 +46,22 @@
     100%{
         transform: rotate(180deg);
     }
+}
+
+.grupo1{
+    color: var(--sano);
+}
+
+.grupo2{
+    color: var(--riesgo);
+}
+
+.grupo3{
+    color: var(--enfermo);
+}
+
+.grupo4{
+    color: var(--discapacitado);
 }
 
 html{
@@ -335,13 +356,32 @@ ESTILOS CUADRO AGREGAR PACIENTE
     margin-bottom: 1rem;
 }
 
-.form-agregar input{
+.form-agregar .campo-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5rem;
+}
+
+.form-agregar .campo-container label{
+    margin-bottom: .1rem;
+}
+
+.form-agregar .campo-container input{
     width: 100%;
-    padding: .5rem;
-    border-radius: 10px;
+    padding: .3rem;
+    border-radius: 5px;
     border: none;
-    margin-bottom: 1.5rem; 
     transition: all .2s;
+}
+
+.form-agregar .campo-container select{
+    width: 100%;
+    border-radius: 5px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    padding: .3rem;
 }
 
 .form-agregar input:focus, .form-agregar .contenedor-select select:focus{
@@ -353,28 +393,12 @@ ESTILOS CUADRO AGREGAR PACIENTE
     color: white;
 }
 
-.form-agregar input:last-child{
-    margin-bottom: 0;
-}
-
-.form-agregar .contenedor-flex{
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-    width: 100%;
-}
-
 .form-agregar .contenedor-select{
     flex: 0 0 50%;
 }
 
-.form-agregar .contenedor-select select{
-    width: 90%;
-    padding: .3rem 0;
-}
-
 .form-agregar button{
-    margin: 0 auto;
+    margin: .5rem auto;
     display: inline-block;
     width: 100%;
 }
@@ -505,14 +529,6 @@ table {
 
 .table tbody td{
     text-align: center;
-}
-
-tbody tr:nth-child(2n){
-    color: #28a745; /*VERDE*/
-}
-
-tbody tr:nth-child(2n + 1){
-    color: #dc3545; /*ROJO*/
 }
 
 tr span{
@@ -858,6 +874,12 @@ ESTILOS RESPONSIVE
     .col-md-4{
         flex: 0 0 calc(33.3% - 1rem);
         max-width: calc(33.3% - 1rem);
+        margin-right: 1rem;
+    }
+
+    .col-md-2{
+        flex: 0 0 calc(16.65% - 1rem);
+        max-width: calc(16.65% - 1rem);
         margin-right: 1rem;
     }
 
