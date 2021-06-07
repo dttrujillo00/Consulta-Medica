@@ -4,7 +4,7 @@
 	require_once('database/conexion.php');
 
     
-    $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne');
+    $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne ORDER BY p.id_pac');
     $statement->execute();		
     $result = $statement->fetchAll();
 	?>		
@@ -175,24 +175,24 @@
 				<?php if(!$_GET): ?>
 				<form class="form-agregar">
 
-					<h2 class="col-md-12">Agregar Paciente</h2>
+					<h2 class="col-md-12 col-sm-12">Agregar Paciente</h2>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="nombre_apellido">Nombre completo:</label>
 						<input required="" type="text" id="nombre_apellido">
 					</div>
 
-					<div class="campo-container col-md-4">
+					<div class="campo-container col-md-4 col-sm-12">
 						<label for="fecha_nacimiento">Fecha de nacimiento</label>
 						<input required="" type="date" id="fecha_nacimiento">
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="direccion">Dirección</label>
 						<input required="" type="text" id="direccion">
 					</div>
 
-					<div class="campo-container col-md-4">
+					<div class="campo-container col-md-4 col-sm-12">
 						<label>Nivel Educacional</label>
 						<select id="nivel_educacional">
 							<option value="1">Primaria</option>
@@ -205,17 +205,17 @@
 						</select>
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="diagnostico">Diagnóstico</label>
 						<input id="diagnostico" type="text">
 					</div>
 
-					<div class="campo-container col-md-2">
+					<div class="campo-container col-md-2 col-sm-12">
 						<label for="manzana">Manzana</label>
 						<input required="" type="text" id="manzana">
 					</div>
 
-					<div class="campo-container col-md-2">
+					<div class="campo-container col-md-2 col-sm-12">
 						<label>Grupo Disp.</label>
 						<select id="grupo_disp">
 								<option value="1">I</option>
@@ -225,12 +225,12 @@
 						</select>
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="labor">Ocupación</label>
 						<input id="labor" type="text">
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-4 col-sm-12">
 						<div class="flex">
 							<div class="radio-container">
 								<label for="hombre">Masculino</label>
@@ -243,7 +243,7 @@
 						</div>	
 					</div>
 
-					<div class="div-button col-md-4">
+					<div class="div-button col-md-4 col-sm-12">
 						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
 					</div>
 
@@ -406,53 +406,88 @@
 						</table>
 						
 						<div class="tabla-responsive">
-							<div class="fila-paciente">
+							<?php foreach($result as $dato): ?>
+							<div class="fila-paciente grupo<?php echo($dato['grupo_disponible_pac']) ?>">
 								<div class="campo">
 									<h4>Nombre:</h4>
-									<p>Daniel Alberto Tamayo Trujillo</p>
+									<p><?php echo $dato['nombre_comp_pac'] ?></p>
 									<span class="fa fa-caret-down"></span>
 								</div>
 								<div class="campo">
 									<h4>Sexo:</h4>
-									<p>M</p>
+									<p><?php echo $dato['genero'] ?></p>
+								</div>
+								<div class="campo">
+									<h4>Grupo:</h4>
+									<p><?php
+										 	switch ($dato['grupo_disponible_pac']) {
+										 		case 1:
+										 			echo "I";
+										 			break;
+										 		case 2:
+										 			echo "II";
+										 			break;
+										 		case 3:
+										 			echo "III";
+										 			break;
+										 		case 4:
+										 			echo "IV";
+										 			break;
+										 		
+										 		default:
+										 			echo "undefined";
+										 			break;
+										 	} 
+										?></p>
 								</div>
 								<div class="campo">
 									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
+									<p><?php echo $dato['dir_nuc'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Edad:</h4>
-									<p>21</p>
+									<p><?php echo $dato['edad_pac'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Nivel:</h4>
-									<p>Preuniversitario</p>
+									<p><?php echo $dato['nivel'] ?></p>
+								</div>
+								<div class="campo">
+									<h4>Ocupación:</h4>
+									<p><?php echo $dato['labor_pac'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Manzana:</h4>
-									<p>100</p>
+									<p><?php echo $dato['no_nuc'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Diagnóstico:</h4>
-									<p>Sano</p>
+									<p><?php echo $dato['diagnostico_pac'] ?></p>
 								</div>
+
 								<div class="campo">
 									<h4>Acciones:</h4>
 									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
+										<span class="icono-editar">
+											<a href="index.php?id=<?php echo $dato['id_pac'] ?>" >
+												<i class="fa fa-pencil"></i>
+											</a>
+										</span>
+										<span class="icono-eliminar" data-id="<?php echo $dato['id_pac'] ?>">
+											<i class="fa fa-trash-o"></i>
+										</span>
 									</div>
 								</div>
+
 							</div>
+							<?php endforeach ?>
 							
 						</div>
 					</section>
 
 		</article>
 	</main>
-    
-
-    <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+   
 	<script src="js/script.js"></script>
 	<script src="js/pacientes.js"></script>
 	<script src="js/sweetalert2.all.min.js"></script>

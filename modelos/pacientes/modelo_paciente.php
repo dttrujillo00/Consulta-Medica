@@ -34,7 +34,8 @@
 		$respuesta = array(
 			'respuesta' => 'Correcto',
 			'datos' => array(
-				'edad' => $edad
+				'edad' => $edad,
+				'id_insertado' => $id_pac
 			)
 		);
 	}

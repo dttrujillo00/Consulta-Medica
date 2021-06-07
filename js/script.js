@@ -3,12 +3,14 @@
         var navegacionSubHeader = document.querySelectorAll('.contenido-sub-header ul li');
         var flagbodyDesplegar = false;
         const btnColapsarForm = document.querySelector('.btn-desplegable'),
-              buscar = document.querySelector('.nav-botones-header ul');
+              buscar = document.querySelector('.nav-botones-header ul'),
+              tablaResponsive = document.querySelector('.tabla-responsive');
+              console.log(tablaResponsive);
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
-        $('.campo > span').click(function(e){
-            var filaActivada = e.target.parentElement.parentElement;
-            if(e.target.classList.contains('fa-caret-down')){
+        tablaResponsive.addEventListener('click', e => {
+          var filaActivada = e.target.parentElement.parentElement;
+          if(e.target.classList.contains('fa-caret-down')){
                 e.target.classList.add('rotar');
                 setTimeout(() => {
                      e.target.classList.remove('fa-caret-down');

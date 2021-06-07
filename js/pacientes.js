@@ -7,6 +7,7 @@
 
 const formAgregar = document.querySelector('.form-agregar');
 const tablaPacientes = document.querySelector('.table tbody');
+const tablaResponsive = document.querySelector('.tabla-responsive');
  
 
 formAgregar.addEventListener('submit', (e) => {
@@ -117,40 +118,82 @@ const agregarPaciente = (datos) => {
                 <td>${datos.get('labor')}</td>
 				<td>${datos.get('manzana')}</td>
 				<td>${datos.get('diagnostico')}</td>
-                `;
-
-                // COLUMNA EDITAR CON ICONO Y TODO
-                var tdEditar = document.createElement('td');
-
-                var spanEditar = document.createElement('span');
-                spanEditar.classList.add('icono-editar');
-
-                var iconoEditar = document.createElement('i');
-                iconoEditar.classList.add('fa', 'fa-pencil');
-
-                spanEditar.appendChild(iconoEditar);
-                tdEditar.appendChild(spanEditar);
-
-                nuevaFila.appendChild(tdEditar);
-
-                // COLUMNA ELIMINAR CON ICONO Y TODO
-                var tdEliminar = document.createElement('td');
-
-                var spanEliminar = document.createElement('span');
-                spanEliminar.classList.add('icono-eliminar');
-
-                var iconoEliminar = document.createElement('i');
-                iconoEliminar.classList.add('fa', 'fa-trash-o');
-
-                spanEliminar.appendChild(iconoEliminar);
-                tdEliminar.appendChild(spanEliminar);
-
-                nuevaFila.appendChild(tdEliminar);
-
-                
+                <td>
+                    <span class="icono-editar">
+                        <a href="index.php?id=${respuesta.datos.id_insertado}" >
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                    </span>
+                </td>
+                <td>
+                    <span class="icono-eliminar" data-id="${respuesta.datos.id_insertado}">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </td>
+                `;  
 
                 tablaPacientes.appendChild(nuevaFila);
                 mostrarNotificacion('OK', 'Paciente guardado exitosamente', 'success');
+
+                // ACTUALIZAR VISTA DE PACIENTES EN DISEÑO RESPONSIVE
+                var nuevaFilaResponsive = document.createElement('div');
+                nuevaFilaResponsive.classList.add('fila-paciente', `grupo${datos.get('grupo_disp')}`);
+
+                nuevaFilaResponsive.innerHTML = `
+                <div class="campo">
+                    <h4>Nombre:</h4>
+                    <p>${datos.get('nombre_apellido')}</p>
+                    <span class="fa fa-caret-down"></span>
+                </div>
+                <div class="campo">
+                    <h4>Sexo:</h4>
+                    <p>${datos.get(sexoVistaPaciente)}</p>
+                </div>
+                <div class="campo">
+                    <h4>Grupo:</h4>
+                    <p>${romanize(datos.get('grupo_disp'))}</p>
+                </div>
+                <div class="campo">
+                    <h4>Dirección:</h4>
+                    <p>${datos.get('direccion')}</p>
+                 </div>
+                 <div class="campo">
+                     <h4>Edad:</h4>
+                     <p>${respuesta.datos.edad}</p>
+                </div>
+                <div class="campo">
+                    <h4>Nivel:</h4>
+                     <p>${nivelEducacionalVistaPaciente}</p>
+                 </div>
+                <div class="campo">
+                    <h4>Ocupación:</h4>
+                    <p>${datos.get('labor')}</p>
+                </div>
+                <div class="campo">
+                    <h4>Manzana:</h4>
+                    <p>${datos.get('manzana')}</p>
+                 </div>
+                 <div class="campo">
+                    <h4>Diagnóstico:</h4>
+                    <p>${datos.get('diagnostico')}</p>
+                 </div>
+
+                <div class="campo">
+                    <h4>Acciones:</h4>
+                    <div class="acciones">
+                        <span class="icono-editar">
+                            <a href="index.php?id=${respuesta.datos.id_insertado}" >
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </span>
+                        <span class="icono-eliminar" data-id="${respuesta.datos.id_insertado}">
+                            <i class="fa fa-trash-o"></i>
+                        </span>
+                    </div>
+                </div>
+                `;
+
+                tablaResponsive.appendChild(nuevaFilaResponsive);
 
                 formAgregar.reset();
             } else {

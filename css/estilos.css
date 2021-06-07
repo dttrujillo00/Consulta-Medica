@@ -329,10 +329,6 @@ ESTILOS CUADRO AGREGAR PACIENTE
     justify-content: center;
 }
 
-.form-agregar h2{
-    /* text-shadow: 1px 1px 2px; */
-}
-
 .btn-desplegable{
    text-align: center;
    background-color: var(--colorPrincipal);
@@ -741,14 +737,6 @@ ESTILOS RESPONSIVE
         display: block;
     }
 
-     .tabla-responsive .fila-paciente:nth-child(2n+1){
-        color:#28a745; /*VERDE*/
-    } 
-
-    .tabla-responsive .fila-paciente:nth-child(2n){
-        color:#dc3545; /*ROJO*/
-    }
-
     .tabla-responsive .fila-paciente{
         padding: 0.75rem;
         border-top: 1px solid #dee2e6;
@@ -780,7 +768,6 @@ ESTILOS RESPONSIVE
         display: flex;
         justify-content: center;  
         font-size: 1.7rem;
-        color: rgb(47, 168, 47);
     }
 
     .campo span:hover{
@@ -817,12 +804,15 @@ ESTILOS RESPONSIVE
     
 }
 
-@media screen and (min-width: 790px){
-    .contenedor-select-nucleo{
-        flex: 0 0 calc(50% - 1rem);
-        margin-right: 1rem;
+/*ESTILOS RESPONSIVE DEL CUADRO DE AGREGAR Y EDITAR PACIENTE*/
+@media screen and (max-width: 630px){
+    .col-sm-12{
+        flex: 0 0 100%;
+        max-width: 100%;
     }
+}
 
+@media screen and (min-width: 790px){
     .height-static{
         height: 156px;
     }

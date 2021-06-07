@@ -744,10 +744,6 @@
 	        
 	    </main>
 
-
-
-    
-    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript">
     	var sinProblemasRadio = document.querySelector('#clasif-evaluacion-1'),
             conProblemasRadio = document.querySelector('#clasif-evaluacion-2'),
