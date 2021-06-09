@@ -210,23 +210,40 @@ const agregarPaciente = (datos) => {
 tablaPacientes.addEventListener('click', (e) => {
     if(e.target.parentElement.classList.contains('icono-eliminar')){
         var fila = e.target.parentElement.parentElement.parentElement;
-        if(confirm('¿Quiere eliminar a un paciente?')){
-            var idPaciente = e.target.parentElement.getAttribute('data-id');
+        // fila.style.backgroundColor = '#3085d6';
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: '¡Esta acción no se puede revertir!',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, borrar!'
+        }).then((result) => {
+            if(result.value) {
+                var idPaciente = e.target.parentElement.getAttribute('data-id');
 
-            var xhr = new XMLHttpRequest();
+                var xhr = new XMLHttpRequest();
 
-            xhr.open('POST', 'modelos/modelo_Test.php', true);
+                xhr.open('GET', `modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`, true);
 
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    if (xhr.responseText === 'Correcto') {
-                        fila.remove();
+                xhr.onload = function() {
+                    if (this.status === 200) {
+                        var respuestaEliminarP = JSON.parse(xhr.responseText);
+                        console.log(respuestaEliminarP)
+                        if (respuestaEliminarP.respuesta === 'Correcto') {
+                            fila.remove();
+                            mostrarNotificacion('Borrado', 'El paciente ha sido eliminado.', 'success');
+                        }
                     }
                 }
-            }
 
-            xhr.send(idPaciente);
-        }
+                xhr.send();
+            } else {
+                // fila.style.backgroundColor = '#fff';
+            }
+        }) 
     }
 });
 
