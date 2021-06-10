@@ -5,7 +5,6 @@
         const btnColapsarForm = document.querySelector('.btn-desplegable'),
               buscar = document.querySelector('.nav-botones-header ul'),
               tablaResponsive = document.querySelector('.tabla-responsive');
-              console.log(tablaResponsive);
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
         tablaResponsive.addEventListener('click', e => {

@@ -4,6 +4,91 @@
 // luego enviarlos a traves de ajax y responder en la vista en consecuencia a
 // la respuesta del archivo que procesa y realiza la peticion al servidor
 
+/***************
+ * FUNCIONES   *
+ ***************/
+
+const eliminarPaciente = e => {
+    if(e.target.parentElement.classList.contains('icono-eliminar')){
+        // var fila = e.target.parentElement.parentElement.parentElement;
+        Swal.fire({
+            title: '¿Está seguro?',
+            text: '¡Esta acción no se puede revertir!',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, borrar!'
+        }).then((result) => {
+            if(result.value) {
+                var idPaciente = e.target.parentElement.getAttribute('data-id');
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', `modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`, true);
+
+                xhr.onload = function() {
+                    if (this.status === 200) {
+                        var respuestaEliminarP = JSON.parse(xhr.responseText);
+                        if (respuestaEliminarP.respuesta === 'Correcto') {
+                            // Esto es para eliminar el paciente de la vista movil
+                            // Aqui realmente estoy guardando los botones de eliminar de cada fila
+                            // Para obtener el id del paciente
+                            var idsPacientesResponsive = document.querySelectorAll('.tabla-responsive .fila-paciente .acciones span.icono-eliminar');
+                            idsPacientesResponsive.forEach((itemR) => {
+                                console.log(itemR.getAttribute('data-id'));
+                                if(itemR.getAttribute('data-id') == idPaciente) {
+                                    itemR.parentElement.parentElement.parentElement.remove();
+                                }
+
+                            });
+
+                            var idsPacientes = document.querySelectorAll('.table tbody tr td span.icono-eliminar');
+                            idsPacientes.forEach((item) => {
+                                if(item.getAttribute('data-id') == idPaciente) {
+                                    item.parentElement.parentElement.remove();
+                                }
+                            });
+                            mostrarNotificacion('Borrado', 'El paciente ha sido eliminado.', 'success');
+                        }
+                    }
+                }
+
+                xhr.send();
+            }
+        }) 
+    }
+}
+
+const romanize = (number) => {
+    switch (number) {
+        case '1':
+            return 'I';
+            break;
+        case '2':
+            return 'II';
+            break;
+        case '3':
+            return 'III';
+            break;
+        case '4':
+            return 'IV';
+            break;
+    
+        default:
+            return false;
+    }
+}
+
+const mostrarNotificacion = (title, description, type) => {
+    Swal.fire(
+        title,
+        description,
+        type
+
+    )
+}
 
 const formAgregar = document.querySelector('.form-agregar');
 const tablaPacientes = document.querySelector('.table tbody');
@@ -147,7 +232,7 @@ const agregarPaciente = (datos) => {
                 </div>
                 <div class="campo">
                     <h4>Sexo:</h4>
-                    <p>${datos.get(sexoVistaPaciente)}</p>
+                    <p>${sexoVistaPaciente}</p>
                 </div>
                 <div class="campo">
                     <h4>Grupo:</h4>
@@ -206,72 +291,8 @@ const agregarPaciente = (datos) => {
 	xhr.send(datos);
 }
 
-// ELIMINAR PACIENTE
-tablaPacientes.addEventListener('click', (e) => {
-    if(e.target.parentElement.classList.contains('icono-eliminar')){
-        var fila = e.target.parentElement.parentElement.parentElement;
-        // fila.style.backgroundColor = '#3085d6';
-        Swal.fire({
-            title: '¿Está seguro?',
-            text: '¡Esta acción no se puede revertir!',
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡Sí, borrar!'
-        }).then((result) => {
-            if(result.value) {
-                var idPaciente = e.target.parentElement.getAttribute('data-id');
-
-                var xhr = new XMLHttpRequest();
-
-                xhr.open('GET', `modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`, true);
-
-                xhr.onload = function() {
-                    if (this.status === 200) {
-                        var respuestaEliminarP = JSON.parse(xhr.responseText);
-                        console.log(respuestaEliminarP)
-                        if (respuestaEliminarP.respuesta === 'Correcto') {
-                            fila.remove();
-                            mostrarNotificacion('Borrado', 'El paciente ha sido eliminado.', 'success');
-                        }
-                    }
-                }
-
-                xhr.send();
-            } else {
-                // fila.style.backgroundColor = '#fff';
-            }
-        }) 
-    }
-});
-
-const romanize = (number) => {
-    switch (number) {
-        case '1':
-            return 'I';
-            break;
-        case '2':
-            return 'II';
-            break;
-        case '3':
-            return 'III';
-            break;
-        case '4':
-            return 'IV';
-            break;
-    
-        default:
-            return false;
-    }
-}
-
-const mostrarNotificacion = (title, description, type) => {
-    Swal.fire(
-        title,
-        description,
-        type
-
-    )
-}
+/*********************** 
+ *  ELIMINAR PACIENTE  *
+ ***********************/
+tablaPacientes.addEventListener('click', eliminarPaciente);
+tablaResponsive.addEventListener('click', eliminarPaciente);
