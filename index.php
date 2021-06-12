@@ -7,6 +7,14 @@
     $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne ORDER BY p.id_pac');
     $statement->execute();		
     $result = $statement->fetchAll();
+
+    if ($_GET) {
+    	$idUnico = $_GET['id'];
+    	$statementUnico = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel, ne.id_ne, np.id_nuc FROM paciente p INNER JOIN nucleo_pac np ON p.id_pac = np.id_pac INNER JOIN nucleo n ON np.id_nuc = n.id_nuc INNER JOIN sexo s ON p.id_pac = s.pac INNER JOIN genero g ON s.gen = g.id_gen INNER JOIN nivel_educacional_paciente nep ON p.id_pac = nep.id_pac INNER JOIN nivel_educacional ne ON nep.id_ne = ne.id_ne WHERE p.id_pac = (?)');
+    	$statementUnico->execute(array($idUnico));
+    	$resultUnico = $statementUnico->fetch();
+    	// var_dump($resultUnico);		
+    }
 	?>		
 <!DOCTYPE html>
 <html lang="es">
@@ -169,11 +177,11 @@
 
 	    
 	    	<div class="btn-desplegable container">
-				<p>Colapsar</p>
+				<p>Ocultar</p>
 			</div>
 			<div class="body-desplegable container">
 				<?php if(!$_GET): ?>
-				<form class="form-agregar">
+				<form class="form-agregar" id="form-agregar">
 
 					<h2 class="col-md-12 col-sm-12">Agregar Paciente</h2>
 
@@ -251,23 +259,23 @@
 				<?php endif ?>
 
 				<?php if($_GET): ?>
-				<form class="form-agregar editar">
+				<form class="form-agregar editar" id="form-editar">
 
 					<h2 class="col-md-12">Editar Paciente</h2>
 
 					<div class="campo-container col-md-8">
 						<label for="nombre_apellido">Nombre completo:</label>
-						<input required="" type="text" id="nombre_apellido">
+						<input required="" type="text" id="nombre_apellido" value="<?php echo $resultUnico['nombre_comp_pac'] ?>">
 					</div>
 
 					<div class="campo-container col-md-4">
 						<label for="fecha_nacimiento">Fecha de nacimiento</label>
-						<input required="" type="date" id="fecha_nacimiento">
+						<input required="" type="date" id="fecha_nacimiento" value="<?php echo $resultUnico['fecha_nac_pac'] ?>">
 					</div>
 
 					<div class="campo-container col-md-8">
 						<label for="direccion">Dirección</label>
-						<input required="" type="text" id="direccion">
+						<input required="" type="text" id="direccion" value="<?php echo $resultUnico['dir_nuc'] ?>">
 					</div>
 
 					<div class="campo-container col-md-4">
@@ -285,12 +293,12 @@
 
 					<div class="campo-container col-md-8">
 						<label for="diagnostico">Diagnóstico</label>
-						<input id="diagnostico" type="text">
+						<input id="diagnostico" type="text" value="<?php echo $resultUnico['diagnostico_pac'] ?>">
 					</div>
 
 					<div class="campo-container col-md-2">
 						<label for="manzana">Manzana</label>
-						<input required="" type="text" id="manzana">
+						<input required="" type="text" id="manzana" value="<?php echo $resultUnico['no_nuc'] ?>">
 					</div>
 
 					<div class="campo-container col-md-2">
@@ -305,7 +313,7 @@
 
 					<div class="campo-container col-md-8">
 						<label for="labor">Ocupación</label>
-						<input id="labor" type="text">
+						<input id="labor" type="text" value="<?php echo $resultUnico['labor_pac'] ?>">
 					</div>
 
 					<div class="col-md-4">
@@ -336,7 +344,7 @@
 	    <article>
 
 		            <section class="vista-pacientes container">
-		            	<div class="encabezado-vista">
+		            	<div class="encabezado-vista" id="encabezado-vista">
 							<h2>Pacientes</h2>
 		            	</div>
 		                <table class="table">
@@ -357,7 +365,7 @@
 		                    </thead>
 		                    <tbody>
 								<?php foreach($result as $dato): ?>
-		                        <tr class="grupo<?php echo($dato['grupo_disponible_pac']) ?>">
+		                        <tr id="<?php echo $dato['id_pac'] ?>" class="grupo<?php echo($dato['grupo_disponible_pac']) ?>">
 		                            <td><?php echo $dato['nombre_comp_pac'] ?></td>
 									<td><?php echo $dato['genero'] ?></td>
 									<td>
@@ -390,7 +398,7 @@
 									<td><?php echo $dato['diagnostico_pac'] ?></td>
 									<td>
 										<span class="icono-editar">
-											<a href="index.php?id=<?php echo $dato['id_pac'] ?>" >
+											<a href="index.php?id=<?php echo $dato['id_pac'] ?>#form-editar" >
 												<i class="fa fa-pencil"></i>
 											</a>
 										</span>
@@ -469,7 +477,7 @@
 									<h4>Acciones:</h4>
 									<div class="acciones">
 										<span class="icono-editar">
-											<a href="index.php?id=<?php echo $dato['id_pac'] ?>" >
+											<a href="index.php?id=<?php echo $dato['id_pac'] ?>#form-editar" >
 												<i class="fa fa-pencil"></i>
 											</a>
 										</span>
@@ -491,6 +499,74 @@
 	<script src="js/script.js"></script>
 	<script src="js/pacientes.js"></script>
 	<script src="js/sweetalert2.all.min.js"></script>
+
+	<?php if($_GET): ?>
+		<script type="text/javascript">
+			// DATOS EDITAR
+			const selectNivelEditar = document.querySelector('.editar select#nivel_educacional');
+			const selectGrupoEditar = document.querySelector('.editar select#grupo_disp');
+			var generoEditar = "<?php echo $resultUnico['genero'] ?>";
+
+			if(generoEditar == 'F') {
+				document.querySelector('#mujer').checked = true;
+			} else {
+				document.querySelector('#hombre').checked = true;
+			}
+
+			selectNivelEditar.selectedIndex = <?php echo ($resultUnico['id_ne'] - 1) ?>;
+			selectGrupoEditar.selectedIndex = <?php echo ($resultUnico['grupo_disponible_pac'] - 1)?>;
+
+			formEditar.addEventListener('submit', e => {
+			    e.preventDefault();
+
+			    var datosPacienteEditar = validarYGuardar(formEditar);
+
+			    if(datosPacienteEditar){
+			    	Swal.fire({
+			            title: '¿Desea guardar los cambios?',
+			            showCancelButton: true,
+			            showCloseButton: true,
+			            cancelButtonText: 'Cancelar',
+			            confirmButtonText: '¡Guardar!',
+			            confirmButtonColor: '#3085d6',
+			            cancelButtonColor: '#d33'
+			        }).then((result) => {
+			        	console.log(result);
+			        	if(result.value){
+			        		datosPacienteEditar.append('id_paciente', <?php echo $resultUnico['id_pac'] ?>);
+					    	datosPacienteEditar.append('id_nucleo', <?php echo $resultUnico['id_nuc'] ?>);
+					        editarPaciente(datosPacienteEditar);
+			        	} else if(result.dismiss === 'cancel'){
+			        		Swal.fire({
+			        			title: 'No se hicieron cambios',
+			        			type: 'info',
+			        			showConfirmButton: false,
+			        			timer: 1500
+			        		}).then(()=>{
+			        			window.location.href = 'index.php#encabezado-vista';
+			        		});
+			        	}
+			        });
+			    }
+
+			 });
+		</script>
+	<?php endif ?>	
+
+	<?php if(!$_GET): ?>
+		<script>
+			formAgregar.addEventListener('submit', e => {
+			    e.preventDefault();
+
+			    var datosPaciente = validarYGuardar(formAgregar);
+
+			    if(datosPaciente){
+			        agregarPaciente(datosPaciente);
+			    }
+			});
+		</script>
+	<?php endif ?>
+		
     
 </body>
 </html>

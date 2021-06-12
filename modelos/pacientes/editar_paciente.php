@@ -25,9 +25,9 @@
         
         $statement = $pdo->prepare('SELECT * FROM nucleo WHERE id_nuc=?');
         $statement->execute(array($id_nuc));
-        $tabla_nucleo=$statement->fetchAll();
+        $tabla_nucleo=$statement->fetch();
         
-        if($tabla_nucleo.dir_nuc != $direccion || $tabla_nucleo.no_nuc != $manzana){                
+        if($tabla_nucleo['dir_nuc'] != $direccion || $tabla_nucleo['no_nuc'] != $manzana){                
             $statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
             $statement->execute(array($direccion, $manzana));
             $id_nuc = $pdo->lastInsertId();
