@@ -8,6 +8,7 @@
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
         tablaResponsive.addEventListener('click', e => {
+          console.log(e.target);
           var filaActivada = e.target.parentElement.parentElement;
           if(e.target.classList.contains('fa-caret-down')){
                 e.target.classList.add('rotar');

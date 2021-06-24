@@ -263,22 +263,22 @@
 
 					<h2 class="col-md-12">Editar Paciente</h2>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="nombre_apellido">Nombre completo:</label>
 						<input required="" type="text" id="nombre_apellido" value="<?php echo $resultUnico['nombre_comp_pac'] ?>">
 					</div>
 
-					<div class="campo-container col-md-4">
+					<div class="campo-container col-md-4 col-sm-12">
 						<label for="fecha_nacimiento">Fecha de nacimiento</label>
 						<input required="" type="date" id="fecha_nacimiento" value="<?php echo $resultUnico['fecha_nac_pac'] ?>">
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="direccion">Dirección</label>
 						<input required="" type="text" id="direccion" value="<?php echo $resultUnico['dir_nuc'] ?>">
 					</div>
 
-					<div class="campo-container col-md-4">
+					<div class="campo-container col-md-4 col-sm-12">
 						<label>Nivel Educacional</label>
 						<select id="nivel_educacional">
 							<option value="1">Primaria</option>
@@ -291,17 +291,17 @@
 						</select>
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="diagnostico">Diagnóstico</label>
 						<input id="diagnostico" type="text" value="<?php echo $resultUnico['diagnostico_pac'] ?>">
 					</div>
 
-					<div class="campo-container col-md-2">
+					<div class="campo-container col-md-2 col-sm-12">
 						<label for="manzana">Manzana</label>
 						<input required="" type="text" id="manzana" value="<?php echo $resultUnico['no_nuc'] ?>">
 					</div>
 
-					<div class="campo-container col-md-2">
+					<div class="campo-container col-md-2 col-sm-12">
 						<label>Grupo Disp.</label>
 						<select id="grupo_disp">
 								<option value="1">I</option>
@@ -311,12 +311,12 @@
 						</select>
 					</div>
 
-					<div class="campo-container col-md-8">
+					<div class="campo-container col-md-8 col-sm-12">
 						<label for="labor">Ocupación</label>
 						<input id="labor" type="text" value="<?php echo $resultUnico['labor_pac'] ?>">
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-4 col-sm-12">
 						<div class="flex">
 							<div class="radio-container">
 								<label for="hombre">Masculino</label>
@@ -329,7 +329,7 @@
 						</div>	
 					</div>
 
-					<div class="div-button col-md-4">
+					<div class="div-button col-md-4 col-sm-12">
 						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
 					</div>
 
