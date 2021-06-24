@@ -18,7 +18,7 @@
                      e.target.classList.remove('rotar');
                 }, 200);
                 filaActivada.style.maxHeight = '1000px';
-            } else {
+            } else if(e.target.classList.contains('fa-caret-up')){
                 e.target.classList.add('rotar');
                 setTimeout(() => {
                     e.target.classList.remove('fa-caret-up');

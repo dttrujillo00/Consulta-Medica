@@ -155,6 +155,7 @@ const agregarPaciente = (datos) => {
 
     xhr.onload = function() {
         if(this.status === 200){
+            console.log(xhr.responseText);
             var respuesta = JSON.parse(xhr.responseText);
             // console.log(respuesta);
             if(respuesta.respuesta === 'Correcto') {
@@ -256,6 +257,12 @@ const agregarPaciente = (datos) => {
                 tablaResponsive.appendChild(nuevaFilaResponsive);
 
                 formAgregar.reset();
+            } else if(respuesta.respuesta === 'Existente'){
+                Swal.fire({
+                    title: 'Este paciente ya exitse en la base de datos',
+                    text: 'Lo sentimos',
+                    type: 'error'
+                });
             } else {
                 Swal.fire({
                     title: 'ERROR',

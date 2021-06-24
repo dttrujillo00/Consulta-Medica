@@ -46,12 +46,12 @@
 				);
 			}else
 			$respuesta = array(
-				'respuesta' => 'Existente',
-				'datos' => array(
-					'edad' => $edad,
-					'id_insertado' => $id_pac
-					)
-				);
+				'respuesta' => 'Existente'
+				// 'datos' => array(
+				// 	'edad' => $edad,
+				// 	'id_insertado' => $id_pac
+				// )
+			);
 	}
 	catch (Exception $e) {
 		// $respuesta = 'Error'.$e->getMessage();
