@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2021 a las 17:40:40
+-- Tiempo de generación: 25-06-2021 a las 04:54:45
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -32,6 +32,15 @@ CREATE TABLE `calificativo` (
   `id_cal` int(10) UNSIGNED NOT NULL,
   `calificacion` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `calificativo`
+--
+
+INSERT INTO `calificativo` (`id_cal`, `calificacion`) VALUES
+(1, 'Bien'),
+(2, 'Regular'),
+(3, 'Mal');
 
 -- --------------------------------------------------------
 
@@ -93,39 +102,6 @@ CREATE TABLE `cond_estr_viv` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `defic_cond_mat_vida`
---
-
-CREATE TABLE `defic_cond_mat_vida` (
-  `id_dcmv` int(10) UNSIGNED NOT NULL,
-  `descr_dcmv` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `defic_func_fam`
---
-
-CREATE TABLE `defic_func_fam` (
-  `id_dff` int(10) UNSIGNED NOT NULL,
-  `descr_dff` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `defic_salud_integr`
---
-
-CREATE TABLE `defic_salud_integr` (
-  `id_dsi` int(10) UNSIGNED NOT NULL,
-  `descr_dsi` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `eq_dom_bas`
 --
 
@@ -137,15 +113,34 @@ CREATE TABLE `eq_dom_bas` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `evaluacion_nucleo`
+-- Estructura de tabla para la tabla `evaluacion`
 --
 
-CREATE TABLE `evaluacion_nucleo` (
+CREATE TABLE `evaluacion` (
+  `id_eval` int(10) UNSIGNED NOT NULL,
+  `evaluacion` varchar(120) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `evaluacion`
+--
+
+INSERT INTO `evaluacion` (`id_eval`, `evaluacion`) VALUES
+(1, 'Sin Problemas'),
+(2, 'Dificultades c/ condiciones materiales'),
+(3, 'Dificultades c/ la salud de los integrantes'),
+(4, 'Dificultades c/ el funcionamiento de la familia');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `eval_nuc`
+--
+
+CREATE TABLE `eval_nuc` (
   `id_nuc` int(10) UNSIGNED NOT NULL,
-  `id_dsi` int(10) UNSIGNED NOT NULL,
-  `id_dff` int(10) UNSIGNED NOT NULL,
-  `id_dcmv` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_eval` int(10) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -177,8 +172,17 @@ CREATE TABLE `factor_riesgo_pac` (
 
 CREATE TABLE `funcionalidad` (
   `id_func` int(10) UNSIGNED NOT NULL,
-  `tipo_func` varchar(250) NOT NULL
+  `tipo_func` varchar(62) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `funcionalidad`
+--
+
+INSERT INTO `funcionalidad` (`id_func`, `tipo_func`) VALUES
+(1, 'Funcional'),
+(2, 'Riesgo de Disfunción'),
+(3, 'Disfuncional');
 
 -- --------------------------------------------------------
 
@@ -305,10 +309,13 @@ CREATE TABLE `nivel_educacional_paciente` (
 --
 
 INSERT INTO `nivel_educacional_paciente` (`id_pac`, `id_ne`) VALUES
-(7, 1),
-(8, 1),
 (9, 1),
-(10, 1);
+(10, 1),
+(11, 7),
+(12, 1),
+(16, 2),
+(17, 7),
+(18, 5);
 
 -- --------------------------------------------------------
 
@@ -331,7 +338,22 @@ INSERT INTO `nucleo` (`id_nuc`, `dir_nuc`, `no_nuc`) VALUES
 (2, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
 (3, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
 (4, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
-(5, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 9);
+(5, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 9),
+(6, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 13),
+(7, '122/25 y 27a no12256', 3),
+(8, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 13),
+(9, '122/25 y 27a no12256', 4),
+(10, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 5),
+(11, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 17),
+(12, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(13, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(14, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(15, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(16, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(17, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(18, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(19, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2),
+(20, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2);
 
 -- --------------------------------------------------------
 
@@ -349,9 +371,13 @@ CREATE TABLE `nucleo_pac` (
 --
 
 INSERT INTO `nucleo_pac` (`id_pac`, `id_nuc`) VALUES
-(8, 2),
 (9, 2),
-(10, 2);
+(10, 11),
+(11, 6),
+(12, 7),
+(16, 12),
+(17, 13),
+(18, 14);
 
 -- --------------------------------------------------------
 
@@ -374,14 +400,13 @@ CREATE TABLE `paciente` (
 --
 
 INSERT INTO `paciente` (`id_pac`, `nombre_comp_pac`, `edad_pac`, `fecha_nac_pac`, `labor_pac`, `diagnostico_pac`, `grupo_disponible_pac`) VALUES
-(1, 'Henri', 21, '2000-03-31', 'Estudiar', '', NULL),
-(2, 'Daniel', 21, '2000-02-07', 'Estudiar', '', NULL),
-(3, 'Thalia', 21, '2000-06-02', 'Estudiar', '', NULL),
-(6, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '1'),
-(7, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
-(8, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
-(9, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', '', 'paracetamol y abundante agua', '3'),
-(10, 'Henri Daniel PeÃ±a Dequero', 2021, '0000-00-00', 'Estudiante', 'paracetamol y abundante agua', '3');
+(9, 'Henri Daniel PeÃ±a Dequero', 2021, '2000-03-31', '', 'paracetamol y abundante agua', '3'),
+(10, 'Henri Daniel PeÃ±a Dequero', 21, '2000-03-31', 'Estudiante', 'paracetamol y abundante agua', '3'),
+(11, 'Henri Daniel PeÃ±a Dequero', 21, '2000-03-31', 'web developer', 'paracetamol y abundante agua', '1'),
+(12, 'ThalÃ­a PÃ©rez RodrÃ­guez', 21, '2000-06-10', 'Estudiante', 'sano', '1'),
+(16, 'InÃ©s MarÃ­a Tito IrÃ­bar', 79, '1941-09-10', 'Jubilada', 'Reposo', '4'),
+(17, 'Henri PeÃ±a Vidal', 46, '1975-04-24', 'Proyectista de clima, ETECSA', 'Ejercicios', '2'),
+(18, 'Ahmed Abdula Dequero', 24, '1996-07-24', 'Trabajador por cuenta propia', 'sano', '1');
 
 -- --------------------------------------------------------
 
@@ -424,8 +449,17 @@ CREATE TABLE `planificacion_tipo_plan` (
 
 CREATE TABLE `satis_ingreso` (
   `id_si` int(10) UNSIGNED NOT NULL,
-  `satisfaccion` varchar(250) NOT NULL
+  `satisfaccion` varchar(62) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `satis_ingreso`
+--
+
+INSERT INTO `satis_ingreso` (`id_si`, `satisfaccion`) VALUES
+(1, 'Satisfecho'),
+(2, 'M/Satisfecho'),
+(3, 'Insatisfecho');
 
 -- --------------------------------------------------------
 
@@ -454,11 +488,13 @@ CREATE TABLE `sexo` (
 --
 
 INSERT INTO `sexo` (`pac`, `gen`) VALUES
-(1, 1),
-(2, 1),
 (9, 1),
 (10, 1),
-(3, 2);
+(11, 1),
+(17, 1),
+(18, 1),
+(12, 2),
+(16, 2);
 
 -- --------------------------------------------------------
 
@@ -518,24 +554,6 @@ ALTER TABLE `cond_estr_viv`
   ADD KEY `id_cal` (`id_cal`);
 
 --
--- Indices de la tabla `defic_cond_mat_vida`
---
-ALTER TABLE `defic_cond_mat_vida`
-  ADD PRIMARY KEY (`id_dcmv`);
-
---
--- Indices de la tabla `defic_func_fam`
---
-ALTER TABLE `defic_func_fam`
-  ADD PRIMARY KEY (`id_dff`);
-
---
--- Indices de la tabla `defic_salud_integr`
---
-ALTER TABLE `defic_salud_integr`
-  ADD PRIMARY KEY (`id_dsi`);
-
---
 -- Indices de la tabla `eq_dom_bas`
 --
 ALTER TABLE `eq_dom_bas`
@@ -544,14 +562,18 @@ ALTER TABLE `eq_dom_bas`
   ADD KEY `id_cal` (`id_cal`);
 
 --
--- Indices de la tabla `evaluacion_nucleo`
+-- Indices de la tabla `evaluacion`
 --
-ALTER TABLE `evaluacion_nucleo`
-  ADD PRIMARY KEY (`id_nuc`,`id_dsi`,`id_dff`,`id_dcmv`),
+ALTER TABLE `evaluacion`
+  ADD PRIMARY KEY (`id_eval`);
+
+--
+-- Indices de la tabla `eval_nuc`
+--
+ALTER TABLE `eval_nuc`
+  ADD PRIMARY KEY (`id_nuc`,`id_eval`),
   ADD KEY `id_nuc` (`id_nuc`),
-  ADD KEY `id_dsi` (`id_dsi`),
-  ADD KEY `id_dff` (`id_dff`),
-  ADD KEY `id_dcmv` (`id_dcmv`);
+  ADD KEY `id_eval` (`id_eval`);
 
 --
 -- Indices de la tabla `factor_riesgo`
@@ -715,7 +737,7 @@ ALTER TABLE `tipo_plan`
 -- AUTO_INCREMENT de la tabla `calificativo`
 --
 ALTER TABLE `calificativo`
-  MODIFY `id_cal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cal` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `cdr`
@@ -730,22 +752,10 @@ ALTER TABLE `circunscripcion`
   MODIFY `id_cir` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `defic_cond_mat_vida`
+-- AUTO_INCREMENT de la tabla `evaluacion`
 --
-ALTER TABLE `defic_cond_mat_vida`
-  MODIFY `id_dcmv` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `defic_func_fam`
---
-ALTER TABLE `defic_func_fam`
-  MODIFY `id_dff` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `defic_salud_integr`
---
-ALTER TABLE `defic_salud_integr`
-  MODIFY `id_dsi` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `evaluacion`
+  MODIFY `id_eval` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `factor_riesgo`
@@ -757,7 +767,7 @@ ALTER TABLE `factor_riesgo`
 -- AUTO_INCREMENT de la tabla `funcionalidad`
 --
 ALTER TABLE `funcionalidad`
-  MODIFY `id_func` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_func` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `genero`
@@ -787,13 +797,13 @@ ALTER TABLE `nivel_educacional`
 -- AUTO_INCREMENT de la tabla `nucleo`
 --
 ALTER TABLE `nucleo`
-  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `planificacion`
@@ -805,7 +815,7 @@ ALTER TABLE `planificacion`
 -- AUTO_INCREMENT de la tabla `satis_ingreso`
 --
 ALTER TABLE `satis_ingreso`
-  MODIFY `id_si` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_si` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_plan`
@@ -846,13 +856,11 @@ ALTER TABLE `eq_dom_bas`
   ADD CONSTRAINT `eq_dom_bas_ibfk_2` FOREIGN KEY (`id_cal`) REFERENCES `calificativo` (`id_cal`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `evaluacion_nucleo`
+-- Filtros para la tabla `eval_nuc`
 --
-ALTER TABLE `evaluacion_nucleo`
-  ADD CONSTRAINT `evaluacion_nucleo_ibfk_1` FOREIGN KEY (`id_nuc`) REFERENCES `nucleo` (`id_nuc`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluacion_nucleo_ibfk_2` FOREIGN KEY (`id_dsi`) REFERENCES `defic_salud_integr` (`id_dsi`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluacion_nucleo_ibfk_3` FOREIGN KEY (`id_dff`) REFERENCES `defic_func_fam` (`id_dff`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `evaluacion_nucleo_ibfk_4` FOREIGN KEY (`id_dcmv`) REFERENCES `defic_cond_mat_vida` (`id_dcmv`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `eval_nuc`
+  ADD CONSTRAINT `eval_nuc_ibfk_1` FOREIGN KEY (`id_nuc`) REFERENCES `nucleo` (`id_nuc`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `eval_nuc_ibfk_2` FOREIGN KEY (`id_eval`) REFERENCES `evaluacion` (`id_eval`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `factor_riesgo_pac`
