@@ -240,13 +240,13 @@
 
 					<div class="col-md-4 col-sm-12">
 						<div class="flex">
-							<div class="radio-container">
-								<label for="hombre">Masculino</label>
+							<div class="radio-container col-md-6">								
 								<input type="radio" name="sexo" id="hombre">
+								<label for="hombre">Masculino</label>
 							</div>
-							<div class="radio-container">
-								<label for="mujer">Femenino</label>
+							<div class="radio-container col-md-6">								
 								<input type="radio" name="sexo" id="mujer">
+								<label for="mujer">Femenino</label>
 							</div>		
 						</div>	
 					</div>

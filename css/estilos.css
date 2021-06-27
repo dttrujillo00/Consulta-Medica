@@ -145,6 +145,7 @@ a{
     text-transform: uppercase;
     font-weight: 700;
     transition: all .3s;
+    font-family: 'Open-sans-regular';
     
 }
 
@@ -213,6 +214,15 @@ input[type="file"] > input[type="button"]::-moz-focus-inner{
     z-index: 2;
 }
 
+select {
+    width: 100%;
+    border-radius: 5px;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    padding: .3rem;
+}
 
 /*********************** 
 ESTILOS HEADER
@@ -389,9 +399,9 @@ ESTILOS CUADRO AGREGAR PACIENTE
     color: white;
 }
 
-.form-agregar .contenedor-select{
+/*.form-agregar .contenedor-select{
     flex: 0 0 50%;
-}
+}*/
 
 .form-agregar button{
     margin: .5rem auto;
@@ -399,11 +409,11 @@ ESTILOS CUADRO AGREGAR PACIENTE
     width: 100%;
 }
 
-.contenedor-flex-select{
+/*.contenedor-flex-select{
     width: 100%;
     display: flex;
     margin-bottom: 1rem;
-}
+}*/
 
 .div-button{
     width: auto;
@@ -444,9 +454,20 @@ ESTILOS FORMULARIO NUCLEO
     margin: .3rem;
  }
 
+ .radio-container input{
+    display: none;
+ }
+
+ .radio-container input:checked + label{
+    background-color: rgba(0,0,0,.7);
+ }
+
  .radio-container label{
     font-weight: bold;
     text-align: center;
+    padding: 0 20px;
+    border-radius: 5px;
+    text-shadow: 0 1px 1px black;
  }
 
 .radio-container select{
@@ -859,6 +880,12 @@ ESTILOS RESPONSIVE
         flex: 0 0 calc(66.6% - 1rem);
         max-width: calc(66.6% - 1rem);
         margin-right: 1rem; 
+    }
+
+    .col-md-6{
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+        margin-right: 1rem;
     }
 
     .col-md-4{

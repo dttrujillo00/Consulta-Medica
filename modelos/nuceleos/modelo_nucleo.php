@@ -38,11 +38,11 @@
         }
         else{
             $respuesta = array(
-                'respuesta' => 'Existente',
-                'datos' => array(
-                    'id_insertado' => $id_nuc
-                    )
-                );
+                'respuesta' => 'Existente'
+                // 'datos' => array(
+                //     'id_insertado' => $id_nuc
+                //     )
+                // );
             }
 	}
 	catch (Exception $e) {

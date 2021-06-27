@@ -171,16 +171,16 @@
 
 						<div class="flex">
 							<div class="radio-container">
-								<label for="clasif-B-1">Bien</label>
 								<input type="radio" name="clasif-condiciones" id="clasif-B-1">
+								<label for="clasif-B-1">Bien</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-R-1">Regular</label>
 								<input type="radio" name="clasif-condiciones" id="clasif-R-1">
+								<label for="clasif-R-1">Regular</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-M-1">Mal</label>
 								<input type="radio" name="clasif-condiciones" id="clasif-M-1">
+								<label for="clasif-M-1">Mal</label>
 							</div>		
 						</div>
 					</div>
@@ -190,16 +190,16 @@
 
 						<div class="flex">
 							<div class="radio-container">
-								<label for="clasif-B-2">Bien</label>
 								<input type="radio" name="clasif-indice" id="clasif-B-2">
+								<label for="clasif-B-2">Bien</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-R-2">Regular</label>
 								<input type="radio" name="clasif-indice" id="clasif-R-2">
+								<label for="clasif-R-2">Regular</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-M-2">Mal</label>
 								<input type="radio" name="clasif-indice" id="clasif-M-2">
+								<label for="clasif-M-2">Mal</label>
 							</div>		
 						</div>
 
@@ -210,16 +210,16 @@
 
 						<div class="flex">
 							<div class="radio-container">
-								<label for="clasif-B-3">Bien</label>
 								<input type="radio" name="clasif-equipamiento" id="clasif-B-3">
+								<label for="clasif-B-3">Bien</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-R-3">Regular</label>
 								<input type="radio" name="clasif-equipamiento" id="clasif-R-3">
+								<label for="clasif-R-3">Regular</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-M-3">Mal</label>
 								<input type="radio" name="clasif-equipamiento" id="clasif-M-3">
+								<label for="clasif-M-3">Mal</label>
 							</div>		
 						</div>
 					</div>
@@ -229,16 +229,16 @@
 
 						<div class="flex">
 							<div class="radio-container">
-								<label for="clasif-satisfaccion-1">Satisfechos</label>
 								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-1">
+								<label for="clasif-satisfaccion-1">Satisfechos</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-satisfaccion-2">M/Satisfechos</label>
 								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-2">
+								<label for="clasif-satisfaccion-2">M/Satisfechos</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-satisfaccion-3">Insatisfechos</label>
 								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-3">
+								<label for="clasif-satisfaccion-3">Insatisfechos</label>
 							</div>		
 						</div>
 					</div>
@@ -248,16 +248,16 @@
 
 						<div class="flex">
 							<div class="radio-container">
-								<label for="clasif-funcionamiento-1">Funcional</label>
 								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
+								<label for="clasif-funcionamiento-1">Funcional</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
 								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
+								<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
 							</div>
 							<div class="radio-container">
-								<label for="clasif-funcionamiento-3">Disfuncional</label>
 								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
+								<label for="clasif-funcionamiento-3">Disfuncional</label>
 							</div>		
 						</div>
 					</div>
@@ -267,12 +267,12 @@
 
 						<div class="flex">
 							<div class="radio-container col-6">
-								<label for="clasif-evaluacion-1">Sin Problemas</label>
 								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
+								<label for="clasif-evaluacion-1">Sin Problemas</label>
 							</div>
 							<div class="radio-container col-6">
-								<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
 								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
+								<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
 							</div>
 							<div class="radio-container col-12">
 								<select id="select-evaluacion">
