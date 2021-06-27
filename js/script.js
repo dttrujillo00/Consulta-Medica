@@ -25,7 +25,7 @@
                     e.target.classList.add('fa-caret-down');
                     e.target.classList.remove('rotar');
                }, 200);
-               filaActivada.style.maxHeight = '70px';
+               filaActivada.style.maxHeight = '65px';
             }
         });
 

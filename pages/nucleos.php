@@ -157,14 +157,15 @@
 	    </article>
 
 	    <div class="btn-desplegable container">
-			<p>Colapsar</p>
+			<p>Ocultar</p>
 		</div>
 		<div class="body-desplegable container">
 				<form class="form-agregar">
 
 					<h2 class="col-md-12">Agregar Núcleo</h2>
 
-					<input  placeholder="Dirección..." type="text" name="direccion" id="direccion-nucleo">
+					<input  placeholder="Dirección..." type="text" id="direccion-nucleo">
+					<input  placeholder="Manzana..." type="text" id="manzana-nucleo">
 
 					<div class="contenedor-select-nucleo">
 						<h4>Condiciones de la Vivienda</h4>
@@ -205,7 +206,7 @@
 
 					</div>
 
-					<div class="contenedor-select-nucleo height-static-1">
+					<div class="contenedor-select-nucleo">
 						<h4>Equipamiento Doméstico Básico</h4>
 
 						<div class="flex">
@@ -220,6 +221,25 @@
 							<div class="radio-container">
 								<input type="radio" name="clasif-equipamiento" id="clasif-M-3">
 								<label for="clasif-M-3">Mal</label>
+							</div>		
+						</div>
+					</div>
+
+					<div class="contenedor-select-nucleo">
+						<h4>Funcionamiento Familiar</h4>
+
+						<div class="flex">
+							<div class="radio-container">
+								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
+								<label for="clasif-funcionamiento-1">Funcional</label>
+							</div>
+							<div class="radio-container">
+								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
+								<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
+							</div>
+							<div class="radio-container">
+								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
+								<label for="clasif-funcionamiento-3">Disfuncional</label>
 							</div>		
 						</div>
 					</div>
@@ -243,42 +263,23 @@
 						</div>
 					</div>
 
-					<div class="contenedor-select-nucleo height-static">
-						<h4>Funcionamiento Familiar</h4>
-
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
-								<label for="clasif-funcionamiento-1">Funcional</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
-								<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
-								<label for="clasif-funcionamiento-3">Disfuncional</label>
-							</div>		
-						</div>
-					</div>
-
 					<div class="contenedor-select-nucleo">
 						<h4>Evaluación Familiar</h4>
 
 						<div class="flex">
-							<div class="radio-container col-6">
+							<div class="radio-container">
 								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
 								<label for="clasif-evaluacion-1">Sin Problemas</label>
 							</div>
-							<div class="radio-container col-6">
+							<div class="radio-container">
 								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
 								<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
 							</div>
 							<div class="radio-container col-12">
 								<select id="select-evaluacion">
-									<option>Dificultades c/ condiciones materiales</option>
-									<option>Dificultades c/ la salud de los integrantes</option>
-									<option>Dificultades c/ el funcionamiento de la familia</option>
+									<option value="2">Dificultades c/ condiciones materiales</option>
+									<option value="3">Dificultades c/ la salud de los integrantes</option>
+									<option value="4">Dificultades c/ el funcionamiento de la familia</option>
 								</select>
 							</div>		
 						</div>
@@ -313,430 +314,68 @@
 							<th></th>
 		                </tr>
 		            </thead>
-		                    <tbody>
-		                        <tr data-id="1">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="2">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="3">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        <tr data-id="4">
-		                            <td>67 #13613 % 136 y 138</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>Bien</td>
-									<td>M/Satisfechos</td>
-									<td>Funcional</td>
-									<td>Sin Problemas</td>
-									<td>
-										<span class="icono-editar">
-											<i class="fa fa-pencil"></i>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-		                        
-		                    </tbody>
+		            <tbody>
+		                <tr class="grupo1">
+		                    <td>67 #13613 % 136 y 138</td>
+							<td>Bien</td>
+							<td>Bien</td>
+							<td>Bien</td>
+							<td>M/Satisfechos</td>
+							<td>Funcional</td>
+							<td>Sin Problemas</td>
+							<td>
+								<span class="icono-editar">
+									<i class="fa fa-pencil"></i>
+								</span>
+							</td>
+							<td>
+								<span class="icono-eliminar">
+									<i class="fa fa-trash-o"></i>
+								</span>
+							</td>
+		                </tr>
+		            </tbody>
 				</table>
 
 				<div class="tabla-responsive">
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
+					<div class="fila-paciente grupo1">
+						<div class="campo">
+							<h4>Dirección:</h4>
+							<p>67 #13613 % 136 y 138</p>
+							<span class="fa fa-caret-down"></span>
+						</div>
+						<div class="campo">
+							<h4>Condiciones Vivienda:</h4>
+							<p>Bien</p>
+						</div>
+						<div class="campo">
+							<h4>Indice de Hacinamiento:</h4>
+							<p>Bien</p>
+						</div>
+						<div class="campo">
+							<h4>Equipamiento Doméstico Básico:</h4>
+							<p>Bien</p>
+						</div>
+						<div class="campo">
+							<h4>Satisfacción de la Familia c/ Ingresos:</h4>
+							<p>M/Satisfechos</p>
+						</div>
+						<div class="campo">
+							<h4>Funcionamiento Familiar:</h4>
+							<p>Funcional</p>
+						</div>
+						<div class="campo">
+							<h4>Evaluación Familiar:</h4>
+							<p>Sin Problemas</p>
+						</div>
+						<div class="campo">
+							<h4>Acciones:</h4>
+							<div class="acciones">
+								<span class="fa fa-pencil"></span>
+								<span class="fa fa-trash-o"></span>
 							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
-							<div class="fila-paciente">
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p>67 #13613 % 136 y 138</p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Condiciones Vivienda:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Indice de Hacinamiento:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Equipamiento Doméstico Básico:</h4>
-									<p>Bien</p>
-								</div>
-								<div class="campo">
-									<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-									<p>M/Satisfechos</p>
-								</div>
-								<div class="campo">
-									<h4>Funcionamiento Familiar:</h4>
-									<p>Funcional</p>
-								</div>
-								<div class="campo">
-									<h4>Evaluación Familiar:</h4>
-									<p>Sin Problemas</p>
-								</div>
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="fa fa-pencil"></span>
-										<span class="fa fa-trash-o"></span>
-									</div>
-								</div>
-							</div>
+						</div>
+					</div>
 				</div>
 				
 			</article>

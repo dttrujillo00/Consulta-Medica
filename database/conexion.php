@@ -16,6 +16,6 @@ try{
 $pdo=new PDO($link,$user,$pass);
 
 }catch(PDOException $e){
-print "Error";
+print "Error de conexion";
 }
 // echo $conn->ping();

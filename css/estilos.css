@@ -322,7 +322,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
     transition: all .5s;
     overflow: hidden;
     max-height: 2000px;
-    max-width: 900px;
+    max-width: 500px;
     z-index: 2;
     position: relative;
 }
@@ -348,7 +348,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
    box-shadow: 0 1px 3px;
    text-transform: uppercase;
    font-size: 1rem;
-   max-width: 900px;
+   max-width: 500px;
    z-index: 2;
    position: relative;
 }
@@ -372,7 +372,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
     margin-bottom: .1rem;
 }
 
-.form-agregar .campo-container input{
+.form-agregar input{
     width: 100%;
     padding: .3rem;
     border-radius: 5px;
@@ -422,6 +422,11 @@ ESTILOS CUADRO AGREGAR PACIENTE
  /*********************** 
 ESTILOS FORMULARIO NUCLEO
  ***********************/
+#direccion-nucleo, #manzana-nucleo{
+    max-width: 400px;
+    margin-bottom: 1.5rem;
+}
+
  .contenedor-select-nucleo{
     margin-bottom: 1.5rem;
     border: 1px solid white;
@@ -435,24 +440,18 @@ ESTILOS FORMULARIO NUCLEO
     margin-bottom: 1rem;
     margin-left: 1rem;
     font-size: 1rem;
- }
-
- #direccion-nucleo{
-    max-width: 400px;
-    margin-bottom: 1.5rem;
+    text-align: center;
  }
 
  .flex{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
- .radio-container{
-    display: flex;
-    flex-direction: column;
-    margin: .3rem;
- }
+.radio-container{
+    margin: 5px 0;
+}
 
  .radio-container input{
     display: none;
@@ -465,14 +464,13 @@ ESTILOS FORMULARIO NUCLEO
  .radio-container label{
     font-weight: bold;
     text-align: center;
-    padding: 0 20px;
     border-radius: 5px;
     text-shadow: 0 1px 1px black;
+    padding: 0 .5rem;
  }
 
 .radio-container select{
-   width: 90%;
-   margin: .5rem auto 0;
+   margin: .5rem auto;
    padding: .2rem;
    font-size: .9rem;
 }
@@ -825,7 +823,6 @@ ESTILOS RESPONSIVE
     
 }
 
-/*ESTILOS RESPONSIVE DEL CUADRO DE AGREGAR Y EDITAR PACIENTE*/
 @media screen and (max-width: 630px){
     .col-sm-12{
         flex: 0 0 100%;
@@ -834,19 +831,20 @@ ESTILOS RESPONSIVE
 }
 
 @media screen and (min-width: 790px){
-    .height-static{
-        height: 156px;
+    #manzana-nucleo, #direccion-nucleo{
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+        margin-right: 1rem;
     }
 
-    #direccion-nucleo{
-        flex: 0 0 100%;
-        max-width: 100%;
+    .contenedor-select-nucleo {
+        flex: 0 0 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+        margin-right: 1rem;
     }
-}
 
-@media screen and (min-width: 790px) and (max-width: 821px){
-    .height-static-1{
-        height: 113px;
+    .btn-desplegable, .body-desplegable {
+        max-width: 900px;
     }
 }
 

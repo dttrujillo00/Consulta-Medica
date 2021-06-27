@@ -17,29 +17,29 @@
         $statement->execute(array($direccion, $manzana));
         $tabla_nucleo=$statement->fetch();        
         if($tabla_nucleo==null){          
-		$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
-		$statement->execute(array($direccion, $manzana));
-		$id_nuc = $pdo->lastInsertId();			
-        $statement = $pdo->prepare('INSERT INTO cond_estr_viv (id_pac, id_cal) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_condViv));	
-        $statement = $pdo->prepare('INSERT INTO nidic_hac (id_pac, id_cal) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_indiceHac));	
-        $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_pac, id_cal) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_equipBas));	
-        $statement = $pdo->prepare('INSERT INTO satis_ingreso_nucleo (id_nuc, id_si) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_satisFam));	
-        $statement = $pdo->prepare('INSERT INTO funcionalidad_nucleo (id_nuc, id_func) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_funcFam));	
-        $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_nuc, id_eval) VALUES (?, ?)');
-        $statement->execute(array($id_nuc, $id_evalFam));	
-        
-		// $respuesta = 'Correcto';
-		$respuesta = array(
-            'respuesta' => 'Correcto',
-			'datos' => array(
-				'id_insertado' => $id_nuc
-                )
-            );
+    		$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
+    		$statement->execute(array($direccion, $manzana));
+    		$id_nuc = $pdo->lastInsertId();			
+            $statement = $pdo->prepare('INSERT INTO cond_estr_viv (id_nuc, id_cal) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_condViv));	
+            $statement = $pdo->prepare('INSERT INTO indic_hac (id_nuc, id_cal) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_indiceHac));	
+            $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_nuc, id_cal) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_equipBas));	
+            $statement = $pdo->prepare('INSERT INTO satis_ingreso_nucleo (id_nuc, id_si) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_satisFam));	
+            $statement = $pdo->prepare('INSERT INTO funcionalidad_nucleo (id_nuc, id_func) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_funcFam));	
+            $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_nuc, id_eval) VALUES (?, ?)');
+            $statement->execute(array($id_nuc, $id_evalFam));	
+            
+    		// $respuesta = 'Correcto';
+    		$respuesta = array(
+                'respuesta' => 'Correcto',
+    			'datos' => array(
+    				'id_insertado' => $id_nuc
+                    )
+                );
         }
         else{
             $respuesta = array(
