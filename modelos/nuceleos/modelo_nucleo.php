@@ -7,11 +7,10 @@
 	$id_condViv = filter_var($_POST['condiciones'], FILTER_SANITIZE_STRING);
 	$id_indiceHac = filter_var($_POST['indice'], FILTER_SANITIZE_STRING);
 	$id_equipBas = filter_var($_POST['equipamiento'], FILTER_SANITIZE_STRING);
-    //En desarrollo
-	/* $id_satisFam = filter_var($_POST['satisfaccion'], FILTER_SANITIZE_STRING);
+	$id_satisFam = filter_var($_POST['satisfaccion'], FILTER_SANITIZE_STRING);
 	$id_funcFam = filter_var($_POST['funcionamiento'], FILTER_SANITIZE_STRING);
+	//hay 4 evalaciones: 1 Sin problemas, 2 Deficid..... 
 	$id_evalFam = filter_var($_POST['evaluacion'], FILTER_SANITIZE_STRING);
-	$id_problema = filter_var($_POST['propblemas'], FILTER_SANITIZE_STRING); */
 
 	try {
         $statement = $pdo->prepare('SELECT * FROM nucleo WHERE dir_nuc=? , no_nuc=?');
@@ -27,6 +26,12 @@
         $statement->execute(array($id_nuc, $id_indiceHac));	
         $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_pac, id_cal) VALUES (?, ?)');
         $statement->execute(array($id_nuc, $id_equipBas));	
+        $statement = $pdo->prepare('INSERT INTO satis_ingreso_nucleo (id_nuc, id_si) VALUES (?, ?)');
+        $statement->execute(array($id_nuc, $id_satisFam));	
+        $statement = $pdo->prepare('INSERT INTO funcionalidad_nucleo (id_nuc, id_func) VALUES (?, ?)');
+        $statement->execute(array($id_nuc, $id_funcFam));	
+        $statement = $pdo->prepare('INSERT INTO eq_dom_bas (id_nuc, id_eval) VALUES (?, ?)');
+        $statement->execute(array($id_nuc, $id_evalFam));	
         
 		// $respuesta = 'Correcto';
 		$respuesta = array(
