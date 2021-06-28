@@ -67,14 +67,12 @@
 html{
     box-sizing: border-box;
     min-height: 100%;
-    /*transition: all .5s;*/
 }
 
 body{
     font-family: 'Open-sans-regular';
     font-size: 14px;
     position: relative;
-    /*transition: all .5s;*/
     overflow-x: hidden;
 }
 
@@ -94,12 +92,6 @@ ul{
 
 .container{
     max-width: 1200px;
-    margin: 0 auto;
-    width: 95%;
-}
-
-.little-container{
-    max-width: 400px;
     margin: 0 auto;
     width: 95%;
 }
@@ -250,18 +242,37 @@ header{
 
 .nav-botones-header ul li{
     margin-right: 1.5rem;
+    position: relative;
 }
 
 .nav-botones-header ul li:hover{
     cursor: pointer;
 }
 
-.nav-botones-header ul li:last-child, .sub-header button:last-child{
+.nav-botones-header ul li:last-child{
     margin-right: 0;
 }
 
 .nav-botones-header ul li i{
     font-size: 1rem;
+    
+}
+
+.nav-botones-header ul li span{
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    height: 18px;
+    width: 18px;
+    background-color: var(--enfermo);
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    border-radius: 50%;
+    z-index: 100;
+    text-shadow: 1px 0 2px black;
 }
 
 /*********************** 
@@ -283,7 +294,6 @@ ESTILOS SUB-HEADER
      flex: 1;
      color: #fff;
      text-align: center;
-     /*padding: .5rem 0;*/
      height: 35px;
 }
 
@@ -351,6 +361,30 @@ ESTILOS CUADRO AGREGAR PACIENTE
    max-width: 500px;
    z-index: 2;
    position: relative;
+   height: 32px;
+}
+
+.btn-desplegable .content-text{
+    position: relative;
+}
+
+.btn-desplegable .content-text p:last-child{
+    opacity: 0;
+}
+
+.btn-desplegable.mostrar .content-text p:first-child{
+    opacity: 0;
+}
+
+.btn-desplegable.mostrar .content-text p:last-child{
+    opacity: 1;
+}
+
+.btn-desplegable p{
+    transition: opacity .4s;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .btn-desplegable:hover{
@@ -390,7 +424,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
     padding: .3rem;
 }
 
-.form-agregar input:focus, .form-agregar .contenedor-select select:focus{
+.form-agregar input:focus{
     background-color: rgba(0, 0, 0, .7);
     color: #fff;
 }
@@ -399,21 +433,11 @@ ESTILOS CUADRO AGREGAR PACIENTE
     color: white;
 }
 
-/*.form-agregar .contenedor-select{
-    flex: 0 0 50%;
-}*/
-
 .form-agregar button{
     margin: .5rem auto;
     display: inline-block;
     width: 100%;
 }
-
-/*.contenedor-flex-select{
-    width: 100%;
-    display: flex;
-    margin-bottom: 1rem;
-}*/
 
 .div-button{
     width: auto;
@@ -542,6 +566,10 @@ table {
   border-top: 2px solid #dee2e6;
 }
 
+.table tbody tr:last-child{
+    border-bottom: 1px solid #dee2e6;
+}
+
 .table tbody td{
     text-align: center;
 }
@@ -602,7 +630,6 @@ ESTILOS GRÁFICOS
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    /* padding-bottom: .5rem; */
     height: 100%;  
  }
 
@@ -649,11 +676,9 @@ ESTILOS PANEL DE NOTIFICACIONES
     box-shadow: 0 2px 3px black;
     height: 100vh;
     overflow-y: scroll;
-    /*display: none;*/
 }
 
 .mostrar-panel-notificaciones{
-    /*display: block;*/
     right: 0;
 }
 
@@ -747,6 +772,8 @@ ESTILOS GRID
  /*********************** 
 ESTILOS RESPONSIVE
  ***********************/
+
+ /*TABLE RESPONSIVE*/
 @media screen and (max-width: 850px){
     .table{
         display: none;
@@ -762,6 +789,10 @@ ESTILOS RESPONSIVE
         overflow-y: hidden;
         max-height: 65px;
         transition: all .2s linear;
+    }
+
+    .tabla-responsive .fila-paciente:last-child{
+        border-bottom: 1px solid #dee2e6;
     }
 
     .tabla-responsive .fila-paciente .campo{
@@ -822,6 +853,7 @@ ESTILOS RESPONSIVE
 
     
 }
+/*TABLE RESPONSIVE - FIN*/
 
 @media screen and (max-width: 630px){
     .col-sm-12{

@@ -1,10 +1,10 @@
 (function(){
     document.addEventListener('DOMContentLoaded', function(){
-        var navegacionSubHeader = document.querySelectorAll('.contenido-sub-header ul li');
-        var flagbodyDesplegar = false;
-        const btnColapsarForm = document.querySelector('.btn-desplegable'),
+        const navegacionSubHeader = document.querySelectorAll('.contenido-sub-header ul li'),
+              btnColapsarForm = document.querySelector('.btn-desplegable'),
               buscar = document.querySelector('.nav-botones-header ul'),
               tablaResponsive = document.querySelector('.tabla-responsive');
+        var flagbodyDesplegar = false;
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
         tablaResponsive.addEventListener('click', e => {
@@ -30,16 +30,18 @@
         });
 
         // COLAPSAR FORMULARIOS
-        btnColapsarForm.addEventListener('click', function(){
+        btnColapsarForm.addEventListener('click', () =>{
             const bodyDesplegar = document.querySelector('.body-desplegable');
             if (!flagbodyDesplegar) {
                 bodyDesplegar.style.maxHeight = 0;
                 bodyDesplegar.style.padding = 0;
                 flagbodyDesplegar = true;
+                btnColapsarForm.classList.add('mostrar');                
             } else {
                 bodyDesplegar.style.maxHeight = 2000 + 'px';
                 bodyDesplegar.style.padding = 1 + 'rem';
                 flagbodyDesplegar = false;
+                btnColapsarForm.classList.remove('mostrar');
             }
             
         });
@@ -80,7 +82,7 @@
          })
 
          // NOTIFICACIONES
-         const campana = document.querySelector('.campana'),
+         const campana = document.querySelector('.nav-botones-header ul li:last-child'),
             panel = document.querySelector('.panel-de-notificaciones'),
             cerrarPanel = document.querySelector('.cerrar-panel');
 

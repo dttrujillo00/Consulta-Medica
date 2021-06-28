@@ -135,8 +135,13 @@
             
             <nav class="nav-botones-header">
                 <ul>
-                    <li><i class="fa fa-search"></i></li>
-                    <li><i class="fa fa-bell campana"></i></li>
+                    <li>
+                    	<i class="fa fa-search"></i>
+                	</li>
+                    <li>
+                    	<i class="fa fa-bell campana"></i>
+                    	<span>12</span>
+                	</li>
                 </ul>
             </nav>
         </div>
@@ -157,7 +162,10 @@
 	    </article>
 
 	    <div class="btn-desplegable container">
-			<p>Ocultar</p>
+			<div class="content-text">
+				<p>Ocultar</p>
+				<P>Mostrar</P>
+	    	</div>
 		</div>
 		<div class="body-desplegable container">
 				<form class="form-agregar">

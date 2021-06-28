@@ -259,7 +259,7 @@ const agregarPaciente = (datos) => {
                 formAgregar.reset();
             } else if(respuesta.respuesta === 'Existente'){
                 Swal.fire({
-                    title: 'Este paciente ya exitse en la base de datos',
+                    title: 'Este paciente ya existe en la base de datos',
                     text: 'Lo sentimos',
                     type: 'error'
                 });
