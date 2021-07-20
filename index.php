@@ -270,6 +270,7 @@
 				<form class="form-agregar editar" id="form-editar">
 
 					<h2 class="col-md-12">Editar Paciente</h2>
+					<i class="fa fa-close cerrar-form"></i>
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="nombre_apellido">Nombre completo:</label>
@@ -332,12 +333,13 @@
 							</div>
 							<div class="radio-container col-md-6">								
 								<input type="radio" name="sexo" id="mujer">
-								<label for="mujer">Femenino</label>
+							<label for="mujer">Femenino</label>
 							</div>		
 						</div>	
 					</div>
 
-					<div class="div-button col-md-4 col-sm-12">
+					<div class="div-button col-12">
+						<!-- <button class="btn btn-cancelar" id="btn_cancelar">Cancelar</button> -->
 						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
 					</div>
 
@@ -530,34 +532,23 @@
 			    var datosPacienteEditar = validarYGuardar(formEditar);
 
 			    if(datosPacienteEditar){
-			    	Swal.fire({
-			            title: '¿Desea guardar los cambios?',
-			            showCancelButton: true,
-			            showCloseButton: true,
-			            cancelButtonText: 'Cancelar',
-			            confirmButtonText: '¡Guardar!',
-			            confirmButtonColor: '#3085d6',
-			            cancelButtonColor: '#d33'
-			        }).then((result) => {
-			        	console.log(result);
-			        	if(result.value){
-			        		datosPacienteEditar.append('id_paciente', <?php echo $resultUnico['id_pac'] ?>);
-					    	datosPacienteEditar.append('id_nucleo', <?php echo $resultUnico['id_nuc'] ?>);
-					        editarPaciente(datosPacienteEditar);
-			        	} else if(result.dismiss === 'cancel'){
-			        		Swal.fire({
-			        			title: 'No se hicieron cambios',
-			        			type: 'info',
-			        			showConfirmButton: false,
-			        			timer: 1500
-			        		}).then(()=>{
-			        			window.location.href = 'index.php#encabezado-vista';
-			        		});
-			        	}
-			        });
+			    	datosPacienteEditar.append('id_paciente', <?php echo $resultUnico['id_pac'] ?>);
+					datosPacienteEditar.append('id_nucleo', <?php echo $resultUnico['id_nuc'] ?>);
+					editarPaciente(datosPacienteEditar);
 			    }
 
 			 });
+
+			cancelarEditar.addEventListener('click', function() {
+				Swal.fire({
+			       title: 'No se guardaron los cambios',
+			       type: 'info',
+			       showConfirmButton: false,
+			       timer: 1500
+			    }).then(()=>{
+			       window.location.href = 'index.php#encabezado-vista';
+			    });
+			});
 		</script>
 	<?php endif ?>	
 

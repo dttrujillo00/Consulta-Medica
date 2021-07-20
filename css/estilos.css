@@ -136,7 +136,7 @@ a{
     padding: .5rem 1.5rem;
     text-transform: uppercase;
     font-weight: 700;
-    transition: all .3s;
+    transition: all .2s;
     font-family: 'Open-sans-regular';
     
 }
@@ -146,13 +146,18 @@ a{
 }
 
 .btn-guardar{
-    background-color: rgba(0, 0, 0, .7);
+    background-color: #005e9e;
     color: white;
+}
+
+.btn-cancelar {
+    color: white;
+    background-color: #80261e;
 }
 
 .btn:hover{
     cursor: pointer;
-    box-shadow: 0 2px 3px white;
+    outline: 1px solid white;
 } 
 
 select::-moz-focus-inner,
@@ -436,11 +441,30 @@ ESTILOS CUADRO AGREGAR PACIENTE
 .form-agregar button{
     margin: .5rem auto;
     display: inline-block;
-    width: 100%;
 }
 
 .div-button{
-    width: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#form-editar{
+    position: relative;
+}
+
+#form-editar i{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+    transition: transform .2s;
+}
+
+#form-editar i:hover{
+    color: #80261e;
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
  /*********************** 
@@ -483,6 +507,7 @@ ESTILOS FORMULARIO NUCLEO
 
  .radio-container input:checked + label{
     background-color: rgba(0,0,0,.7);
+    /*background-color: #4c5b51;*/
  }
 
  .radio-container label{

@@ -334,6 +334,7 @@ const validarYGuardar = (form) => {
 
 const formAgregar = document.querySelector('#form-agregar');
 const formEditar = document.querySelector('#form-editar');
+const cancelarEditar = document.querySelector('#form-editar i.cerrar-form');
 const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
  
