@@ -1,0 +1,9 @@
+	"En la pagina de núcleos"
+*Quitar en formulario de agregar nucleo ya que los nucleos se van a obtener de las direcciones previamente ingresadas en los pacientes.
+
+*Delante de las direccciones que no tengan toda la informacion mostrar un icono de exclamacion o advertencia a modo de dar a entender que no está completo.
+
+*En la fila de un nucleo agregar en la parte de las acciones un boton para ver a los integrantes de dicho nucleo. Usar el icono de usuario, u otro que represente a una familia o grupo de personas.
+
+	"En el formulario de editar"
+*Mejoras en la UI, por ejemplo al lado del boton GUARDAR otro de CANCELAR

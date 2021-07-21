@@ -1,7 +1,7 @@
 <?php
 require_once('../database/conexion.php'); 
 
-$statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih.calificacion AS califIndicHac, ccev.calificacion AS califCondEstrucViv, cedb.calificacion AS califEqDomBas, si.satisfaccion AS satisIngr, ff.tipo_func AS funcFam, e.evaluacion AS eval FROM nucleo n LEFT JOIN indic_hac ih ON n.id_nuc = ih.id_nuc LEFT JOIN calificativo cih ON ih.id_cal = cih.id_cal LEFT JOIN cond_estr_viv cev ON n.id_nuc = cev.id_nuc LEFT JOIN calificativo ccev ON cev.id_cal = ccev.id_cal LEFT JOIN eq_dom_bas edb ON n.id_nuc = edb.id_nuc LEFT JOIN calificativo cedb ON cedb.id_cal = edb.id_cal LEFT JOIN satis_ingreso_nucleo sin ON sin.id_nuc = n.id_nuc LEFT JOIN satis_ingreso si ON si.id_si = sin.id_si LEFT JOIN funcionalidad_nucleo ffn ON ffn.id_nuc = n.id_nuc LEFT JOIN funcionalidad ff on ff.id_func = ffn.id_func LEFT JOIN eval_nuc en ON en.id_nuc = n.id_nuc LEFT JOIN evaluacion e ON e.id_eval = en.id_eval ORDER BY n.id_nuc');
+$statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_nuc AS manzana, cih.calificacion AS califIndicHac, ccev.calificacion AS califCondEstrucViv, cedb.calificacion AS califEqDomBas, si.satisfaccion AS satisIngr, ff.tipo_func AS funcFam, e.evaluacion AS eval FROM nucleo n LEFT JOIN indic_hac ih ON n.id_nuc = ih.id_nuc LEFT JOIN calificativo cih ON ih.id_cal = cih.id_cal LEFT JOIN cond_estr_viv cev ON n.id_nuc = cev.id_nuc LEFT JOIN calificativo ccev ON cev.id_cal = ccev.id_cal LEFT JOIN eq_dom_bas edb ON n.id_nuc = edb.id_nuc LEFT JOIN calificativo cedb ON cedb.id_cal = edb.id_cal LEFT JOIN satis_ingreso_nucleo sin ON sin.id_nuc = n.id_nuc LEFT JOIN satis_ingreso si ON si.id_si = sin.id_si LEFT JOIN funcionalidad_nucleo ffn ON ffn.id_nuc = n.id_nuc LEFT JOIN funcionalidad ff on ff.id_func = ffn.id_func LEFT JOIN eval_nuc en ON en.id_nuc = n.id_nuc LEFT JOIN evaluacion e ON e.id_eval = en.id_eval ORDER BY n.id_nuc');
     $statement->execute();		
     $result = $statement->fetchAll();
     // var_dump($result); 
@@ -171,143 +171,154 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 	        </div>
 	    </article>
 
-	    <div class="btn-desplegable container">
-			<div class="content-text">
-				<p>Ocultar</p>
-				<P>Mostrar</P>
-	    	</div>
-		</div>
-		<div class="body-desplegable container">
-				<form class="form-agregar">
+	    <div class="cont-form-edit-nuc smallDot">
+		    <div class="btn-desplegable container">
+				<div class="content-text">
+					<p>Ocultar</p>
+					<P>Mostrar</P>
+		    	</div>
+			</div>
+			<div class="body-desplegable container">
+				
+					<form class="form-agregar editar" id="form-editar">
 
-					<h2 class="col-md-12">Agregar Núcleo</h2>
+						<h2 class="col-md-12">Editar Núcleo</h2>
 
-					<input  placeholder="Dirección..." type="text" id="direccion-nucleo">
-					<input  placeholder="Manzana..." type="text" id="manzana-nucleo">
+						<input  
+						placeholder="Dirección..." 
+						type="text" 
+						id="direccion-nucleo">
+						
+						<input  
+						placeholder="Manzana..." 
+						type="text" 
+						id="manzana-nucleo">
 
-					<div class="contenedor-select-nucleo">
-						<h4>Condiciones de la Vivienda</h4>
+						<div class="contenedor-select-nucleo">
+							<h4>Condiciones de la Vivienda</h4>
 
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-condiciones" id="clasif-B-1">
-								<label for="clasif-B-1">Bien</label>
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-condiciones" id="clasif-B-1">
+									<label for="clasif-B-1">Bien</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-condiciones" id="clasif-R-1">
+									<label for="clasif-R-1">Regular</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-condiciones" id="clasif-M-1">
+									<label for="clasif-M-1">Mal</label>
+								</div>		
 							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-condiciones" id="clasif-R-1">
-								<label for="clasif-R-1">Regular</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-condiciones" id="clasif-M-1">
-								<label for="clasif-M-1">Mal</label>
-							</div>		
-						</div>
-					</div>
-
-					<div class="contenedor-select-nucleo">
-						<h4>Indice de Hacinamiento</h4>
-
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-indice" id="clasif-B-2">
-								<label for="clasif-B-2">Bien</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-indice" id="clasif-R-2">
-								<label for="clasif-R-2">Regular</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-indice" id="clasif-M-2">
-								<label for="clasif-M-2">Mal</label>
-							</div>		
 						</div>
 
-					</div>
+						<div class="contenedor-select-nucleo">
+							<h4>Indice de Hacinamiento</h4>
 
-					<div class="contenedor-select-nucleo">
-						<h4>Equipamiento Doméstico Básico</h4>
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-indice" id="clasif-B-2">
+									<label for="clasif-B-2">Bien</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-indice" id="clasif-R-2">
+									<label for="clasif-R-2">Regular</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-indice" id="clasif-M-2">
+									<label for="clasif-M-2">Mal</label>
+								</div>		
+							</div>
 
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-equipamiento" id="clasif-B-3">
-								<label for="clasif-B-3">Bien</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-equipamiento" id="clasif-R-3">
-								<label for="clasif-R-3">Regular</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-equipamiento" id="clasif-M-3">
-								<label for="clasif-M-3">Mal</label>
-							</div>		
 						</div>
-					</div>
 
-					<div class="contenedor-select-nucleo">
-						<h4>Funcionamiento Familiar</h4>
+						<div class="contenedor-select-nucleo">
+							<h4>Equipamiento Doméstico Básico</h4>
 
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
-								<label for="clasif-funcionamiento-1">Funcional</label>
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-equipamiento" id="clasif-B-3">
+									<label for="clasif-B-3">Bien</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-equipamiento" id="clasif-R-3">
+									<label for="clasif-R-3">Regular</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-equipamiento" id="clasif-M-3">
+									<label for="clasif-M-3">Mal</label>
+								</div>		
 							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
-								<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
-								<label for="clasif-funcionamiento-3">Disfuncional</label>
-							</div>		
 						</div>
-					</div>
 
-					<div class="contenedor-select-nucleo">
-						<h4>Satisfacción de la Familia con los Ingresos</h4>
+						<div class="contenedor-select-nucleo">
+							<h4>Funcionamiento Familiar</h4>
 
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-1">
-								<label for="clasif-satisfaccion-1">Satisfechos</label>
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
+									<label for="clasif-funcionamiento-1">Funcional</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
+									<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
+									<label for="clasif-funcionamiento-3">Disfuncional</label>
+								</div>		
 							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-2">
-								<label for="clasif-satisfaccion-2">M/Satisfechos</label>
-							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-3">
-								<label for="clasif-satisfaccion-3">Insatisfechos</label>
-							</div>		
 						</div>
-					</div>
 
-					<div class="contenedor-select-nucleo">
-						<h4>Evaluación Familiar</h4>
+						<div class="contenedor-select-nucleo">
+							<h4>Satisfacción de la Familia con los Ingresos</h4>
 
-						<div class="flex">
-							<div class="radio-container">
-								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
-								<label for="clasif-evaluacion-1">Sin Problemas</label>
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-1">
+									<label for="clasif-satisfaccion-1">Satisfechos</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-2">
+									<label for="clasif-satisfaccion-2">M/Satisfechos</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-3">
+									<label for="clasif-satisfaccion-3">Insatisfechos</label>
+								</div>		
 							</div>
-							<div class="radio-container">
-								<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
-								<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
-							</div>
-							<div class="radio-container col-12">
-								<select id="select-evaluacion">
-									<option value="2">Dificultades c/ condiciones materiales</option>
-									<option value="3">Dificultades c/ la salud de los integrantes</option>
-									<option value="4">Dificultades c/ el funcionamiento de la familia</option>
-								</select>
-							</div>		
 						</div>
-					</div>
 
-					<div class="div-button-nucleo">
-						<button class="btn btn-guardar" id="btn_guardar-nucleo">Guardar</button>
-					</div>
+						<div class="contenedor-select-nucleo">
+							<h4>Evaluación Familiar</h4>
 
-				</form>	
+							<div class="flex">
+								<div class="radio-container">
+									<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
+									<label for="clasif-evaluacion-1">Sin Problemas</label>
+								</div>
+								<div class="radio-container">
+									<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
+									<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
+								</div>
+								<div class="radio-container col-12">
+									<select id="select-evaluacion">
+										<option value="2">Dificultades c/ condiciones materiales</option>
+										<option value="3">Dificultades c/ la salud de los integrantes</option>
+										<option value="4">Dificultades c/ el funcionamiento de la familia</option>
+									</select>
+								</div>		
+							</div>
+						</div>
+
+						<div class="div-button-nucleo">
+							<button class="btn btn-guardar" id="btn_guardar-nucleo">Guardar</button>
+						</div>
+
+					</form>	
+				
+			</div>
 		</div>
 	</div>
 
@@ -322,6 +333,7 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 		        	<thead>
 		                <tr>
 		                    <th>Dirección</th>
+		                    <th>Manzana</th>
 							<th>Cond. Vivienda</th>
 							<th>Indice Hacinamiento</th>
 							<th>Equip. Dom. Básico</th>
@@ -334,8 +346,9 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 		            </thead>
 		            <tbody>
 		            	<?php foreach ($result as $nucleo): ?>
-		                <tr class="grupo1">
+		                <tr class="grupo1" data-id="<?php echo $nucleo['idNuc'] ?>">
 		                    <td><?php echo $nucleo['dirNuc'] ?></td>
+		                    <td><?php echo $nucleo['manzana'] ?></td>
 							<td><?php echo $nucleo['califCondEstrucViv'] ?></td>
 							<td><?php echo $nucleo['califIndicHac'] ?></td>
 							<td><?php echo $nucleo['califEqDomBas'] ?></td>
@@ -361,24 +374,24 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 					<div class="fila-paciente grupo1">
 						<div class="campo">
 							<h4>Dirección:</h4>
-							<p>67 #13613 % 136 y 138</p>
+							<p><?php echo $nucleo['dirNuc'] ?></p>
 							<span class="fa fa-caret-down"></span>
 						</div>
 						<div class="campo">
 							<h4>Condiciones Vivienda:</h4>
-							<p>Bien</p>
+							<p><?php echo $nucleo['califCondEstrucViv'] ?></p>
 						</div>
 						<div class="campo">
 							<h4>Indice de Hacinamiento:</h4>
-							<p>Bien</p>
+							<p><?php echo $nucleo['califIndicHac'] ?></p>
 						</div>
 						<div class="campo">
 							<h4>Equipamiento Doméstico Básico:</h4>
-							<p>Bien</p>
+							<p><?php echo $nucleo['califEqDomBas'] ?></p>
 						</div>
 						<div class="campo">
 							<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-							<p>M/Satisfechos</p>
+							<p><?php echo $nucleo['satisIngr'] ?></p>
 						</div>
 						<div class="campo">
 							<h4>Funcionamiento Familiar:</h4>
@@ -386,12 +399,12 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 						</div>
 						<div class="campo">
 							<h4>Evaluación Familiar:</h4>
-							<p>Sin Problemas</p>
+							<p><?php echo $nucleo['eval'] ?></p>
 						</div>
 						<div class="campo">
 							<h4>Acciones:</h4>
 							<div class="acciones">
-								<span class="fa fa-pencil"></span>
+								<span class="fa fa-pencil"></span>	
 								<span class="fa fa-trash-o"></span>
 							</div>
 						</div>
@@ -402,6 +415,7 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
 
 	        
 	    </main>
+	    	
 
     <script type="text/javascript">
     	var sinProblemasRadio = document.querySelector('#clasif-evaluacion-1'),
@@ -419,5 +433,6 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.no_nuc AS manzana, cih
             });
     </script>
     <script src="../js/script.js"></script>
+    <script src="../js/nucleos.js"></script>
 </body>
 </html>

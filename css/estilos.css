@@ -150,11 +150,6 @@ a{
     color: white;
 }
 
-.btn-cancelar {
-    color: white;
-    background-color: #80261e;
-}
-
 .btn:hover{
     cursor: pointer;
     outline: 1px solid white;
@@ -219,6 +214,11 @@ select {
     -webkit-appearance: none;
     border: none;
     padding: .3rem;
+}
+
+.smallDot {
+    height: 0;
+    opacity: 0;
 }
 
 /*********************** 
@@ -443,7 +443,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
     display: inline-block;
 }
 
-.div-button{
+.div-button, .div-button-nucleo{
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -531,11 +531,6 @@ ESTILOS FORMULARIO NUCLEO
 
 #select-evaluacion[disabled]{
     cursor: not-allowed;
-}
-
-.div-button-nucleo{
-    flex: 0 0 100%;
-    max-width: 400px;
 }
 
  /*********************** 
@@ -780,6 +775,13 @@ ESTILOS PANEL DE NOTIFICACIONES
     border-bottom: 1px solid var(--colorPrincipal);
     width: 75%;
 }
+
+/*********************** 
+ESTILOS NUCLEOS
+ ***********************/
+ .cont-form-edit-nuc{
+    transition: all .5s;
+ }
 
 /*********************** 
 ESTILOS GRID
