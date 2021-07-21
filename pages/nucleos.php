@@ -188,7 +188,7 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						placeholder="Dirección..." 
 						type="text" 
 						id="direccion-nucleo">
-						
+
 						<input  
 						placeholder="Manzana..." 
 						type="text" 
@@ -197,17 +197,17 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Condiciones de la Vivienda</h4>
 
-							<div class="flex">
+							<div class="flex" id="condiciones">
 								<div class="radio-container">
-									<input type="radio" name="clasif-condiciones" id="clasif-B-1">
+									<input data-value="1" type="radio" name="clasif-condiciones" id="clasif-B-1">
 									<label for="clasif-B-1">Bien</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-condiciones" id="clasif-R-1">
+									<input data-value="2" type="radio" name="clasif-condiciones" id="clasif-R-1">
 									<label for="clasif-R-1">Regular</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-condiciones" id="clasif-M-1">
+									<input data-value="3" type="radio" name="clasif-condiciones" id="clasif-M-1">
 									<label for="clasif-M-1">Mal</label>
 								</div>		
 							</div>
@@ -216,17 +216,17 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Indice de Hacinamiento</h4>
 
-							<div class="flex">
+							<div class="flex" id="hacinamiento">
 								<div class="radio-container">
-									<input type="radio" name="clasif-indice" id="clasif-B-2">
+									<input data-value="1" type="radio" name="clasif-indice" id="clasif-B-2">
 									<label for="clasif-B-2">Bien</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-indice" id="clasif-R-2">
+									<input data-value="2" type="radio" name="clasif-indice" id="clasif-R-2">
 									<label for="clasif-R-2">Regular</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-indice" id="clasif-M-2">
+									<input data-value="3" type="radio" name="clasif-indice" id="clasif-M-2">
 									<label for="clasif-M-2">Mal</label>
 								</div>		
 							</div>
@@ -236,17 +236,17 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Equipamiento Doméstico Básico</h4>
 
-							<div class="flex">
+							<div class="flex" id="equipamiento">
 								<div class="radio-container">
-									<input type="radio" name="clasif-equipamiento" id="clasif-B-3">
+									<input data-value="1" type="radio" name="clasif-equipamiento" id="clasif-B-3">
 									<label for="clasif-B-3">Bien</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-equipamiento" id="clasif-R-3">
+									<input data-value="2" type="radio" name="clasif-equipamiento" id="clasif-R-3">
 									<label for="clasif-R-3">Regular</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-equipamiento" id="clasif-M-3">
+									<input data-value="3" type="radio" name="clasif-equipamiento" id="clasif-M-3">
 									<label for="clasif-M-3">Mal</label>
 								</div>		
 							</div>
@@ -255,17 +255,17 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Funcionamiento Familiar</h4>
 
-							<div class="flex">
+							<div class="flex" id="funcionamiento">
 								<div class="radio-container">
-									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
+									<input data-value="1" type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-1">
 									<label for="clasif-funcionamiento-1">Funcional</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
+									<input data-value="2" type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-2">
 									<label for="clasif-funcionamiento-2">Riesgo de Disfunc.</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
+									<input data-value="3" type="radio" name="clasif-funcionamiento" id="clasif-funcionamiento-3">
 									<label for="clasif-funcionamiento-3">Disfuncional</label>
 								</div>		
 							</div>
@@ -274,17 +274,17 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Satisfacción de la Familia con los Ingresos</h4>
 
-							<div class="flex">
+							<div class="flex" id="satisfaccion">
 								<div class="radio-container">
-									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-1">
+									<input data-value="1" type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-1">
 									<label for="clasif-satisfaccion-1">Satisfechos</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-2">
+									<input data-value="2" type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-2">
 									<label for="clasif-satisfaccion-2">M/Satisfechos</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-3">
+									<input data-value="3" type="radio" name="clasif-satisfaccion" id="clasif-satisfaccion-3">
 									<label for="clasif-satisfaccion-3">Insatisfechos</label>
 								</div>		
 							</div>
@@ -293,13 +293,13 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
 						<div class="contenedor-select-nucleo">
 							<h4>Evaluación Familiar</h4>
 
-							<div class="flex">
+							<div class="flex" id="evaluacion">
 								<div class="radio-container">
-									<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
+									<input data-value="1" type="radio" name="clasif-evaluacion" id="clasif-evaluacion-1">
 									<label for="clasif-evaluacion-1">Sin Problemas</label>
 								</div>
 								<div class="radio-container">
-									<input type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
+									<input data-value="2" type="radio" name="clasif-evaluacion" id="clasif-evaluacion-2">
 									<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
 								</div>
 								<div class="radio-container col-12">
@@ -434,5 +434,6 @@ $statement = $pdo->prepare('SELECT n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_
     </script>
     <script src="../js/script.js"></script>
     <script src="../js/nucleos.js"></script>
+    <script src="../js/sweetalert2.all.min.js"></script>
 </body>
 </html>
