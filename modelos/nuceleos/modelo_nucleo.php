@@ -13,7 +13,7 @@
 	$id_evalFam = filter_var($_POST['evaluacion'], FILTER_SANITIZE_STRING);
 
 	try {
-        $statement = $pdo->prepare('SELECT * FROM nucleo WHERE dir_nuc=? , no_nuc=?');
+        $statement = $pdo->prepare('SELECT * FROM nucleo WHERE dir_nuc=? and no_nuc=?');
         $statement->execute(array($direccion, $manzana));
         $tabla_nucleo=$statement->fetch();        
         if($tabla_nucleo==null){          
@@ -43,7 +43,7 @@
 
         }
         else{
-            $id_nuc = $tabla_nucleo[0][0];
+            $id_nuc = $tabla_nucleo["id_nuc"];
             
             $statement = $pdo->prepare('SELECT * FROM cond_estr_viv WHERE id_nuc=?');
             $statement->execute(array($id_nuc));

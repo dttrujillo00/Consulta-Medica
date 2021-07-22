@@ -27,9 +27,16 @@
 			$statement = $pdo->prepare('INSERT INTO paciente (nombre_comp_pac, edad_pac, fecha_nac_pac, labor_pac, diagnostico_pac, grupo_disponible_pac) VALUES (?, ?, ?, ?, ?, ?)');
 			$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp));		
 			$id_pac = $pdo->lastInsertId();
-			$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
+			$statement = $pdo->prepare('SELECT id_nuc FROM nucleo WHERE dir_nuc= ? and no_nuc = ?');
 			$statement->execute(array($direccion, $manzana));
-			$id_nuc = $pdo->lastInsertId();		
+			$tabla_nucleo=$statement->fetch();     
+			if($tabla_nucleo == null){
+				$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
+				$statement->execute(array($direccion, $manzana));
+				$id_nuc = $pdo->lastInsertId();
+			}else{
+				$id_nuc = $tabla_nucleo["id_nuc"];
+			} 		
 			$statement = $pdo->prepare('INSERT INTO nucleo_pac (id_pac, id_nuc) VALUES (?, ?)');
 			$statement->execute(array($id_pac, $id_nuc));			
 			$statement = $pdo->prepare('INSERT INTO sexo (pac, gen) VALUES (?, ?)');
