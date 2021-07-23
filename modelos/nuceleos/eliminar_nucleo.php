@@ -6,7 +6,7 @@
 
 	try {
 		$statement = $pdo->prepare('DELETE FROM nucleo WHERE id_nuc = ?');
-		$statement->execute(array($id_pac));
+		$statement->execute(array($id_nuc));
 		$statement = $pdo->prepare('SELECT id_pac FROM nucleo_pac WHERE id_nuc = ?');
 		$statement->execute(array($id_nuc));
         $pac = $statement->fetchAll();	
