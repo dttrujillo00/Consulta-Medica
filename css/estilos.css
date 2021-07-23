@@ -781,6 +781,7 @@ ESTILOS NUCLEOS
  ***********************/
  .cont-form-edit-nuc{
     transition: all .5s;
+    overflow: hidden;
  }
 
 /*********************** 

@@ -13,6 +13,7 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
  ************************/
 botonesEditar.forEach((boton) => {
 	boton.addEventListener('click', (e) => {
+		formEditNucleo.reset();
 		let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
 		obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
 									//Que rellena los campos del formulario
@@ -37,13 +38,13 @@ botonesEditar.forEach((boton) => {
         	if(result.value){
         		let filaActual = e.target.parentElement.parentElement.parentElement;
 		 		let idNucleo = filaActual.getAttribute('data-id');
-		 		fetch(`../modelos/nuceleos/eliminar_nucleo.php?id_nuc=${idNucleo}`)
+		 		fetch(`../modelos/nucleos/eliminar_nucleo.php?id_nuc=${idNucleo}`)
 		 		.then(res => res.json())
 		 		.then(data => {
 		 			if (data.respuesta == 'Correcto') {
 		 				Swal.fire({
 		                    type: 'success',
-		                    title: 'Paciente eliminado',
+		                    title: 'Núcleo eliminado',
 		                    showConfirmButton: false,
 		                    timer: 2000
 		                });
@@ -89,7 +90,7 @@ botonesEditar.forEach((boton) => {
  		datos.append('evaluacion', 1);
  	}
 
- 	fetch('../modelos/nuceleos/modelo_nucleo.php', {
+ 	fetch('../modelos/nucleos/modelo_nucleo.php', {
  		method: 'POST',
  		body: datos
  	})
@@ -114,7 +115,7 @@ botonesEditar.forEach((boton) => {
  *       FUNCIONES      *		
  ************************/
 const obtenerNucleoUnic = (id) => {
-	fetch(`../modelos/nuceleos/obtener_nucleo_unic.php?id=${id}`)
+	fetch(`../modelos/nucleos/obtener_nucleo_unic.php?id=${id}`)
 	.then(response => response.json())
 	.then(data => {
 		if(data.respuesta == 'Correcto'){
@@ -131,6 +132,7 @@ const obtenerNucleoUnic = (id) => {
 }
 
 const rellenarCamposFormEdit = (nucleo) => {
+
 	camposFormEdit[0].value = nucleo['dirNuc'];
 	camposFormEdit[1].value = nucleo['manzana'];
 
