@@ -15,19 +15,8 @@
             $statement = $pdo->prepare('DELETE FROM paciente WHERE id_pac = ?');
             $statement->execute(array($id));    
         }
+		//Todavia se puede mejorar, me gusta la idea de usar un trigger
 		$statement = $pdo->prepare('DELETE FROM nucleo_pac WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM cond_estr_viv WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM indic_hac WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM eq_dom_bas WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM satis_ingreso_nucleo WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM funcionalidad_nucleo WHERE id_nuc = ?');
-		$statement->execute(array($id_nuc));			
-		$statement = $pdo->prepare('DELETE FROM eq_dom_bas WHERE id_nuc = ?');
 		$statement->execute(array($id_nuc));			
 		// $respuesta = 'Correcto';
 		$respuesta = array(
