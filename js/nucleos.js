@@ -1,24 +1,73 @@
 // Seleccionar los botones de editar y ponerles un eventlistener de CLICK
 
-const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+const bodyTable = document.querySelector('.table tbody');
+// const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
 const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
 const contFormEdit = document.querySelector('.cont-form-edit-nuc');
 const formEditNucleo = document.querySelector('#form-editar');
 const camposFormEdit = document.querySelectorAll('#form-editar input');
 const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 
-
 /************************
- *   EDITAR NUCLEO      *		
+ *     LEER NUCLEOS     *		
  ************************/
-botonesEditar.forEach((boton) => {
+ fetch('../modelos/nucleos/obtener_nucleo.php')
+ .then(res => res.json())
+ .then(data => {
+ 	// let contenidoTabla;
+ 	data.datos.forEach((nucleo) => {
+ 		// console.log(nucleo);
+ 		var fila = document.createElement('tr');
+ 		fila.classList.add('grupo1');
+ 		fila.setAttribute('data-id', nucleo.idNuc);
+	 	fila.innerHTML = `
+			<td>${nucleo.dirNuc}</td>
+			<td>${nucleo.manzana}</td>
+			<td>${nucleo.califCondEstrucViv}</td>
+			<td>${nucleo.califIndicHac}</td>
+			<td>${nucleo.califEqDomBas}</td>
+			<td>${nucleo.funcFam}</td>
+			<td>${nucleo.satisIngr}</td>
+			<td>${nucleo.eval}</td>
+			<td>
+				<span class="icono-editar">
+					<i class="fa fa-pencil"></i>
+				</span>
+			</td>
+			<td>
+				<span class="icono-eliminar">
+					<i class="fa fa-trash-o"></i>
+				</span>
+			</td>
+	 	`;
+
+	 	bodyTable.appendChild(fila);
+ 	});
+ 	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+ 	botonesEditar.forEach((boton) => {
 	boton.addEventListener('click', (e) => {
+		console.log(e.target);
 		formEditNucleo.reset();
 		let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
 		obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
 									//Que rellena los campos del formulario
 	});
 });
+ })
+
+const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+/************************
+ *   EDITAR NUCLEO      *		
+ ************************/
+// botonesEditar.forEach((boton) => {
+// 	boton.addEventListener('click', (e) => {
+// 		console.log(e.target);
+// 		formEditNucleo.reset();
+// 		let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
+// 		obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
+// 									//Que rellena los campos del formulario
+// 	});
+// });
 
 /************************
  *   ELIMINAR NUCLEO    *		

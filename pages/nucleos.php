@@ -345,16 +345,16 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<?php foreach ($result as $nucleo): ?>
-		                <tr class="grupo1" data-id="<?php echo $nucleo['idNuc'] ?>">
-		                    <td><?php echo $nucleo['dirNuc'] ?></td>
-		                    <td><?php echo $nucleo['manzana'] ?></td>
-							<td><?php echo $nucleo['califCondEstrucViv'] ?></td>
-							<td><?php echo $nucleo['califIndicHac'] ?></td>
-							<td><?php echo $nucleo['califEqDomBas'] ?></td>
-							<td><?php echo $nucleo['funcFam'] ?></td>
-							<td><?php echo $nucleo['satisIngr'] ?></td>
-							<td><?php echo $nucleo['eval'] ?></td>
+		            	<!-- <?php //foreach ($result as $nucleo): ?>
+		                <tr class="grupo1" data-id="<?php //echo $nucleo['idNuc'] ?>">
+		                    <td><?php //echo $nucleo['dirNuc'] ?></td>
+		                    <td><?php //echo $nucleo['manzana'] ?></td>
+							<td><?php //echo $nucleo['califCondEstrucViv'] ?></td>
+							<td><?php //echo $nucleo['califIndicHac'] ?></td>
+							<td><?php //echo $nucleo['califEqDomBas'] ?></td>
+							<td><?php //echo $nucleo['funcFam'] ?></td>
+							<td><?php //echo $nucleo['satisIngr'] ?></td>
+							<td><?php //echo $nucleo['eval'] ?></td>
 							<td>
 								<span class="icono-editar">
 									<i class="fa fa-pencil"></i>
@@ -366,7 +366,7 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 								</span>
 							</td>
 		                </tr>
-		            <?php endforeach ?>
+		            <?php //endforeach ?> -->
 		            </tbody>
 				</table>
 
