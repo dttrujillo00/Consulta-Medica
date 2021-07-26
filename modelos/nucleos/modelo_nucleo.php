@@ -2,7 +2,7 @@
 	// INSTANCIANDO LA CONEXION 
 	require_once('../../database/conexion.php');
 
-    $id_nuc = filter_var($_POST['funcionamiento'], FILTER_SANITIZE_STRING);
+    $id_nuc = filter_var($_POST['idNuc'], FILTER_SANITIZE_STRING);
 	$direccion = filter_var($_POST['direccion'], FILTER_SANITIZE_STRING);
 	$manzana = filter_var($_POST['manzana'], FILTER_SANITIZE_STRING);
 	$id_condViv = filter_var($_POST['condiciones'], FILTER_SANITIZE_STRING);

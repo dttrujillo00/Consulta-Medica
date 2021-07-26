@@ -1,8 +1,6 @@
 // Seleccionar los botones de editar y ponerles un eventlistener de CLICK
 
 const bodyTable = document.querySelector('.table tbody');
-// const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
-const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
 const contFormEdit = document.querySelector('.cont-form-edit-nuc');
 const formEditNucleo = document.querySelector('#form-editar');
 const camposFormEdit = document.querySelectorAll('#form-editar input');
@@ -16,7 +14,7 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
  .then(data => {
  	// let contenidoTabla;
  	data.datos.forEach((nucleo) => {
- 		// console.log(nucleo);
+ 		console.log(nucleo);
  		var fila = document.createElement('tr');
  		fila.classList.add('grupo1');
  		fila.setAttribute('data-id', nucleo.idNuc);
@@ -43,68 +41,12 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 
 	 	bodyTable.appendChild(fila);
  	});
+
  	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
- 	botonesEditar.forEach((boton) => {
-	boton.addEventListener('click', (e) => {
-		console.log(e.target);
-		formEditNucleo.reset();
-		let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
-		obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
-									//Que rellena los campos del formulario
-	});
-});
+ 	const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+ 	habilitarBotonesEditar(botonesEditar);
+ 	habilitarBotonesEliminar(botonesEliminar);
  })
-
-const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
-/************************
- *   EDITAR NUCLEO      *		
- ************************/
-// botonesEditar.forEach((boton) => {
-// 	boton.addEventListener('click', (e) => {
-// 		console.log(e.target);
-// 		formEditNucleo.reset();
-// 		let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
-// 		obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
-// 									//Que rellena los campos del formulario
-// 	});
-// });
-
-/************************
- *   ELIMINAR NUCLEO    *		
- ************************/
- botonesEliminar.forEach((boton)=>{
- 	boton.addEventListener('click', (e) =>{
- 		Swal.fire({
-            title: '¿Está seguro?',
-            text: '¡Esta acción no se puede revertir!',
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '¡Sí, borrar!'
-        }).then((result) => {
-        	if(result.value){
-        		let filaActual = e.target.parentElement.parentElement.parentElement;
-		 		let idNucleo = filaActual.getAttribute('data-id');
-		 		fetch(`../modelos/nucleos/eliminar_nucleo.php?id_nuc=${idNucleo}`)
-		 		.then(res => res.json())
-		 		.then(data => {
-		 			if (data.respuesta == 'Correcto') {
-		 				Swal.fire({
-		                    type: 'success',
-		                    title: 'Núcleo eliminado',
-		                    showConfirmButton: false,
-		                    timer: 2000
-		                });
-		 				filaActual.remove();
-		 			}
-		 		})
-        	}
-        })
- 	});
- });
-
 
 /************************
  *   GUARDAR NUCLEO      *		
@@ -114,8 +56,9 @@ const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
 
  	let datos = new FormData();
 
- 	datos.append('direccion', camposFormEdit[0].value);
- 	datos.append('manzana', camposFormEdit[1].value);
+ 	datos.append('idNuc', camposFormEdit[0].value);
+ 	datos.append('direccion', camposFormEdit[1].value);
+ 	datos.append('manzana', camposFormEdit[2].value);
 
  	let inputActive = document.querySelector('#condiciones input:checked');
 	datos.append('condiciones', inputActive.getAttribute('data-value'));
@@ -138,6 +81,8 @@ const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
  	}else{
  		datos.append('evaluacion', 1);
  	}
+
+ 	console.log(datos.get('funcionamiento'));
 
  	fetch('../modelos/nucleos/modelo_nucleo.php', {
  		method: 'POST',
@@ -182,8 +127,9 @@ const obtenerNucleoUnic = (id) => {
 
 const rellenarCamposFormEdit = (nucleo) => {
 
-	camposFormEdit[0].value = nucleo['dirNuc'];
-	camposFormEdit[1].value = nucleo['manzana'];
+	camposFormEdit[0].value = nucleo['idNuc']
+	camposFormEdit[1].value = nucleo['dirNuc'];
+	camposFormEdit[2].value = nucleo['manzana'];
 
 	console.log(nucleo);
 	console.log(camposFormEdit);
@@ -191,13 +137,13 @@ const rellenarCamposFormEdit = (nucleo) => {
 	if (nucleo['califCondEstrucViv']) {
 		switch (nucleo['califCondEstrucViv']){
 			case 'Bien':
-			camposFormEdit[2].checked = true;
-			break;
-			case 'Regular':
 			camposFormEdit[3].checked = true;
 			break;
-			case 'Mal':
+			case 'Regular':
 			camposFormEdit[4].checked = true;
+			break;
+			case 'Mal':
+			camposFormEdit[5].checked = true;
 			break;
 		}
 	}
@@ -205,13 +151,13 @@ const rellenarCamposFormEdit = (nucleo) => {
 	if (nucleo['califIndicHac']) {
 		switch (nucleo['califIndicHac']){
 			case 'Bien':
-			camposFormEdit[5].checked = true;
-			break;
-			case 'Regular':
 			camposFormEdit[6].checked = true;
 			break;
-			case 'Mal':
+			case 'Regular':
 			camposFormEdit[7].checked = true;
+			break;
+			case 'Mal':
+			camposFormEdit[8].checked = true;
 			break;
 		}
 	}
@@ -219,13 +165,13 @@ const rellenarCamposFormEdit = (nucleo) => {
 	if (nucleo['califEqDomBas']) {
 		switch (nucleo['califEqDomBas']){
 			case 'Bien':
-			camposFormEdit[8].checked = true;
-			break;
-			case 'Regular':
 			camposFormEdit[9].checked = true;
 			break;
-			case 'Mal':
+			case 'Regular':
 			camposFormEdit[10].checked = true;
+			break;
+			case 'Mal':
+			camposFormEdit[11].checked = true;
 			break;
 		}
 	}
@@ -233,13 +179,13 @@ const rellenarCamposFormEdit = (nucleo) => {
 	if (nucleo['funcFam']) {
 		switch (nucleo['funcFam']){
 			case 'Funcional':
-			camposFormEdit[11].checked = true;
-			break;
-			case 'Riesgo de Disfunción':
 			camposFormEdit[12].checked = true;
 			break;
-			case 'Disfuncional':
+			case 'Riesgo de Disfunción':
 			camposFormEdit[13].checked = true;
+			break;
+			case 'Disfuncional':
+			camposFormEdit[14].checked = true;
 			break;
 		}
 	}
@@ -247,33 +193,92 @@ const rellenarCamposFormEdit = (nucleo) => {
 	if (nucleo['satisIngr']) {
 		switch (nucleo['satisIngr']){
 			case 'Satisfecho':
-			camposFormEdit[14].checked = true;
-			break;
-			case 'M/Satisfecho':
 			camposFormEdit[15].checked = true;
 			break;
-			case 'Insatisfecho':
+			case 'M/Satisfecho':
 			camposFormEdit[16].checked = true;
+			break;
+			case 'Insatisfecho':
+			camposFormEdit[17].checked = true;
 			break;
 		}
 	}
 
 	if (nucleo['eval']) {
 		switch (nucleo['eval']){
-			case 1:
-				camposFormEdit[17].checked = true;
-				break;
-			case 2:
+			case 'Sin Problemas':
 				camposFormEdit[18].checked = true;
+				selectEvaluacionForm.disabled = true;
+				break;
+			case 'Dificultades c/ condiciones materiales':
+				camposFormEdit[19].checked = true;
+				selectEvaluacionForm.disabled = false;
 				selectEvaluacionForm.selectedIndex = 0;
 				break;
-			case 3:
-				camposFormEdit[18].checked = true;
+			case 'Dificultades c/ la salud de los integrantes':
+				camposFormEdit[19].checked = true;
+				selectEvaluacionForm.disabled = false;
 				selectEvaluacionForm.selectedIndex = 1;
 				break;
-			case 4:
-				camposFormEdit[18].checked = true;
+			case 'Dificultades c/ el funcionamiento de la familia':
+				camposFormEdit[19].checked = true;
+				selectEvaluacionForm.disabled = false;
 				selectEvaluacionForm.selectedIndex = 2;
 		}
 	}
+}
+
+ 	/************************
+ 	 *   EDITAR NUCLEO      *		
+ 	 ************************/
+
+const habilitarBotonesEditar = (array) => {
+	array.forEach((boton) => {
+		boton.addEventListener('click', (e) => {
+			console.log(e.target);
+			formEditNucleo.reset();
+			let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
+			obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
+									//Que rellena los campos del formulario
+		});
+	});
+}
+
+/************************
+ *   ELIMINAR NUCLEO    *		
+ ************************/
+
+const habilitarBotonesEliminar = (array) => {
+ array.forEach((boton)=>{
+ 	boton.addEventListener('click', (e) =>{
+ 		Swal.fire({
+            title: '¿Está seguro?',
+            text: '¡Esta acción no se puede revertir!',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, borrar!'
+        }).then((result) => {
+        	if(result.value){
+        		let filaActual = e.target.parentElement.parentElement.parentElement;
+		 		let idNucleo = filaActual.getAttribute('data-id');
+		 		fetch(`../modelos/nucleos/eliminar_nucleo.php?id_nuc=${idNucleo}`)
+		 		.then(res => res.json())
+		 		.then(data => {
+		 			if (data.respuesta == 'Correcto') {
+		 				Swal.fire({
+		                    type: 'success',
+		                    title: 'Núcleo eliminado',
+		                    showConfirmButton: false,
+		                    timer: 2000
+		                });
+		 				filaActual.remove();
+		 			}
+		 		})
+        	}
+        })
+ 	});
+ });
 }

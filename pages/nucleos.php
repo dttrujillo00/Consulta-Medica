@@ -184,6 +184,8 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 
 						<h2 class="col-md-12">Editar Núcleo</h2>
 
+						<input type="hidden">
+
 						<input  
 						placeholder="Dirección..." 
 						type="text" 
@@ -303,7 +305,7 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 									<label for="clasif-evaluacion-2">Con Problemas de Salud</label>
 								</div>
 								<div class="radio-container col-12">
-									<select id="select-evaluacion">
+									<select id="select-evaluacion" disabled="">
 										<option value="2">Dificultades c/ condiciones materiales</option>
 										<option value="3">Dificultades c/ la salud de los integrantes</option>
 										<option value="4">Dificultades c/ el funcionamiento de la familia</option>
@@ -418,19 +420,26 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 	    	
 
     <script type="text/javascript">
-    	var sinProblemasRadio = document.querySelector('#clasif-evaluacion-1'),
-            conProblemasRadio = document.querySelector('#clasif-evaluacion-2'),
-            selectEvaluacion = document.querySelector('#select-evaluacion');
+    	const sinProblemasRadio = document.querySelector('#clasif-evaluacion-1');
+        const conProblemasRadio = document.querySelector('#clasif-evaluacion-2');
+        const selectEvaluacion = document.querySelector('#select-evaluacion');
 
-             selectEvaluacion.setAttribute('disabled', '');
+        if(conProblemasRadio.checked){
+        	selectEvaluacion.removeAttribute('disabled');
+        } else {
+        	selectEvaluacion.setAttribute('disabled', '');
+        }
 
-            sinProblemasRadio.addEventListener('click', function(){
-                selectEvaluacion.setAttribute('disabled', '');
-            });
+            //  selectEvaluacion.setAttribute('disabled', '');
 
-            conProblemasRadio.addEventListener('click', function(){
-                selectEvaluacion.removeAttribute('disabled');
-            });
+
+            // sinProblemasRadio.addEventListener('click', function(){
+            //     selectEvaluacion.setAttribute('disabled', '');
+            // });
+
+            // conProblemasRadio.addEventListener('click', function(){
+            //     selectEvaluacion.removeAttribute('disabled');
+            // });
     </script>
     <script src="../js/script.js"></script>
     <script src="../js/nucleos.js"></script>
