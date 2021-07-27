@@ -18,46 +18,28 @@
 	$edad = calcularEdad($_POST['fecha_nacimiento'], $today);
 
 	try {
-		
-        $statement = $pdo->prepare('SELECT * FROM paciente WHERE nombre_comp_pac=?');
-        $statement->execute(array($nombre_apellido));
-        $tabla_paciente=$statement->fetch();     
-		if($tabla_paciente == null){
-
-			$statement = $pdo->prepare('INSERT INTO paciente (nombre_comp_pac, edad_pac, fecha_nac_pac, labor_pac, diagnostico_pac, grupo_disponible_pac) VALUES (?, ?, ?, ?, ?, ?)');
-			$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp));		
-			$id_pac = $pdo->lastInsertId();
-			$statement = $pdo->prepare('SELECT id_nuc FROM nucleo WHERE dir_nuc= ? and no_nuc = ?');
+		$statement = $pdo->prepare('INSERT INTO paciente (nombre_comp_pac, edad_pac, fecha_nac_pac, labor_pac, diagnostico_pac, grupo_disponible_pac, sexo, nivel_educacional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+		$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp, $id_sexo, $nivel_educacional));		
+		$id_pac = $pdo->lastInsertId();
+		$statement = $pdo->prepare('SELECT id_nuc FROM nucleo WHERE dir_nuc= ? and no_nuc = ?');
+		$statement->execute(array($direccion, $manzana));
+		$tabla_nucleo=$statement->fetch();     
+		if($tabla_nucleo == null){
+			$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
 			$statement->execute(array($direccion, $manzana));
-			$tabla_nucleo=$statement->fetch();     
-			if($tabla_nucleo == null){
-				$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
-				$statement->execute(array($direccion, $manzana));
-				$id_nuc = $pdo->lastInsertId();
-			}else{
-				$id_nuc = $tabla_nucleo["id_nuc"];
-			} 		
-			$statement = $pdo->prepare('INSERT INTO nucleo_pac (id_pac, id_nuc) VALUES (?, ?)');
-			$statement->execute(array($id_pac, $id_nuc));			
-			$statement = $pdo->prepare('INSERT INTO sexo (pac, gen) VALUES (?, ?)');
-			$statement->execute(array($id_pac, $id_sexo));					
-			$statement = $pdo->prepare('INSERT INTO nivel_educacional_paciente (id_pac, id_ne) VALUES (?, ?)');
-			$statement->execute(array($id_pac, $nivel_educacional));			
-			// $respuesta = 'Correcto';
-			$respuesta = array(
-				'respuesta' => 'Correcto',
-				'datos' => array(
-					'edad' => $edad,
-					'id_insertado' => $id_pac
-					)
-				);
-			}else
-			$respuesta = array(
-				'respuesta' => 'Existente'
-				// 'datos' => array(
-				// 	'edad' => $edad,
-				// 	'id_insertado' => $id_pac
-				// )
+			$id_nuc = $pdo->lastInsertId();
+		}else{
+			$id_nuc = $tabla_nucleo["id_nuc"];
+		} 		
+		$statement = $pdo->prepare('INSERT INTO nucleo_pac (id_pac, id_nuc) VALUES (?, ?)');
+		$statement->execute(array($id_pac, $id_nuc));			
+		// $respuesta = 'Correcto';
+		$respuesta = array(
+			'respuesta' => 'Correcto',
+			'datos' => array(
+				'edad' => $edad,
+				'id_insertado' => $id_pac
+				)
 			);
 	}
 	catch (Exception $e) {

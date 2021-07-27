@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-07-2021 a las 08:12:50
+-- Tiempo de generación: 27-07-2021 a las 22:32:35
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -241,24 +241,6 @@ INSERT INTO `nivel_educacional` (`id_ne`, `nivel`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `nivel_educacional_paciente`
---
-
-CREATE TABLE `nivel_educacional_paciente` (
-  `id_pac` int(10) UNSIGNED NOT NULL,
-  `id_ne` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `nivel_educacional_paciente`
---
-
-INSERT INTO `nivel_educacional_paciente` (`id_pac`, `id_ne`) VALUES
-(24, 1);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `nucleo`
 --
 
@@ -279,7 +261,8 @@ CREATE TABLE `nucleo` (
 --
 
 INSERT INTO `nucleo` (`id_nuc`, `dir_nuc`, `no_nuc`, `cond_estr_viv`, `indic_hac`, `eq_dom_bas`, `satis_ingreso`, `funcionamiento_nucleo`, `eval_nuc`) VALUES
-(23, 'ñlkjhvl', 2, 1, 2, 3, 1, 2, 4);
+(39, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 13, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, '4ta Norte edif LACETEL appto 16, Primero de Mayo Boyeros', 2, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -297,7 +280,15 @@ CREATE TABLE `nucleo_pac` (
 --
 
 INSERT INTO `nucleo_pac` (`id_pac`, `id_nuc`) VALUES
-(24, 23);
+(43, 40);
+
+--
+-- Disparadores `nucleo_pac`
+--
+DELIMITER $$
+CREATE TRIGGER `DelPac` AFTER DELETE ON `nucleo_pac` FOR EACH ROW DELETE FROM paciente WHERE id_pac = old.id_pac
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -312,15 +303,17 @@ CREATE TABLE `paciente` (
   `fecha_nac_pac` date NOT NULL,
   `labor_pac` varchar(120) DEFAULT NULL,
   `diagnostico_pac` varchar(250) NOT NULL,
-  `grupo_disponible_pac` varchar(7) DEFAULT NULL
+  `grupo_disponible_pac` varchar(7) DEFAULT NULL,
+  `sexo` int(10) UNSIGNED NOT NULL,
+  `nivel_educacional` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `paciente`
 --
 
-INSERT INTO `paciente` (`id_pac`, `nombre_comp_pac`, `edad_pac`, `fecha_nac_pac`, `labor_pac`, `diagnostico_pac`, `grupo_disponible_pac`) VALUES
-(24, 'Henri PeÃ±a Vidal', 0, '5678-04-23', 'Estudiante y web developer', 'paracetamol y abundante agua', '1');
+INSERT INTO `paciente` (`id_pac`, `nombre_comp_pac`, `edad_pac`, `fecha_nac_pac`, `labor_pac`, `diagnostico_pac`, `grupo_disponible_pac`, `sexo`, `nivel_educacional`) VALUES
+(43, 'Henri Daniel PeÃ±a Dequero', 0, '0000-00-00', 'Estudiante', 'paracetamol y abundante agua', '1', 1, 3);
 
 -- --------------------------------------------------------
 
@@ -374,24 +367,6 @@ INSERT INTO `satis_ingreso` (`id_si`, `satisfaccion`) VALUES
 (1, 'Satisfecho'),
 (2, 'M/Satisfecho'),
 (3, 'Insatisfecho');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sexo`
---
-
-CREATE TABLE `sexo` (
-  `pac` int(10) UNSIGNED NOT NULL,
-  `gen` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `sexo`
---
-
-INSERT INTO `sexo` (`pac`, `gen`) VALUES
-(24, 1);
 
 -- --------------------------------------------------------
 
@@ -509,14 +484,6 @@ ALTER TABLE `nivel_educacional`
   ADD PRIMARY KEY (`id_ne`);
 
 --
--- Indices de la tabla `nivel_educacional_paciente`
---
-ALTER TABLE `nivel_educacional_paciente`
-  ADD PRIMARY KEY (`id_pac`,`id_ne`),
-  ADD KEY `id_pac` (`id_pac`),
-  ADD KEY `id_ne` (`id_ne`);
-
---
 -- Indices de la tabla `nucleo`
 --
 ALTER TABLE `nucleo`
@@ -540,7 +507,10 @@ ALTER TABLE `nucleo_pac`
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  ADD PRIMARY KEY (`id_pac`);
+  ADD PRIMARY KEY (`id_pac`),
+  ADD UNIQUE KEY `nombre_comp_pac` (`nombre_comp_pac`,`fecha_nac_pac`),
+  ADD KEY `sexo` (`sexo`),
+  ADD KEY `nivel_educacional` (`nivel_educacional`);
 
 --
 -- Indices de la tabla `planificacion`
@@ -569,14 +539,6 @@ ALTER TABLE `planificacion_tipo_plan`
 --
 ALTER TABLE `satis_ingreso`
   ADD PRIMARY KEY (`id_si`);
-
---
--- Indices de la tabla `sexo`
---
-ALTER TABLE `sexo`
-  ADD PRIMARY KEY (`gen`,`pac`),
-  ADD KEY `pac` (`pac`),
-  ADD KEY `gen` (`gen`);
 
 --
 -- Indices de la tabla `tipo_plan`
@@ -652,13 +614,13 @@ ALTER TABLE `nivel_educacional`
 -- AUTO_INCREMENT de la tabla `nucleo`
 --
 ALTER TABLE `nucleo`
-  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_nuc` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
-  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_pac` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `planificacion`
@@ -718,13 +680,6 @@ ALTER TABLE `intervencion_nucleo`
   ADD CONSTRAINT `intervencion_nucleo_ibfk_2` FOREIGN KEY (`id_inter`) REFERENCES `intervencion` (`id_inter`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `nivel_educacional_paciente`
---
-ALTER TABLE `nivel_educacional_paciente`
-  ADD CONSTRAINT `nivel_educacional_paciente_ibfk_1` FOREIGN KEY (`id_pac`) REFERENCES `paciente` (`id_pac`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nivel_educacional_paciente_ibfk_2` FOREIGN KEY (`id_ne`) REFERENCES `nivel_educacional` (`id_ne`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Filtros para la tabla `nucleo`
 --
 ALTER TABLE `nucleo`
@@ -743,6 +698,13 @@ ALTER TABLE `nucleo_pac`
   ADD CONSTRAINT `nucleo_pac_ibfk_2` FOREIGN KEY (`id_nuc`) REFERENCES `nucleo` (`id_nuc`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `paciente`
+--
+ALTER TABLE `paciente`
+  ADD CONSTRAINT `paciente_ibfk_1` FOREIGN KEY (`sexo`) REFERENCES `genero` (`id_gen`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `paciente_ibfk_2` FOREIGN KEY (`nivel_educacional`) REFERENCES `nivel_educacional` (`id_ne`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `planificacion_pac`
 --
 ALTER TABLE `planificacion_pac`
@@ -755,13 +717,6 @@ ALTER TABLE `planificacion_pac`
 ALTER TABLE `planificacion_tipo_plan`
   ADD CONSTRAINT `planificacion_tipo_plan_ibfk_1` FOREIGN KEY (`id_plan`) REFERENCES `planificacion` (`id_plan`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `planificacion_tipo_plan_ibfk_2` FOREIGN KEY (`id_tp`) REFERENCES `tipo_plan` (`id_tp`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `sexo`
---
-ALTER TABLE `sexo`
-  ADD CONSTRAINT `sexo_ibfk_1` FOREIGN KEY (`gen`) REFERENCES `genero` (`id_gen`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sexo_ibfk_2` FOREIGN KEY (`pac`) REFERENCES `paciente` (`id_pac`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
