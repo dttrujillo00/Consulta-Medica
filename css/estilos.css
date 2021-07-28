@@ -138,7 +138,7 @@ a{
     font-weight: 700;
     transition: all .2s;
     font-family: 'Open-sans-regular';
-    
+    outline: 0;
 }
 
 .btn:active{

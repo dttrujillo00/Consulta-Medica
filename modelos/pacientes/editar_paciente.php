@@ -15,8 +15,8 @@
 	$id_sexo = filter_var($_POST['sexo'], FILTER_SANITIZE_STRING);
 	$id_pac = filter_var($_POST['id_paciente'], FILTER_SANITIZE_STRING);
 	//HACE FALTA ESTO AHORA
-	$manzana_vieja = filter_var($_POST['id_nucleo'], FILTER_SANITIZE_STRING);
-	$direccion_vieja = filter_var($_POST['id_nucleo'], FILTER_SANITIZE_STRING);
+	$manzana_vieja = filter_var($_POST['manzana_vieja'], FILTER_SANITIZE_STRING);
+	$direccion_vieja = filter_var($_POST['direccion_vieja'], FILTER_SANITIZE_STRING);
 	//NO HACE FALTA EL ID_NUC
     //$id_nuc = filter_var($_POST['id_nucleo'], FILTER_SANITIZE_STRING);
 

@@ -420,15 +420,18 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 	    	
 
     <script type="text/javascript">
+		const contenedorEvaluacion = document.querySelector('#evaluacion');
     	const sinProblemasRadio = document.querySelector('#clasif-evaluacion-1');
         const conProblemasRadio = document.querySelector('#clasif-evaluacion-2');
         const selectEvaluacion = document.querySelector('#select-evaluacion');
-
-        if(conProblemasRadio.checked){
-        	selectEvaluacion.removeAttribute('disabled');
-        } else {
-        	selectEvaluacion.setAttribute('disabled', '');
-        }
+		
+		contenedorEvaluacion.addEventListener('click', () => {
+			if(conProblemasRadio.checked){
+        		selectEvaluacion.removeAttribute('disabled');
+        	} else {
+        		selectEvaluacion.setAttribute('disabled', '');
+        	}
+		});
 
             //  selectEvaluacion.setAttribute('disabled', '');
 

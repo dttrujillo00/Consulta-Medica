@@ -1,5 +1,3 @@
-// Seleccionar los botones de editar y ponerles un eventlistener de CLICK
-
 const bodyTable = document.querySelector('.table tbody');
 const contFormEdit = document.querySelector('.cont-form-edit-nuc');
 const formEditNucleo = document.querySelector('#form-editar');
@@ -7,107 +5,51 @@ const camposFormEdit = document.querySelectorAll('#form-editar input');
 const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 
 /************************
- *     LEER NUCLEOS     *		
- ************************/
- fetch('../modelos/nucleos/obtener_nucleo.php')
- .then(res => res.json())
- .then(data => {
- 	// let contenidoTabla;
- 	data.datos.forEach((nucleo) => {
- 		console.log(nucleo);
- 		var fila = document.createElement('tr');
- 		fila.classList.add('grupo1');
- 		fila.setAttribute('data-id', nucleo.idNuc);
-	 	fila.innerHTML = `
-			<td>${nucleo.dirNuc}</td>
-			<td>${nucleo.manzana}</td>
-			<td>${nucleo.califCondEstrucViv}</td>
-			<td>${nucleo.califIndicHac}</td>
-			<td>${nucleo.califEqDomBas}</td>
-			<td>${nucleo.funcFam}</td>
-			<td>${nucleo.satisIngr}</td>
-			<td>${nucleo.eval}</td>
-			<td>
-				<span class="icono-editar">
-					<i class="fa fa-pencil"></i>
-				</span>
-			</td>
-			<td>
-				<span class="icono-eliminar">
-					<i class="fa fa-trash-o"></i>
-				</span>
-			</td>
-	 	`;
-
-	 	bodyTable.appendChild(fila);
- 	});
-
- 	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
- 	const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
- 	habilitarBotonesEditar(botonesEditar);
- 	habilitarBotonesEliminar(botonesEliminar);
- })
-
-/************************
- *   GUARDAR NUCLEO      *		
- ************************/
- formEditNucleo.addEventListener('submit', function(e) {
- 	e.preventDefault();
-
- 	let datos = new FormData();
-
- 	datos.append('idNuc', camposFormEdit[0].value);
- 	datos.append('direccion', camposFormEdit[1].value);
- 	datos.append('manzana', camposFormEdit[2].value);
-
- 	let inputActive = document.querySelector('#condiciones input:checked');
-	datos.append('condiciones', inputActive.getAttribute('data-value'));
-
-	inputActive = document.querySelector('#hacinamiento input:checked');
- 	datos.append('indice', inputActive.getAttribute('data-value'));
-
- 	inputActive = document.querySelector('#equipamiento input:checked');
- 	datos.append('equipamiento', inputActive.getAttribute('data-value'));
-
- 	inputActive = document.querySelector('#funcionamiento input:checked');
- 	datos.append('funcionamiento', inputActive.getAttribute('data-value'));
-
- 	inputActive = document.querySelector('#satisfaccion input:checked');
- 	datos.append('satisfaccion', inputActive.getAttribute('data-value'));
-
- 	inputActive = document.querySelector('#evaluacion input:checked');
- 	if(inputActive.getAttribute('data-value') != 1){
- 		datos.append('evaluacion', selectEvaluacionForm.value);
- 	}else{
- 		datos.append('evaluacion', 1);
- 	}
-
- 	console.log(datos.get('funcionamiento'));
-
- 	fetch('../modelos/nucleos/modelo_nucleo.php', {
- 		method: 'POST',
- 		body: datos
- 	})
- 	.then(response => response.json())
- 	.then(data => {
- 		if(data.respuesta == 'Existente' || data.respuesta == 'Correcto'){
- 			Swal.fire({
-                title: 'OK',
-                text: 'Núcleo guardado exitosamente',
-                type: 'success',
-                timer: 3000,
-                timerProgressBar: true,
-                showConfirmButton: false
-            }).then(() => {
-                window.location.href = 'nucleos.php';
-            });
- 		}
- 	});
- });
-
-/************************
  *       FUNCIONES      *		
  ************************/
+ const obtenerNucleos = () => {
+	fetch('../modelos/nucleos/obtener_nucleo.php')
+	.then(res => res.json())
+	.then(data => {
+		// let contenidoTabla;
+		while(bodyTable.firstChild){
+			bodyTable.removeChild(bodyTable.firstChild);
+		}
+		data.datos.forEach((nucleo) => {
+			// console.log(nucleo);
+			var fila = document.createElement('tr');
+			fila.classList.add('grupo1');
+			fila.setAttribute('data-id', nucleo.idNuc);
+			fila.innerHTML = `
+				<td>${nucleo.dirNuc}</td>
+				<td>${nucleo.manzana}</td>
+				<td>${nucleo.califCondEstrucViv}</td>
+				<td>${nucleo.califIndicHac}</td>
+				<td>${nucleo.califEqDomBas}</td>
+				<td>${nucleo.funcFam}</td>
+				<td>${nucleo.satisIngr}</td>
+				<td>${nucleo.eval}</td>
+				<td>
+					<span class="icono-editar">
+						<i class="fa fa-pencil"></i>
+					</span>
+				</td>
+				<td>
+					<span class="icono-eliminar">
+						<i class="fa fa-trash-o"></i>
+					</span>
+				</td>
+			`;
+
+			bodyTable.appendChild(fila);
+		});
+
+		const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+		habilitarBotonesEditar(botonesEditar);
+		habilitarBotonesEliminar(botonesEliminar);
+	})
+}
 const obtenerNucleoUnic = (id) => {
 	fetch(`../modelos/nucleos/obtener_nucleo_unic.php?id=${id}`)
 	.then(response => response.json())
@@ -131,8 +73,8 @@ const rellenarCamposFormEdit = (nucleo) => {
 	camposFormEdit[1].value = nucleo['dirNuc'];
 	camposFormEdit[2].value = nucleo['manzana'];
 
-	console.log(nucleo);
-	console.log(camposFormEdit);
+	// console.log(nucleo);
+	// console.log(camposFormEdit);
 
 	if (nucleo['califCondEstrucViv']) {
 		switch (nucleo['califCondEstrucViv']){
@@ -235,7 +177,7 @@ const rellenarCamposFormEdit = (nucleo) => {
 const habilitarBotonesEditar = (array) => {
 	array.forEach((boton) => {
 		boton.addEventListener('click', (e) => {
-			console.log(e.target);
+			// console.log(e.target);
 			formEditNucleo.reset();
 			let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
 			obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
@@ -282,3 +224,106 @@ const habilitarBotonesEliminar = (array) => {
  	});
  });
 }
+
+/************************
+ *     LEER NUCLEOS     *		
+ ************************/
+obtenerNucleos();
+//  fetch('../modelos/nucleos/obtener_nucleo.php')
+//  .then(res => res.json())
+//  .then(data => {
+//  	// let contenidoTabla;
+//  	data.datos.forEach((nucleo) => {
+//  		console.log(nucleo);
+//  		var fila = document.createElement('tr');
+//  		fila.classList.add('grupo1');
+//  		fila.setAttribute('data-id', nucleo.idNuc);
+// 	 	fila.innerHTML = `
+// 			<td>${nucleo.dirNuc}</td>
+// 			<td>${nucleo.manzana}</td>
+// 			<td>${nucleo.califCondEstrucViv}</td>
+// 			<td>${nucleo.califIndicHac}</td>
+// 			<td>${nucleo.califEqDomBas}</td>
+// 			<td>${nucleo.funcFam}</td>
+// 			<td>${nucleo.satisIngr}</td>
+// 			<td>${nucleo.eval}</td>
+// 			<td>
+// 				<span class="icono-editar">
+// 					<i class="fa fa-pencil"></i>
+// 				</span>
+// 			</td>
+// 			<td>
+// 				<span class="icono-eliminar">
+// 					<i class="fa fa-trash-o"></i>
+// 				</span>
+// 			</td>
+// 	 	`;
+
+// 	 	bodyTable.appendChild(fila);
+//  	});
+
+//  	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+//  	const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+//  	habilitarBotonesEditar(botonesEditar);
+//  	habilitarBotonesEliminar(botonesEliminar);
+//  })
+
+/************************
+ *   GUARDAR NUCLEO      *		
+ ************************/
+ formEditNucleo.addEventListener('submit', function(e) {
+ 	e.preventDefault();
+
+ 	let datos = new FormData();
+
+ 	datos.append('idNuc', camposFormEdit[0].value);
+ 	datos.append('direccion', camposFormEdit[1].value);
+ 	datos.append('manzana', camposFormEdit[2].value);
+
+ 	let inputActive = document.querySelector('#condiciones input:checked');
+	datos.append('condiciones', inputActive.getAttribute('data-value'));
+
+	inputActive = document.querySelector('#hacinamiento input:checked');
+ 	datos.append('indice', inputActive.getAttribute('data-value'));
+
+ 	inputActive = document.querySelector('#equipamiento input:checked');
+ 	datos.append('equipamiento', inputActive.getAttribute('data-value'));
+
+ 	inputActive = document.querySelector('#funcionamiento input:checked');
+ 	datos.append('funcionamiento', inputActive.getAttribute('data-value'));
+
+ 	inputActive = document.querySelector('#satisfaccion input:checked');
+ 	datos.append('satisfaccion', inputActive.getAttribute('data-value'));
+
+ 	inputActive = document.querySelector('#evaluacion input:checked');
+ 	if(inputActive.getAttribute('data-value') != 1){
+ 		datos.append('evaluacion', selectEvaluacionForm.value);
+ 	}else{
+ 		datos.append('evaluacion', 1);
+ 	}
+
+ 	// console.log(datos.get('funcionamiento'));
+
+ 	fetch('../modelos/nucleos/modelo_nucleo.php', {
+ 		method: 'POST',
+ 		body: datos
+ 	})
+ 	.then(response => response.json())
+ 	.then(data => {
+ 		if(data.respuesta == 'Existente' || data.respuesta == 'Correcto'){
+ 			Swal.fire({
+                title: 'OK',
+                text: 'Núcleo guardado exitosamente',
+                type: 'success',
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                // window.location.href = 'nucleos.php';
+				contFormEdit.classList.add('smallDot');
+				obtenerNucleos();
+            });
+ 		}
+ 	});
+ });
+
