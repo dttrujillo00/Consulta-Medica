@@ -229,44 +229,6 @@ const habilitarBotonesEliminar = (array) => {
  *     LEER NUCLEOS     *		
  ************************/
 obtenerNucleos();
-//  fetch('../modelos/nucleos/obtener_nucleo.php')
-//  .then(res => res.json())
-//  .then(data => {
-//  	// let contenidoTabla;
-//  	data.datos.forEach((nucleo) => {
-//  		console.log(nucleo);
-//  		var fila = document.createElement('tr');
-//  		fila.classList.add('grupo1');
-//  		fila.setAttribute('data-id', nucleo.idNuc);
-// 	 	fila.innerHTML = `
-// 			<td>${nucleo.dirNuc}</td>
-// 			<td>${nucleo.manzana}</td>
-// 			<td>${nucleo.califCondEstrucViv}</td>
-// 			<td>${nucleo.califIndicHac}</td>
-// 			<td>${nucleo.califEqDomBas}</td>
-// 			<td>${nucleo.funcFam}</td>
-// 			<td>${nucleo.satisIngr}</td>
-// 			<td>${nucleo.eval}</td>
-// 			<td>
-// 				<span class="icono-editar">
-// 					<i class="fa fa-pencil"></i>
-// 				</span>
-// 			</td>
-// 			<td>
-// 				<span class="icono-eliminar">
-// 					<i class="fa fa-trash-o"></i>
-// 				</span>
-// 			</td>
-// 	 	`;
-
-// 	 	bodyTable.appendChild(fila);
-//  	});
-
-//  	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
-//  	const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
-//  	habilitarBotonesEditar(botonesEditar);
-//  	habilitarBotonesEliminar(botonesEliminar);
-//  })
 
 /************************
  *   GUARDAR NUCLEO      *		

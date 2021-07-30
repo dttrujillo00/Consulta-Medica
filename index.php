@@ -4,17 +4,17 @@
 	require_once('database/conexion.php');
 
     
-    $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne ORDER BY p.id_pac');
-    $statement->execute();		
-    $result = $statement->fetchAll();
+    // $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne ORDER BY p.id_pac');
+    // $statement->execute();		
+    // $result = $statement->fetchAll();
 
-    if ($_GET) {
-    	$idUnico = $_GET['id'];
-    	$statementUnico = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel, ne.id_ne, np.id_nuc FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne WHERE p.id_pac = (?)');
-    	$statementUnico->execute(array($idUnico));
-    	$resultUnico = $statementUnico->fetch();
-    	var_dump($resultUnico);		
-    }
+    // if ($_GET) {
+    // 	$idUnico = $_GET['id'];
+    // 	$statementUnico = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel, ne.id_ne, np.id_nuc FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne WHERE p.id_pac = (?)');
+    // 	$statementUnico->execute(array($idUnico));
+    // 	$resultUnico = $statementUnico->fetch();
+    // 	var_dump($resultUnico);		
+    // }
 	?>		
 <!DOCTYPE html>
 <html lang="es">
@@ -188,7 +188,7 @@
 	    		</div>
 			</div>
 			<div class="body-desplegable container">
-				<?php if(!$_GET): ?>
+
 				<form class="form-agregar" id="form-agregar">
 
 					<h2 class="col-md-12 col-sm-12">Agregar Paciente</h2>
@@ -264,27 +264,25 @@
 					</div>
 
 				</form>	
-				<?php endif ?>
 
-				<?php if($_GET): ?>
-				<form class="form-agregar editar" id="form-editar">
+				<form class="form-agregar editar d-none" id="form-editar">
 
 					<h2 class="col-md-12">Editar Paciente</h2>
 					<i class="fa fa-close cerrar-form"></i>
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="nombre_apellido">Nombre completo:</label>
-						<input required="" type="text" id="nombre_apellido" value="<?php echo $resultUnico['nombre_comp_pac'] ?>">
+						<input required="" type="text" id="nombre_apellido" value="">
 					</div>
 
 					<div class="campo-container col-md-4 col-sm-12">
 						<label for="fecha_nacimiento">Fecha de nacimiento</label>
-						<input required="" type="date" id="fecha_nacimiento" value="<?php echo $resultUnico['fecha_nac_pac'] ?>">
+						<input required="" type="date" id="fecha_nacimiento" value="">
 					</div>
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="direccion">Dirección</label>
-						<input required="" type="text" id="direccion" value="<?php echo $resultUnico['dir_nuc'] ?>">
+						<input required="" type="text" id="direccion" value="">
 					</div>
 
 					<div class="campo-container col-md-4 col-sm-12">
@@ -302,12 +300,12 @@
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="diagnostico">Diagnóstico</label>
-						<input id="diagnostico" type="text" value="<?php echo $resultUnico['diagnostico_pac'] ?>">
+						<input id="diagnostico" type="text" value="">
 					</div>
 
 					<div class="campo-container col-md-2 col-sm-12">
 						<label for="manzana">Manzana</label>
-						<input required="" type="text" id="manzana" value="<?php echo $resultUnico['no_nuc'] ?>">
+						<input required="" type="text" id="manzana" value="">
 					</div>
 
 					<div class="campo-container col-md-2 col-sm-12">
@@ -322,7 +320,7 @@
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="labor">Ocupación</label>
-						<input id="labor" type="text" value="<?php echo $resultUnico['labor_pac'] ?>">
+						<input id="labor" type="text" value="">
 					</div>
 
 					<div class="col-md-4 col-sm-12">
@@ -338,13 +336,16 @@
 						</div>	
 					</div>
 
+					<input type="hidden" value="" id="id-pac">
+					<input type="hidden" value="" id="manzana-vieja">
+					<input type="hidden" value="" id="direccion-vieja">
+
 					<div class="div-button col-12">
 						<!-- <button class="btn btn-cancelar" id="btn_cancelar">Cancelar</button> -->
 						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
 					</div>
 
 				</form>
-				<?php endif ?>
 			</div>
 
     </div>
@@ -374,133 +375,88 @@
 		                        </tr>
 		                    </thead>
 		                    <tbody>
-								<?php foreach($result as $dato): ?>
-		                        <tr id="<?php echo $dato['id_pac'] ?>" class="grupo<?php echo($dato['grupo_disponible_pac']) ?>">
-		                            <td><?php echo $dato['nombre_comp_pac'] ?></td>
-									<td><?php echo $dato['genero'] ?></td>
-									<td>
-										<?php
-										 	switch ($dato['grupo_disponible_pac']) {
-										 		case 1:
-										 			echo "I";
-										 			break;
-										 		case 2:
-										 			echo "II";
-										 			break;
-										 		case 3:
-										 			echo "III";
-										 			break;
-										 		case 4:
-										 			echo "IV";
-										 			break;
-										 		
-										 		default:
-										 			echo "undefined";
-										 			break;
-										 	} 
-										?>
-									 </td>
-									<td><?php echo $dato['dir_nuc'] ?></td>
-									<td><?php echo $dato['edad_pac'] ?></td>
-									<td><?php echo $dato['nivel'] ?></td>
-									<td><?php echo $dato['labor_pac'] ?></td>
-									<td><?php echo $dato['no_nuc'] ?></td>
-									<td><?php echo $dato['diagnostico_pac'] ?></td>
-									<td>
-										<span class="icono-editar">
-											<a href="index.php?id=<?php echo $dato['id_pac'] ?>#form-editar" >
-												<i class="fa fa-pencil"></i>
-											</a>
-										</span>
-									</td>
-									<td>
-										<span class="icono-eliminar" data-id="<?php echo $dato['id_pac'] ?>">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</td>
-		                        </tr>
-								<?php endforeach ?>
+								<!-- El body de la tabla es generado con javascript -->
 		                    </tbody>
 						</table>
 						
-						<div class="tabla-responsive">
-							<?php foreach($result as $dato): ?>
-							<div class="fila-paciente grupo<?php echo($dato['grupo_disponible_pac']) ?>">
+						<!-- <div class="tabla-responsive">
+							<?php //foreach($result as $dato): ?>
+							<div class="fila-paciente grupo<?php //echo($dato['grupo_disponible_pac']) ?>">
 								<div class="campo">
 									<h4>Nombre:</h4>
-									<p><?php echo $dato['nombre_comp_pac'] ?></p>
+									<p><?php //echo $dato['nombre_comp_pac'] ?></p>
 									<span class="fa fa-caret-down"></span>
 								</div>
 								<div class="campo">
 									<h4>Sexo:</h4>
-									<p><?php echo $dato['genero'] ?></p>
+									<p><?php //echo $dato['genero'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Grupo:</h4>
 									<p><?php
-										 	switch ($dato['grupo_disponible_pac']) {
-										 		case 1:
-										 			echo "I";
-										 			break;
-										 		case 2:
-										 			echo "II";
-										 			break;
-										 		case 3:
-										 			echo "III";
-										 			break;
-										 		case 4:
-										 			echo "IV";
-										 			break;
+										 	// switch ($dato['grupo_disponible_pac']) {
+										 	// 	case 1:
+										 	// 		echo "I";
+										 	// 		break;
+										 	// 	case 2:
+										 	// 		echo "II";
+										 	// 		break;
+										 	// 	case 3:
+										 	// 		echo "III";
+										 	// 		break;
+										 	// 	case 4:
+										 	// 		echo "IV";
+										 	// 		break;
 										 		
-										 		default:
-										 			echo "undefined";
-										 			break;
-										 	} 
+										 	// 	default:
+										 	// 		echo "undefined";
+										 	// 		break;
+										 	// } 
 										?></p>
 								</div>
 								<div class="campo">
 									<h4>Dirección:</h4>
-									<p><?php echo $dato['dir_nuc'] ?></p>
+									<p><?php //echo $dato['dir_nuc'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Edad:</h4>
-									<p><?php echo $dato['edad_pac'] ?></p>
+									<p><?php //echo $dato['edad_pac'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Nivel:</h4>
-									<p><?php echo $dato['nivel'] ?></p>
+									<p><?php //echo $dato['nivel'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Ocupación:</h4>
-									<p><?php echo $dato['labor_pac'] ?></p>
+									<p><?php //echo $dato['labor_pac'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Manzana:</h4>
-									<p><?php echo $dato['no_nuc'] ?></p>
+									<p><?php //echo $dato['no_nuc'] ?></p>
 								</div>
 								<div class="campo">
 									<h4>Diagnóstico:</h4>
-									<p><?php echo $dato['diagnostico_pac'] ?></p>
+									<p><?php //echo $dato['diagnostico_pac'] ?></p>
 								</div>
 
 								<div class="campo">
 									<h4>Acciones:</h4>
 									<div class="acciones">
 										<span class="icono-editar">
-											<a href="index.php?id=<?php echo $dato['id_pac'] ?>#form-editar" >
+											<a href="index.php?id=<?php //echo $dato['id_pac'] ?>#form-editar" >
 												<i class="fa fa-pencil"></i>
 											</a>
 										</span>
-										<span class="icono-eliminar" data-id="<?php echo $dato['id_pac'] ?>">
+										<span class="icono-eliminar" data-id="<?php //echo $dato['id_pac'] ?>">
 											<i class="fa fa-trash-o"></i>
 										</span>
 									</div>
 								</div>
 
 							</div>
-							<?php endforeach ?>
+							<?php //endforeach ?>
 							
-						</div>
+						</div> -->
 					</section>
 
 		</article>

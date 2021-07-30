@@ -16,7 +16,7 @@ const eliminarPaciente = e => {
             confirmButtonText: '¡Sí, borrar!'
         }).then((result) => {
             if(result.value) {
-                var idPaciente = e.target.parentElement.getAttribute('data-id');
+                var idPaciente = e.target.parentElement.parentElement.parentElement.id;
 
                 fetch(`modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`)
                 .then(res => res.json())
@@ -34,10 +34,10 @@ const eliminarPaciente = e => {
 
                         });
 
-                        var idsPacientes = document.querySelectorAll('.table tbody tr td span.icono-eliminar');
+                        var idsPacientes = document.querySelectorAll('.table tbody tr');
                         idsPacientes.forEach((item) => {
-                            if(item.getAttribute('data-id') == idPaciente) {
-                                item.parentElement.parentElement.remove();
+                            if(item.id == idPaciente) {
+                                item.remove();
                             }
                         });
                         Swal.fire({
@@ -83,13 +83,16 @@ const editarPaciente = (datos) => {
     .then(res => res.json())
     .then(data => {
         if(data.respuesta === 'Correcto') {
+            obtenerPacientes();
             Swal.fire({
                 type: 'success',
                 title: 'Se guardaron los cambios',
                 showConfirmButton: false,
                 timer: 2000
             }).then(() => {
-                window.location.href = 'index.php#encabezad-vista';
+                formEditar.classList.add('d-none');
+                formAgregar.classList.remove('d-none');
+                formAgregar.reset();
             });
         }
     })
@@ -137,6 +140,7 @@ const agregarPaciente = (datos) => {
     .then(data => {
         if(data.respuesta === 'Correcto') {
             var nuevaFila = document.createElement('tr');
+            nuevaFila.id = data.datos.id_insertado;
             nuevaFila.classList.add(`grupo${datos.get('grupo_disp')}`);
 
             nuevaFila.innerHTML = `
@@ -150,17 +154,15 @@ const agregarPaciente = (datos) => {
             <td>${datos.get('manzana')}</td>
             <td>${datos.get('diagnostico')}</td>
             <td>
-                <span class="icono-editar">
-                    <a href="index.php?id=${data.datos.id_insertado}" >
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                </span>
-            </td>
-            <td>
-                <span class="icono-eliminar" data-id="${data.datos.id_insertado}">
-                    <i class="fa fa-trash-o"></i>
-                </span>
-            </td>
+				<span class="icono-editar">
+					<i class="fa fa-pencil"></i>
+				</span>
+			</td>
+			<td>
+				<span class="icono-eliminar">
+					<i class="fa fa-trash-o"></i>
+				</span>
+			</td>
             `;  
 
             tablaPacientes.appendChild(nuevaFila);
@@ -171,6 +173,8 @@ const agregarPaciente = (datos) => {
                 timer: 2000,
                 showConfirmButton: false
             });
+
+            formAgregar.reset();
 
             // ACTUALIZAR VISTA DE PACIENTES EN DISEÑO RESPONSIVE
             var nuevaFilaResponsive = document.createElement('div');
@@ -232,7 +236,6 @@ const agregarPaciente = (datos) => {
 
             tablaResponsive.appendChild(nuevaFilaResponsive);
 
-            formAgregar.reset();
         } else if(data.respuesta === 'Existente'){
             Swal.fire({
                 title: 'Este paciente ya existe en la base de datos',
@@ -303,15 +306,202 @@ const validarYGuardar = (form) => {
     return infoPaciente;
 }
 
+const obtenerPacientes = () => {
+    fetch('modelos/pacientes/obtener_pacientes.php')
+    .then(res => res.json())
+    .then(data => {
+        while (tablaPacientes.firstChild) {
+            tablaPacientes.removeChild(tablaPacientes.firstChild);
+        }
+
+        let grupo = null;
+
+        data.datos.forEach( paciente => {
+            var fila = document.createElement('tr');
+            fila.id = paciente.id_pac
+			fila.classList.add(`grupo${paciente.grupo_disponible_pac}`);
+
+            switch(+paciente.grupo_disponible_pac) {
+                case 1:
+                    grupo = "I";
+                    break;
+                case 2:
+                    grupo = "II";
+                    break;
+                case 3:
+                    grupo = "III";
+                    break;
+                case 4:
+                    grupo = "IV";
+                    break;
+            
+                default:
+                    break;
+            }
+
+            fila.innerHTML = `
+            <td>${paciente.nombre_comp_pac}</td>
+            <td>${paciente.genero}</td>
+            <td>${grupo}</td>
+            <td>${paciente.dir_nuc}</td>
+            <td>${paciente.edad_pac}</td>
+            <td>${paciente.nivel}</td>
+            <td>${paciente.labor_pac}</td>
+            <td>${paciente.no_nuc}</td>
+            <td>${paciente.diagnostico_pac}</td>
+            <td>
+				<span class="icono-editar">
+					<i class="fa fa-pencil"></i>
+				</span>
+			</td>
+			<td>
+				<span class="icono-eliminar">
+					<i class="fa fa-trash-o"></i>
+				</span>
+			</td>
+            `;
+
+            tablaPacientes.appendChild(fila);
+        });
+
+        const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+		habilitarBotonesEditar(botonesEditar);
+		habilitarBotonesEliminar(botonesEliminar);
+    });
+}
+
+const habilitarBotonesEditar = (array) => {
+    array.forEach( boton => {
+        boton.addEventListener('click', e => {
+            formAgregar.classList.add('d-none');
+            formEditar.classList.remove('d-none');
+            // formEditar.reset();
+            window.scroll(0, 100);
+            rellenarCamposFormEdit(e.target.parentElement.parentElement.parentElement.id);
+        });
+    });
+}
+
+const habilitarBotonesEliminar = (array) => {
+    array.forEach( boton => {
+        boton.addEventListener('click', eliminarPaciente);
+    });
+}
+
+const rellenarCamposFormEdit = id => {
+    const inputsFormEdit = document.querySelectorAll('#form-editar input');
+    const selectsFormEdit = document.querySelectorAll('#form-editar select');
+    fetch(`modelos/pacientes/obtener_paciente_unic.php?id=${id}`)
+    .then(res => res.json())
+    .then(data => {
+        // console.log(data.datos);
+        inputsFormEdit[0].value = data.datos.nombre_comp_pac;
+        inputsFormEdit[1].value = data.datos.fecha_nac_pac;
+        inputsFormEdit[2].value = data.datos.dir_nuc;
+        inputsFormEdit[3].value = data.datos.diagnostico_pac;
+        inputsFormEdit[4].value = data.datos.no_nuc;
+        inputsFormEdit[5].value = data.datos.labor_pac;
+        if(data.datos.genero === 'M'){
+            inputsFormEdit[6].checked = true;
+        } else if(data.datos.genero === 'F'){
+            inputsFormEdit[7].checked = true;
+        }
+        inputsFormEdit[8].value = data.datos.id_pac;
+        inputsFormEdit[9].value = data.datos.no_nuc;
+        inputsFormEdit[10].value = data.datos.dir_nuc;
+
+        switch (data.datos.nivel) {
+            case 'Primaria':
+                selectsFormEdit[0].selectedIndex = 0;
+                break;
+            case 'Secundaria':
+                selectsFormEdit[0].selectedIndex = 1;
+                break;
+            case 'Preuniversitario':
+                selectsFormEdit[0].selectedIndex = 2;
+                break;
+            case 'Obrero calificado':
+                selectsFormEdit[0].selectedIndex = 3;
+                break;
+            case 'Técnico medio':
+                selectsFormEdit[0].selectedIndex = 4;
+                break;
+            case 'Técnico medio superior':
+                selectsFormEdit[0].selectedIndex = 5;
+                break;
+            case 'Nivel superior':
+                selectsFormEdit[0].selectedIndex = 6;
+                break;
+        
+            default:
+                break;
+        }
+
+        switch (+data.datos.grupo_disponible_pac) {
+            case 1:
+                selectsFormEdit[1].selectedIndex = 0;
+                break;
+            case 2:
+                selectsFormEdit[1].selectedIndex = 1;
+                break;
+            case 3:
+                selectsFormEdit[1].selectedIndex = 2;
+                break;
+            case 4:
+                selectsFormEdit[1].selectedIndex = 3;
+                break;
+        
+            default:
+                break;
+        }
+    });
+}
+
 const formAgregar = document.querySelector('#form-agregar');
 const formEditar = document.querySelector('#form-editar');
 const cancelarEditar = document.querySelector('#form-editar i.cerrar-form');
 const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
- 
+
+/*********************** 
+ *    LEER PACIENTE    *
+ ***********************/
+ obtenerPacientes();
 
 /*********************** 
  *  ELIMINAR PACIENTE  *
  ***********************/
 tablaPacientes.addEventListener('click', eliminarPaciente);
-tablaResponsive.addEventListener('click', eliminarPaciente);
+// tablaResponsive.addEventListener('click', eliminarPaciente);
+
+/*********************** 
+ *   EDITAR PACIENTE   *
+ ***********************/
+ formEditar.addEventListener('submit', e => {
+    e.preventDefault();
+
+    var datosPacienteEditar = validarYGuardar(formEditar);
+
+    if(datosPacienteEditar){
+        datosPacienteEditar.append('id_paciente', document.querySelector('#form-editar #id-pac').value);
+        datosPacienteEditar.append('manzana_vieja', document.querySelector('#form-editar #manzana-vieja').value);
+        datosPacienteEditar.append('direccion_vieja', document.querySelector('#form-editar #direccion-vieja').value);
+        // console.log(datosPacienteEditar);
+        editarPaciente(datosPacienteEditar);
+    }
+
+ });
+
+ cancelarEditar.addEventListener('click', function() {
+    Swal.fire({
+       title: 'No se guardaron los cambios',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    }).then(()=>{
+        formEditar.classList.add('d-none');
+        formAgregar.classList.remove('d-none');
+        formAgregar.reset();
+    });
+});

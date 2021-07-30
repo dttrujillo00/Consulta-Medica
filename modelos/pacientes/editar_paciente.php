@@ -24,7 +24,7 @@
 
 	try {
 		$statement = $pdo->prepare('UPDATE paciente SET nombre_comp_pac=?, edad_pac=?, fecha_nac_pac=?, labor_pac=?, diagnostico_pac=?, grupo_disponible_pac=?, sexo=?, nivel_educacional=? WHERE id_pac=?');
-		$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp,$pac, $id_sexo, $nivel_educacional));		
+		$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp, $id_sexo, $nivel_educacional,$id_pac));		
         
         if($direccion_vieja != $direccion || $manzana_vieja != $manzana){                
             $statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');

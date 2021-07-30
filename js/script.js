@@ -7,27 +7,27 @@
         var flagbodyDesplegar = false;
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
-        tablaResponsive.addEventListener('click', e => {
-          console.log(e.target);
-          var filaActivada = e.target.parentElement.parentElement;
-          if(e.target.classList.contains('fa-caret-down')){
-                e.target.classList.add('rotar');
-                setTimeout(() => {
-                     e.target.classList.remove('fa-caret-down');
-                     e.target.classList.add('fa-caret-up');
-                     e.target.classList.remove('rotar');
-                }, 200);
-                filaActivada.style.maxHeight = '1000px';
-            } else if(e.target.classList.contains('fa-caret-up')){
-                e.target.classList.add('rotar');
-                setTimeout(() => {
-                    e.target.classList.remove('fa-caret-up');
-                    e.target.classList.add('fa-caret-down');
-                    e.target.classList.remove('rotar');
-               }, 200);
-               filaActivada.style.maxHeight = '65px';
-            }
-        });
+        // tablaResponsive.addEventListener('click', e => {
+        //   console.log(e.target);
+        //   var filaActivada = e.target.parentElement.parentElement;
+        //   if(e.target.classList.contains('fa-caret-down')){
+        //         e.target.classList.add('rotar');
+        //         setTimeout(() => {
+        //              e.target.classList.remove('fa-caret-down');
+        //              e.target.classList.add('fa-caret-up');
+        //              e.target.classList.remove('rotar');
+        //         }, 200);
+        //         filaActivada.style.maxHeight = '1000px';
+        //     } else if(e.target.classList.contains('fa-caret-up')){
+        //         e.target.classList.add('rotar');
+        //         setTimeout(() => {
+        //             e.target.classList.remove('fa-caret-up');
+        //             e.target.classList.add('fa-caret-down');
+        //             e.target.classList.remove('rotar');
+        //        }, 200);
+        //        filaActivada.style.maxHeight = '65px';
+        //     }
+        // });
 
         // COLAPSAR FORMULARIOS
         btnColapsarForm.addEventListener('click', () =>{
