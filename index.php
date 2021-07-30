@@ -1,21 +1,3 @@
-<?php 
-// include 'database/conexion.php' ;
-// INSTANCIANDO LA CONEXION 
-	require_once('database/conexion.php');
-
-    
-    // $statement = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne ORDER BY p.id_pac');
-    // $statement->execute();		
-    // $result = $statement->fetchAll();
-
-    // if ($_GET) {
-    // 	$idUnico = $_GET['id'];
-    // 	$statementUnico = $pdo->prepare('SELECT p.id_pac, p.nombre_comp_pac, p.edad_pac, p.fecha_nac_pac, p.labor_pac, p.diagnostico_pac, p.grupo_disponible_pac, n.dir_nuc, n.no_nuc, g.genero, ne.nivel, ne.id_ne, np.id_nuc FROM paciente p LEFT JOIN nucleo_pac np ON p.id_pac = np.id_pac LEFT JOIN nucleo n ON np.id_nuc = n.id_nuc LEFT JOIN genero g ON p.sexo = g.id_gen LEFT JOIN nivel_educacional ne ON p.nivel_educacional = ne.id_ne WHERE p.id_pac = (?)');
-    // 	$statementUnico->execute(array($idUnico));
-    // 	$resultUnico = $statementUnico->fetch();
-    // 	var_dump($resultUnico);		
-    // }
-	?>		
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -379,84 +361,9 @@
 		                    </tbody>
 						</table>
 						
-						<!-- <div class="tabla-responsive">
-							<?php //foreach($result as $dato): ?>
-							<div class="fila-paciente grupo<?php //echo($dato['grupo_disponible_pac']) ?>">
-								<div class="campo">
-									<h4>Nombre:</h4>
-									<p><?php //echo $dato['nombre_comp_pac'] ?></p>
-									<span class="fa fa-caret-down"></span>
-								</div>
-								<div class="campo">
-									<h4>Sexo:</h4>
-									<p><?php //echo $dato['genero'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Grupo:</h4>
-									<p><?php
-										 	// switch ($dato['grupo_disponible_pac']) {
-										 	// 	case 1:
-										 	// 		echo "I";
-										 	// 		break;
-										 	// 	case 2:
-										 	// 		echo "II";
-										 	// 		break;
-										 	// 	case 3:
-										 	// 		echo "III";
-										 	// 		break;
-										 	// 	case 4:
-										 	// 		echo "IV";
-										 	// 		break;
-										 		
-										 	// 	default:
-										 	// 		echo "undefined";
-										 	// 		break;
-										 	// } 
-										?></p>
-								</div>
-								<div class="campo">
-									<h4>Dirección:</h4>
-									<p><?php //echo $dato['dir_nuc'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Edad:</h4>
-									<p><?php //echo $dato['edad_pac'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Nivel:</h4>
-									<p><?php //echo $dato['nivel'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Ocupación:</h4>
-									<p><?php //echo $dato['labor_pac'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Manzana:</h4>
-									<p><?php //echo $dato['no_nuc'] ?></p>
-								</div>
-								<div class="campo">
-									<h4>Diagnóstico:</h4>
-									<p><?php //echo $dato['diagnostico_pac'] ?></p>
-								</div>
-
-								<div class="campo">
-									<h4>Acciones:</h4>
-									<div class="acciones">
-										<span class="icono-editar">
-											<a href="index.php?id=<?php //echo $dato['id_pac'] ?>#form-editar" >
-												<i class="fa fa-pencil"></i>
-											</a>
-										</span>
-										<span class="icono-eliminar" data-id="<?php //echo $dato['id_pac'] ?>">
-											<i class="fa fa-trash-o"></i>
-										</span>
-									</div>
-								</div>
-
-							</div>
-							<?php //endforeach ?>
-							
-						</div> -->
+						<div class="tabla-responsive">
+							<!-- El body de la tabla es generado con javascript -->
+						</div>
 					</section>
 
 		</article>
@@ -464,66 +371,6 @@
    
 	<script src="js/script.js"></script>
 	<script src="js/pacientes.js"></script>
-	<script src="js/sweetalert2.all.min.js"></script>
-
-	<?php if($_GET): ?>
-		<script type="text/javascript">
-			// DATOS EDITAR
-			const selectNivelEditar = document.querySelector('.editar select#nivel_educacional');
-			const selectGrupoEditar = document.querySelector('.editar select#grupo_disp');
-			var generoEditar = "<?php echo $resultUnico['genero'] ?>";
-			console.log(generoEditar);
-
-			if(generoEditar == 'F') {
-				document.querySelector('#mujer').checked = true;
-			} else {
-				document.querySelector('#hombre').checked = true;
-			}
-
-			selectNivelEditar.selectedIndex = <?php echo ($resultUnico['id_ne'] - 1) ?>;
-			selectGrupoEditar.selectedIndex = <?php echo ($resultUnico['grupo_disponible_pac'] - 1)?>;
-
-			formEditar.addEventListener('submit', e => {
-			    e.preventDefault();
-
-			    var datosPacienteEditar = validarYGuardar(formEditar);
-
-			    if(datosPacienteEditar){
-			    	datosPacienteEditar.append('id_paciente', <?php echo $resultUnico['id_pac'] ?>);
-					datosPacienteEditar.append('manzana_vieja', <?php echo $resultUnico['no_nuc'] ?>);
-					datosPacienteEditar.append('direccion_vieja', <?php echo $resultUnico['dir_nuc'] ?>);
-					editarPaciente(datosPacienteEditar);
-			    }
-
-			 });
-
-			cancelarEditar.addEventListener('click', function() {
-				Swal.fire({
-			       title: 'No se guardaron los cambios',
-			       type: 'info',
-			       showConfirmButton: false,
-			       timer: 1500
-			    }).then(()=>{
-			       window.location.href = 'index.php#encabezado-vista';
-			    });
-			});
-		</script>
-	<?php endif ?>	
-
-	<?php if(!$_GET): ?>
-		<script>
-			formAgregar.addEventListener('submit', e => {
-			    e.preventDefault();
-
-			    var datosPaciente = validarYGuardar(formAgregar);
-
-			    if(datosPaciente){
-			        agregarPaciente(datosPaciente);
-			    }
-			});
-		</script>
-	<?php endif ?>
-		
-    
+	<script src="js/sweetalert2.all.min.js"></script>    
 </body>
 </html>

@@ -4,7 +4,6 @@
 
 const eliminarPaciente = e => {
     if(e.target.parentElement.classList.contains('icono-eliminar')){
-        // var fila = e.target.parentElement.parentElement.parentElement;
         Swal.fire({
             title: '¿Está seguro?',
             text: '¡Esta acción no se puede revertir!',
@@ -16,7 +15,7 @@ const eliminarPaciente = e => {
             confirmButtonText: '¡Sí, borrar!'
         }).then((result) => {
             if(result.value) {
-                var idPaciente = e.target.parentElement.parentElement.parentElement.id;
+                var idPaciente = e.target.parentElement.id;
 
                 fetch(`modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`)
                 .then(res => res.json())
@@ -28,16 +27,16 @@ const eliminarPaciente = e => {
                         var idsPacientesResponsive = document.querySelectorAll('.tabla-responsive .fila-paciente .acciones span.icono-eliminar');
                         idsPacientesResponsive.forEach((itemR) => {
                             // console.log(itemR.getAttribute('data-id'));
-                            if(itemR.getAttribute('data-id') == idPaciente) {
+                            if(itemR.id == idPaciente) {
                                 itemR.parentElement.parentElement.parentElement.remove();
                             }
 
                         });
 
-                        var idsPacientes = document.querySelectorAll('.table tbody tr');
+                        var idsPacientes = document.querySelectorAll('.table tbody tr td span.icono-eliminar');
                         idsPacientes.forEach((item) => {
                             if(item.id == idPaciente) {
-                                item.remove();
+                                item.parentElement.parentElement.remove();
                             }
                         });
                         Swal.fire({
@@ -140,7 +139,6 @@ const agregarPaciente = (datos) => {
     .then(data => {
         if(data.respuesta === 'Correcto') {
             var nuevaFila = document.createElement('tr');
-            nuevaFila.id = data.datos.id_insertado;
             nuevaFila.classList.add(`grupo${datos.get('grupo_disp')}`);
 
             nuevaFila.innerHTML = `
@@ -154,12 +152,12 @@ const agregarPaciente = (datos) => {
             <td>${datos.get('manzana')}</td>
             <td>${datos.get('diagnostico')}</td>
             <td>
-				<span class="icono-editar">
+				<span class="icono-editar" id="${data.datos.id_insertado}">
 					<i class="fa fa-pencil"></i>
 				</span>
 			</td>
 			<td>
-				<span class="icono-eliminar">
+				<span class="icono-eliminar" id="${data.datos.id_insertado}">
 					<i class="fa fa-trash-o"></i>
 				</span>
 			</td>
@@ -219,15 +217,13 @@ const agregarPaciente = (datos) => {
                 <p>${datos.get('diagnostico')}</p>
              </div>
 
-            <div class="campo">
+             <div class="campo">
                 <h4>Acciones:</h4>
                 <div class="acciones">
-                    <span class="icono-editar">
-                        <a href="index.php?id=${data.datos.id_insertado}" >
-                            <i class="fa fa-pencil"></i>
-                        </a>
+                    <span class="icono-editar" id="${data.datos.id_insertado}">
+                        <i class="fa fa-pencil"></i>
                     </span>
-                    <span class="icono-eliminar" data-id="${data.datos.id_insertado}">
+                    <span class="icono-eliminar" id="${data.datos.id_insertado}">
                         <i class="fa fa-trash-o"></i>
                     </span>
                 </div>
@@ -249,6 +245,15 @@ const agregarPaciente = (datos) => {
                 type: 'error'
             });
         }
+
+        const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+        const botonesEditarResponsive = document.querySelectorAll('.tabla-responsive .icono-editar');
+        const botonesEliminarResponsive = document.querySelectorAll('.tabla-responsive .icono-eliminar');
+		habilitarBotonesEditar(botonesEditar);
+        habilitarBotonesEliminar(botonesEliminar);
+		habilitarBotonesEditar(botonesEditarResponsive);
+        habilitarBotonesEliminar(botonesEliminarResponsive);
     });
 }
 
@@ -314,11 +319,14 @@ const obtenerPacientes = () => {
             tablaPacientes.removeChild(tablaPacientes.firstChild);
         }
 
+        while (tablaResponsive.firstChild) {
+            tablaResponsive.removeChild(tablaResponsive.firstChild);
+        }
+
         let grupo = null;
 
         data.datos.forEach( paciente => {
             var fila = document.createElement('tr');
-            fila.id = paciente.id_pac
 			fila.classList.add(`grupo${paciente.grupo_disponible_pac}`);
 
             switch(+paciente.grupo_disponible_pac) {
@@ -350,24 +358,85 @@ const obtenerPacientes = () => {
             <td>${paciente.no_nuc}</td>
             <td>${paciente.diagnostico_pac}</td>
             <td>
-				<span class="icono-editar">
+				<span class="icono-editar" id="${paciente.id_pac}">
 					<i class="fa fa-pencil"></i>
 				</span>
 			</td>
 			<td>
-				<span class="icono-eliminar">
+				<span class="icono-eliminar" id="${paciente.id_pac}">
 					<i class="fa fa-trash-o"></i>
 				</span>
 			</td>
             `;
 
             tablaPacientes.appendChild(fila);
+
+            var filaResponsive = document.createElement('div');
+            filaResponsive.classList.add('fila-paciente',`grupo${paciente.grupo_disponible_pac}`);
+
+            filaResponsive.innerHTML = `
+            <div class="campo">
+                <h4>Nombre:</h4>
+                <p>${paciente.nombre_comp_pac}</p>
+                <span class="fa fa-caret-down"></span>
+            </div>
+            <div class="campo">
+				<h4>Sexo:</h4>
+				<p>${paciente.genero}</p>
+			</div>
+            <div class="campo">
+				<h4>Grupo:</h4>
+				<p>${grupo}</p>
+			</div>
+            <div class="campo">
+				<h4>Dirección:</h4>
+				<p>${paciente.dir_nuc}</p>
+			</div>
+            <div class="campo">
+				<h4>Edad:</h4>
+				<p>${paciente.edad_pac}</p>
+			</div>
+            <div class="campo">
+				<h4>Nivel:</h4>
+				<p>${paciente.nivel}</p>
+			</div>
+            <div class="campo">
+				<h4>Ocupación:</h4>
+				<p>${paciente.labor_pac}</p>
+			</div>
+            <div class="campo">
+				<h4>Manzana:</h4>
+				<p>${paciente.no_nuc}</p>
+			</div>
+            <div class="campo">
+				<h4>Diagnóstico:</h4>
+				<p>${paciente.diagnostico_pac}</p>
+			</div>
+            <div class="campo">
+				<h4>Acciones:</h4>
+				<div class="acciones">
+					<span class="icono-editar" id="${paciente.id_pac}">
+						<i class="fa fa-pencil"></i>
+					</span>
+					<span class="icono-eliminar" id="${paciente.id_pac}">
+						<i class="fa fa-trash-o"></i>
+					</span>
+				</div>
+			</div>
+            `;
+
+            tablaResponsive.appendChild(filaResponsive);
         });
 
         const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
 		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+        const botonesEditarResponsive = document.querySelectorAll('.tabla-responsive .icono-editar');
+        const botonesEliminarResponsive = document.querySelectorAll('.tabla-responsive .icono-eliminar');
 		habilitarBotonesEditar(botonesEditar);
-		habilitarBotonesEliminar(botonesEliminar);
+        habilitarBotonesEliminar(botonesEliminar);
+		habilitarBotonesEditar(botonesEditarResponsive);
+        habilitarBotonesEliminar(botonesEliminarResponsive);
+
     });
 }
 
@@ -378,7 +447,7 @@ const habilitarBotonesEditar = (array) => {
             formEditar.classList.remove('d-none');
             // formEditar.reset();
             window.scroll(0, 100);
-            rellenarCamposFormEdit(e.target.parentElement.parentElement.parentElement.id);
+            rellenarCamposFormEdit(e.target.parentElement.id);
         });
     });
 }
@@ -470,12 +539,6 @@ const tablaResponsive = document.querySelector('.tabla-responsive');
  obtenerPacientes();
 
 /*********************** 
- *  ELIMINAR PACIENTE  *
- ***********************/
-tablaPacientes.addEventListener('click', eliminarPaciente);
-// tablaResponsive.addEventListener('click', eliminarPaciente);
-
-/*********************** 
  *   EDITAR PACIENTE   *
  ***********************/
  formEditar.addEventListener('submit', e => {
@@ -491,6 +554,19 @@ tablaPacientes.addEventListener('click', eliminarPaciente);
         editarPaciente(datosPacienteEditar);
     }
 
+ });
+
+ /*********************** 
+  *   AGREGAR PACIENTE  *
+  ***********************/
+ formAgregar.addEventListener('submit', e =>{
+    e.preventDefault();
+
+    var datosPacienteAgregar = validarYGuardar(formAgregar);
+
+    if(datosPacienteAgregar){
+        agregarPaciente(datosPacienteAgregar);
+    }
  });
 
  cancelarEditar.addEventListener('click', function() {
