@@ -152,7 +152,7 @@ a{
 
 .btn:hover{
     cursor: pointer;
-    outline: 1px solid white;
+    transform: scale(1.1);
 } 
 
 select::-moz-focus-inner,
@@ -467,7 +467,7 @@ ESTILOS CUADRO AGREGAR PACIENTE
 }
 
 #form-editar i:hover{
-    color: #80261e;
+    color: #005e9e;
     cursor: pointer;
     transform: scale(1.2);
 }

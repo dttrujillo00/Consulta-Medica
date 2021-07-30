@@ -308,12 +308,12 @@
 					<div class="col-md-4 col-sm-12">
 						<div class="flex">
 							<div class="radio-container col-md-6">								
-								<input type="radio" name="sexo" id="hombre">
-								<label for="hombre">Masculino</label>
+								<input type="radio" name="sexo" id="hombre2">
+								<label for="hombre2">Masculino</label>
 							</div>
 							<div class="radio-container col-md-6">								
-								<input type="radio" name="sexo" id="mujer">
-							<label for="mujer">Femenino</label>
+								<input type="radio" name="sexo" id="mujer2">
+							<label for="mujer2">Femenino</label>
 							</div>		
 						</div>	
 					</div>

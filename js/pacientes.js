@@ -258,9 +258,13 @@ const agregarPaciente = (datos) => {
 }
 
 const validarYGuardar = (form) => {
-    var radioSexoMasculino = form.querySelector('#hombre').checked;
-    var radioSexoFemenino = form.querySelector('#mujer').checked;
-
+    if(form.classList.contains('editar')){
+        var radioSexoMasculino = form.querySelector('#hombre2').checked;
+        var radioSexoFemenino = form.querySelector('#mujer2').checked;
+    } else {
+        var radioSexoMasculino = form.querySelector('#hombre').checked;
+        var radioSexoFemenino = form.querySelector('#mujer').checked;
+    }
 
     // CAMPOS DEL FORMULARIO
     var nombre_apellido = form.querySelector('#nombre_apellido').value,
@@ -464,7 +468,7 @@ const rellenarCamposFormEdit = id => {
     fetch(`modelos/pacientes/obtener_paciente_unic.php?id=${id}`)
     .then(res => res.json())
     .then(data => {
-        // console.log(data.datos);
+        // console.log(inputsFormEdit);
         inputsFormEdit[0].value = data.datos.nombre_comp_pac;
         inputsFormEdit[1].value = data.datos.fecha_nac_pac;
         inputsFormEdit[2].value = data.datos.dir_nuc;

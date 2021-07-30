@@ -1,13 +1,3 @@
-<?php
-require_once('../database/conexion.php'); 
-
-$statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no_nuc AS manzana, cih.calificacion AS califIndicHac, ccev.calificacion AS califCondEstrucViv, cedb.calificacion AS califEqDomBas, si.satisfaccion AS satisIngr, ff.tipo_func AS funcFam, e.evaluacion AS eval FROM nucleo n LEFT JOIN indic_hac ih ON n.id_nuc = ih.id_nuc LEFT JOIN calificativo cih ON ih.id_cal = cih.id_cal LEFT JOIN cond_estr_viv cev ON n.id_nuc = cev.id_nuc LEFT JOIN calificativo ccev ON cev.id_cal = ccev.id_cal LEFT JOIN eq_dom_bas edb ON n.id_nuc = edb.id_nuc LEFT JOIN calificativo cedb ON cedb.id_cal = edb.id_cal LEFT JOIN satis_ingreso_nucleo sin ON sin.id_nuc = n.id_nuc LEFT JOIN satis_ingreso si ON si.id_si = sin.id_si LEFT JOIN funcionalidad_nucleo ffn ON ffn.id_nuc = n.id_nuc LEFT JOIN funcionalidad ff on ff.id_func = ffn.id_func LEFT JOIN eval_nuc en ON en.id_nuc = n.id_nuc LEFT JOIN evaluacion e ON e.id_eval = en.id_eval ORDER BY n.id_nuc');
-    $statement->execute();		
-    $result = $statement->fetchAll();
-    // var_dump($result); 
-
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -347,70 +337,12 @@ $statement = $pdo->prepare('SELECT  n.dir_nuc AS dirNuc, n.id_nuc AS idNuc, n.no
 		                </tr>
 		            </thead>
 		            <tbody>
-		            	<!-- <?php //foreach ($result as $nucleo): ?>
-		                <tr class="grupo1" data-id="<?php //echo $nucleo['idNuc'] ?>">
-		                    <td><?php //echo $nucleo['dirNuc'] ?></td>
-		                    <td><?php //echo $nucleo['manzana'] ?></td>
-							<td><?php //echo $nucleo['califCondEstrucViv'] ?></td>
-							<td><?php //echo $nucleo['califIndicHac'] ?></td>
-							<td><?php //echo $nucleo['califEqDomBas'] ?></td>
-							<td><?php //echo $nucleo['funcFam'] ?></td>
-							<td><?php //echo $nucleo['satisIngr'] ?></td>
-							<td><?php //echo $nucleo['eval'] ?></td>
-							<td>
-								<span class="icono-editar">
-									<i class="fa fa-pencil"></i>
-								</span>
-							</td>
-							<td>
-								<span class="icono-eliminar">
-									<i class="fa fa-trash-o"></i>
-								</span>
-							</td>
-		                </tr>
-		            <?php //endforeach ?> -->
+		            	<!-- El body de la tabla es generado con javascript -->
 		            </tbody>
 				</table>
 
 				<div class="tabla-responsive">
-					<div class="fila-paciente grupo1">
-						<div class="campo">
-							<h4>Dirección:</h4>
-							<p><?php echo $nucleo['dirNuc'] ?></p>
-							<span class="fa fa-caret-down"></span>
-						</div>
-						<div class="campo">
-							<h4>Condiciones Vivienda:</h4>
-							<p><?php echo $nucleo['califCondEstrucViv'] ?></p>
-						</div>
-						<div class="campo">
-							<h4>Indice de Hacinamiento:</h4>
-							<p><?php echo $nucleo['califIndicHac'] ?></p>
-						</div>
-						<div class="campo">
-							<h4>Equipamiento Doméstico Básico:</h4>
-							<p><?php echo $nucleo['califEqDomBas'] ?></p>
-						</div>
-						<div class="campo">
-							<h4>Satisfacción de la Familia c/ Ingresos:</h4>
-							<p><?php echo $nucleo['satisIngr'] ?></p>
-						</div>
-						<div class="campo">
-							<h4>Funcionamiento Familiar:</h4>
-							<p>Funcional</p>
-						</div>
-						<div class="campo">
-							<h4>Evaluación Familiar:</h4>
-							<p><?php echo $nucleo['eval'] ?></p>
-						</div>
-						<div class="campo">
-							<h4>Acciones:</h4>
-							<div class="acciones">
-								<span class="fa fa-pencil"></span>	
-								<span class="fa fa-trash-o"></span>
-							</div>
-						</div>
-					</div>
+					<!-- El body de la tabla es generado con javascript -->
 				</div>
 				
 			</article>

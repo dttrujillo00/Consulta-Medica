@@ -1,4 +1,5 @@
 const bodyTable = document.querySelector('.table tbody');
+const bodyTableResponsive = document.querySelector('.tabla-responsive');
 const contFormEdit = document.querySelector('.cont-form-edit-nuc');
 const formEditNucleo = document.querySelector('#form-editar');
 const camposFormEdit = document.querySelectorAll('#form-editar input');
@@ -15,11 +16,16 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 		while(bodyTable.firstChild){
 			bodyTable.removeChild(bodyTable.firstChild);
 		}
+
+		while(bodyTableResponsive.firstChild){
+			bodyTableResponsive.removeChild(bodyTableResponsive.firstChild);
+		}
+
 		data.datos.forEach((nucleo) => {
 			// console.log(nucleo);
 			var fila = document.createElement('tr');
 			fila.classList.add('grupo1');
-			fila.setAttribute('data-id', nucleo.idNuc);
+
 			fila.innerHTML = `
 				<td>${nucleo.dirNuc}</td>
 				<td>${nucleo.manzana}</td>
@@ -30,24 +36,80 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 				<td>${nucleo.satisIngr}</td>
 				<td>${nucleo.eval}</td>
 				<td>
-					<span class="icono-editar">
+					<span class="icono-editar" id="${nucleo.idNuc}">
 						<i class="fa fa-pencil"></i>
 					</span>
 				</td>
 				<td>
-					<span class="icono-eliminar">
+					<span class="icono-eliminar" id="${nucleo.idNuc}">
 						<i class="fa fa-trash-o"></i>
 					</span>
 				</td>
 			`;
 
 			bodyTable.appendChild(fila);
+
+			var filaResponsive = document.createElement('div');
+			filaResponsive.classList.add('grupo1', 'fila-paciente');
+
+			filaResponsive.innerHTML = `
+			<div class="campo">
+				<h4>Dirección:</h4>
+				<p>${nucleo.dirNuc}</p>
+				<span class="fa fa-caret-down"></span>
+			</div>
+			<div class="campo">
+				<h4>Manzana:</h4>
+				<p>${nucleo.manzana}</p>
+			</div>
+			<div class="campo">
+				<h4>Condiciones Vivienda:</h4>
+				<p>${nucleo.califCondEstrucViv}</p>
+			</div>
+			<div class="campo">
+				<h4>Indice de Hacinamiento:</h4>
+				<p>${nucleo.califIndicHac}</p>
+			</div>
+			<div class="campo">
+				<h4>Equipamiento Doméstico Básico:</h4>
+				<p>${nucleo.califEqDomBas}</p>
+			</div>
+			<div class="campo">
+				<h4>Satisfacción de la Familia c/ Ingresos:</h4>
+				<p>${nucleo.satisIngr}</p>
+			</div>
+			<div class="campo">
+				<h4>Funcionamiento Familiar:</h4>
+				<p>${nucleo.funcFam}</p>
+			</div>
+			<div class="campo">
+				<h4>Evaluación Familiar:</h4>
+				<p>${nucleo.eval}</p>
+			</div>
+			<div class="campo">
+				<h4>Acciones:</h4>
+				<div class="acciones">
+					<span class="icono-editar" id="${nucleo.idNuc}">
+						<i class="fa fa-pencil"></i>
+					</span>
+					<span class="icono-eliminar" id="${nucleo.idNuc}">
+						<i class="fa fa-trash-o"></i>
+					</span>
+				</div>
+			</div>
+			`;
+
+			bodyTableResponsive.appendChild(filaResponsive);
 		});
 
 		const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
 		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+		const botonesEditarResponsive = document.querySelectorAll('.tabla-responsive .icono-editar');
+		const botonesEliminarResponsive = document.querySelectorAll('.tabla-responsive .icono-eliminar');
 		habilitarBotonesEditar(botonesEditar);
+		habilitarBotonesEditar(botonesEditarResponsive);
 		habilitarBotonesEliminar(botonesEliminar);
+		habilitarBotonesEliminar(botonesEliminarResponsive);
 	})
 }
 const obtenerNucleoUnic = (id) => {
@@ -170,25 +232,17 @@ const rellenarCamposFormEdit = (nucleo) => {
 	}
 }
 
- 	/************************
- 	 *   EDITAR NUCLEO      *		
- 	 ************************/
-
 const habilitarBotonesEditar = (array) => {
 	array.forEach((boton) => {
 		boton.addEventListener('click', (e) => {
 			// console.log(e.target);
 			formEditNucleo.reset();
-			let idNucleo = e.target.parentElement.parentElement.parentElement.getAttribute('data-id');
+			let idNucleo = e.target.parentElement.id;
 			obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
 									//Que rellena los campos del formulario
 		});
 	});
 }
-
-/************************
- *   ELIMINAR NUCLEO    *		
- ************************/
 
 const habilitarBotonesEliminar = (array) => {
  array.forEach((boton)=>{
@@ -204,19 +258,32 @@ const habilitarBotonesEliminar = (array) => {
             confirmButtonText: '¡Sí, borrar!'
         }).then((result) => {
         	if(result.value){
-        		let filaActual = e.target.parentElement.parentElement.parentElement;
-		 		let idNucleo = filaActual.getAttribute('data-id');
+		 		let idNucleo = e.target.parentElement.id;
 		 		fetch(`../modelos/nucleos/eliminar_nucleo.php?id_nuc=${idNucleo}`)
 		 		.then(res => res.json())
 		 		.then(data => {
 		 			if (data.respuesta == 'Correcto') {
+						var idsNucleosResponsive = document.querySelectorAll('.tabla-responsive .fila-paciente .acciones span.icono-eliminar');
+                        idsNucleosResponsive.forEach((itemR) => {
+                            // console.log(itemR.getAttribute('data-id'));
+                            if(itemR.id == idNucleo) {
+                                itemR.parentElement.parentElement.parentElement.remove();
+                            }
+
+                        });
+
+                        var idsNucleos = document.querySelectorAll('.table tbody tr td span.icono-eliminar');
+                        idsNucleos.forEach((item) => {
+                            if(item.id == idNucleo) {
+                                item.parentElement.parentElement.remove();
+                            }
+                        });
 		 				Swal.fire({
 		                    type: 'success',
 		                    title: 'Núcleo eliminado',
 		                    showConfirmButton: false,
 		                    timer: 2000
 		                });
-		 				filaActual.remove();
 		 			}
 		 		})
         	}
@@ -273,17 +340,17 @@ obtenerNucleos();
  	.then(response => response.json())
  	.then(data => {
  		if(data.respuesta == 'Existente' || data.respuesta == 'Correcto'){
+			contFormEdit.classList.add('smallDot');
+			obtenerNucleos();
  			Swal.fire({
                 title: 'OK',
                 text: 'Núcleo guardado exitosamente',
                 type: 'success',
                 timer: 3000,
-                timerProgressBar: true,
                 showConfirmButton: false
             }).then(() => {
                 // window.location.href = 'nucleos.php';
-				contFormEdit.classList.add('smallDot');
-				obtenerNucleos();
+				
             });
  		}
  	});
