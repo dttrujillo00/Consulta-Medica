@@ -2,7 +2,7 @@
  * FUNCIONES   *
  ***************/
 
-const eliminarPaciente = e => {
+const eliminarPaciente = (e) => {
     if(e.target.parentElement.classList.contains('icono-eliminar')){
         Swal.fire({
             title: '¿Está seguro?',
@@ -319,13 +319,8 @@ const obtenerPacientes = () => {
     fetch('modelos/pacientes/obtener_pacientes.php')
     .then(res => res.json())
     .then(data => {
-        while (tablaPacientes.firstChild) {
-            tablaPacientes.removeChild(tablaPacientes.firstChild);
-        }
-
-        while (tablaResponsive.firstChild) {
-            tablaResponsive.removeChild(tablaResponsive.firstChild);
-        }
+    	tablaPacientes.innerHTML = ``;
+    	tablaResponsive.innerHTML = ``;
 
         let grupo = null;
 
@@ -441,6 +436,14 @@ const obtenerPacientes = () => {
 		habilitarBotonesEditar(botonesEditarResponsive);
         habilitarBotonesEliminar(botonesEliminarResponsive);
 
+        pacientesEnTabla = tablaPacientes.childNodes;
+        console.log(pacientesEnTabla);
+        pacientesEnTabla.forEach((fila)=>{
+        	fila.style.display = 'none';
+        });
+
+        console.log(tablaPacientes.querySelectorAll('tr'));
+
     });
 }
 
@@ -462,7 +465,7 @@ const habilitarBotonesEliminar = (array) => {
     });
 }
 
-const rellenarCamposFormEdit = id => {
+const rellenarCamposFormEdit = (id) => {
     const inputsFormEdit = document.querySelectorAll('#form-editar input');
     const selectsFormEdit = document.querySelectorAll('#form-editar select');
     fetch(`modelos/pacientes/obtener_paciente_unic.php?id=${id}`)
@@ -536,6 +539,7 @@ const formEditar = document.querySelector('#form-editar');
 const cancelarEditar = document.querySelector('#form-editar i.cerrar-form');
 const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
+let pacientesEnTabla;
 
 /*********************** 
  *    LEER PACIENTE    *

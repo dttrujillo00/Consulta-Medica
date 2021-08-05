@@ -13,14 +13,9 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 	.then(res => res.json())
 	.then(data => {
 		// let contenidoTabla;
-		while(bodyTable.firstChild){
-			bodyTable.removeChild(bodyTable.firstChild);
-		}
-
-		while(bodyTableResponsive.firstChild){
-			bodyTableResponsive.removeChild(bodyTableResponsive.firstChild);
-		}
-
+		bodyTable.innerHTML = ``;
+		bodyTableResponsive.innerHTML = ``;
+		
 		data.datos.forEach((nucleo) => {
 			// console.log(nucleo);
 			var fila = document.createElement('tr');
