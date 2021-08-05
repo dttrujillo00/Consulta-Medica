@@ -174,6 +174,7 @@
 				<form class="form-agregar" id="form-agregar">
 
 					<h2 class="col-md-12 col-sm-12">Agregar Paciente</h2>
+					<i class="fa fa-close cerrar-form d-none"></i>
 
 					<div class="campo-container col-md-8 col-sm-12">
 						<label for="nombre_apellido">Nombre completo:</label>
@@ -241,93 +242,16 @@
 						</div>	
 					</div>
 
+					<input type="hidden" value="" id="id-pac">
+					<input type="hidden" value="" id="manzana-vieja">
+					<input type="hidden" value="" id="direccion-vieja">
+
 					<div class="div-button col-md-4 col-sm-12">
 						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
 					</div>
 
 				</form>	
 
-				<form class="form-agregar editar d-none" id="form-editar">
-
-					<h2 class="col-md-12">Editar Paciente</h2>
-					<i class="fa fa-close cerrar-form"></i>
-
-					<div class="campo-container col-md-8 col-sm-12">
-						<label for="nombre_apellido">Nombre completo:</label>
-						<input required="" type="text" id="nombre_apellido" value="">
-					</div>
-
-					<div class="campo-container col-md-4 col-sm-12">
-						<label for="fecha_nacimiento">Fecha de nacimiento</label>
-						<input required="" type="date" id="fecha_nacimiento" value="">
-					</div>
-
-					<div class="campo-container col-md-8 col-sm-12">
-						<label for="direccion">Dirección</label>
-						<input required="" type="text" id="direccion" value="">
-					</div>
-
-					<div class="campo-container col-md-4 col-sm-12">
-						<label>Nivel Educacional</label>
-						<select id="nivel_educacional">
-							<option value="1">Primaria</option>
-							<option value="2">Secundaria</option>
-							<option value="3">Preuniversitario</option>
-							<option value="4">Obrero calificado</option>
-							<option value="5">Técnico medio</option>
-							<option value="6">Técnico medio superior</option>
-							<option value="7">Nivel superior</option>
-						</select>
-					</div>
-
-					<div class="campo-container col-md-8 col-sm-12">
-						<label for="diagnostico">Diagnóstico</label>
-						<input id="diagnostico" type="text" value="">
-					</div>
-
-					<div class="campo-container col-md-2 col-sm-12">
-						<label for="manzana">Manzana</label>
-						<input required="" type="text" id="manzana" value="">
-					</div>
-
-					<div class="campo-container col-md-2 col-sm-12">
-						<label>Grupo Disp.</label>
-						<select id="grupo_disp">
-								<option value="1">I</option>
-								<option value="2">II</option>
-								<option value="3">III</option>
-								<option value="4">IV</option>
-						</select>
-					</div>
-
-					<div class="campo-container col-md-8 col-sm-12">
-						<label for="labor">Ocupación</label>
-						<input id="labor" type="text" value="">
-					</div>
-
-					<div class="col-md-4 col-sm-12">
-						<div class="flex">
-							<div class="radio-container col-md-6">								
-								<input type="radio" name="sexo" id="hombre2">
-								<label for="hombre2">Masculino</label>
-							</div>
-							<div class="radio-container col-md-6">								
-								<input type="radio" name="sexo" id="mujer2">
-							<label for="mujer2">Femenino</label>
-							</div>		
-						</div>	
-					</div>
-
-					<input type="hidden" value="" id="id-pac">
-					<input type="hidden" value="" id="manzana-vieja">
-					<input type="hidden" value="" id="direccion-vieja">
-
-					<div class="div-button col-12">
-						<!-- <button class="btn btn-cancelar" id="btn_cancelar">Cancelar</button> -->
-						<button class="btn btn-guardar" id="btn_guardar">Guardar</button>
-					</div>
-
-				</form>
 			</div>
 
     </div>

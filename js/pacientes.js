@@ -89,8 +89,8 @@ const editarPaciente = (datos) => {
                 showConfirmButton: false,
                 timer: 2000
             }).then(() => {
-                formEditar.classList.add('d-none');
-                formAgregar.classList.remove('d-none');
+                formAgregar.classList.remove('editar');
+                formAgregar.querySelector('.cerrar-form').classList.add('d-none');
                 formAgregar.reset();
             });
         }
@@ -258,13 +258,13 @@ const agregarPaciente = (datos) => {
 }
 
 const validarYGuardar = (form) => {
-    if(form.classList.contains('editar')){
-        var radioSexoMasculino = form.querySelector('#hombre2').checked;
-        var radioSexoFemenino = form.querySelector('#mujer2').checked;
-    } else {
+    // if(form.classList.contains('editar')){
+    //     var radioSexoMasculino = form.querySelector('#hombre2').checked;
+    //     var radioSexoFemenino = form.querySelector('#mujer2').checked;
+    // } else {
         var radioSexoMasculino = form.querySelector('#hombre').checked;
         var radioSexoFemenino = form.querySelector('#mujer').checked;
-    }
+    // }
 
     // CAMPOS DEL FORMULARIO
     var nombre_apellido = form.querySelector('#nombre_apellido').value,
@@ -438,11 +438,6 @@ const obtenerPacientes = () => {
 
         pacientesEnTabla = tablaPacientes.childNodes;
         console.log(pacientesEnTabla);
-        pacientesEnTabla.forEach((fila)=>{
-        	fila.style.display = 'none';
-        });
-
-        console.log(tablaPacientes.querySelectorAll('tr'));
 
     });
 }
@@ -450,9 +445,9 @@ const obtenerPacientes = () => {
 const habilitarBotonesEditar = (array) => {
     array.forEach( boton => {
         boton.addEventListener('click', e => {
-            formAgregar.classList.add('d-none');
-            formEditar.classList.remove('d-none');
-            // formEditar.reset();
+            formAgregar.reset();
+            formAgregar.classList.add('editar');
+            formAgregar.querySelector('.cerrar-form').classList.remove('d-none');
             window.scroll(0, 100);
             rellenarCamposFormEdit(e.target.parentElement.id);
         });
@@ -466,8 +461,8 @@ const habilitarBotonesEliminar = (array) => {
 }
 
 const rellenarCamposFormEdit = (id) => {
-    const inputsFormEdit = document.querySelectorAll('#form-editar input');
-    const selectsFormEdit = document.querySelectorAll('#form-editar select');
+    const inputsFormEdit = document.querySelectorAll('#form-agregar input');
+    const selectsFormEdit = document.querySelectorAll('#form-agregar select');
     fetch(`modelos/pacientes/obtener_paciente_unic.php?id=${id}`)
     .then(res => res.json())
     .then(data => {
@@ -535,8 +530,7 @@ const rellenarCamposFormEdit = (id) => {
 }
 
 const formAgregar = document.querySelector('#form-agregar');
-const formEditar = document.querySelector('#form-editar');
-const cancelarEditar = document.querySelector('#form-editar i.cerrar-form');
+const cancelarEditar = document.querySelector('#form-agregar i.cerrar-form');
 const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
 let pacientesEnTabla;
@@ -546,34 +540,29 @@ let pacientesEnTabla;
  ***********************/
  obtenerPacientes();
 
-/*********************** 
- *   EDITAR PACIENTE   *
- ***********************/
- formEditar.addEventListener('submit', e => {
-    e.preventDefault();
 
-    var datosPacienteEditar = validarYGuardar(formEditar);
-
-    if(datosPacienteEditar){
-        datosPacienteEditar.append('id_paciente', document.querySelector('#form-editar #id-pac').value);
-        datosPacienteEditar.append('manzana_vieja', document.querySelector('#form-editar #manzana-vieja').value);
-        datosPacienteEditar.append('direccion_vieja', document.querySelector('#form-editar #direccion-vieja').value);
-        // console.log(datosPacienteEditar);
-        editarPaciente(datosPacienteEditar);
-    }
-
- });
-
- /*********************** 
-  *   AGREGAR PACIENTE  *
-  ***********************/
+ /******************************** 
+  *   AGREGAR - EDITAR PACIENTE  *
+  ********************************/
  formAgregar.addEventListener('submit', e =>{
     e.preventDefault();
+    if (formAgregar.classList.contains('editar')) {
+    	var datosPacienteEditar = validarYGuardar(formAgregar);
 
-    var datosPacienteAgregar = validarYGuardar(formAgregar);
+    	if(datosPacienteEditar){
+	        datosPacienteEditar.append('id_paciente', document.querySelector('#form-agregar #id-pac').value);
+	        datosPacienteEditar.append('manzana_vieja', document.querySelector('#form-agregar #manzana-vieja').value);
+	        datosPacienteEditar.append('direccion_vieja', document.querySelector('#form-agregar #direccion-vieja').value);
+	        // console.log(datosPacienteEditar);
+	        editarPaciente(datosPacienteEditar);
+	    }
 
-    if(datosPacienteAgregar){
-        agregarPaciente(datosPacienteAgregar);
+    } else {
+    	var datosPacienteAgregar = validarYGuardar(formAgregar);
+
+	    if(datosPacienteAgregar){
+	        agregarPaciente(datosPacienteAgregar);
+	    }
     }
  });
 
@@ -584,8 +573,8 @@ let pacientesEnTabla;
        showConfirmButton: false,
        timer: 1500
     }).then(()=>{
-        formEditar.classList.add('d-none');
-        formAgregar.classList.remove('d-none');
+        formAgregar.classList.remove('editar');
+        formAgregar.querySelector('.cerrar-form').classList.add('d-none');
         formAgregar.reset();
     });
 });
