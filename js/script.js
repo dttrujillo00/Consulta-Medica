@@ -2,7 +2,6 @@
     document.addEventListener('DOMContentLoaded', function(){
         const navegacionSubHeader = document.querySelectorAll('.contenido-sub-header ul li'),
               btnColapsarForm = document.querySelector('.btn-desplegable'),
-              buscar = document.querySelector('.nav-botones-header ul'),
               tablaResponsive = document.querySelector('.tabla-responsive');
         var flagbodyDesplegar = false;
 
@@ -44,11 +43,6 @@
                 btnColapsarForm.classList.remove('mostrar');
             }
             
-        });
-
-        buscar.addEventListener('click', function(e){
-            e.preventDefault();
-            console.log(e.target);
         });
 
         // MOSTRAR Y OCULTAR EL SCROLLUP

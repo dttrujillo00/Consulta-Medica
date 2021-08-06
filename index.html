@@ -155,8 +155,8 @@
 
 				<ul>
 					<li class="active"><a href="#" class="fa fa-user"></a></li>
-					<li><a href="pages/nucleos.php" class="fa fa-home"></a></li>
-					<li><a href="pages/graficos.php" class="fa fa-calendar-o"> C/T</a></li>
+					<li><a href="pages/nucleos.html" class="fa fa-home"></a></li>
+					<li><a href="pages/graficos.html" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
 	        </div>
@@ -173,11 +173,12 @@
 
 				<form class="form-agregar" id="form-agregar">
 
-					<h2 class="col-md-12 col-sm-12">Agregar Paciente</h2>
+					<h2 class="col-md-12 col-sm-12 h2-agregar">Agregar Paciente</h2>
+					<h2 class="col-md-12 col-sm-12 h2-editar">Editar Paciente</h2>
 					<i class="fa fa-close cerrar-form d-none"></i>
 
 					<div class="campo-container col-md-8 col-sm-12">
-						<label for="nombre_apellido">Nombre completo:</label>
+						<label for="nombre_apellido">Nombre completo</label>
 						<input autofocus="" required="" type="text" id="nombre_apellido">
 					</div>
 
@@ -251,6 +252,83 @@
 					</div>
 
 				</form>	
+
+				<form class="form-buscar d-none" id="form-buscar">
+					<h2 class="col-md-12 col-sm-12">Buscar Pacientes</h2>
+					<i class="fa fa-close cerrar-form"></i>
+
+					<div class="campo-container col-md-8 col-sm-12">
+						<label for="nombre_apellido_buscar">Nombre completo</label>
+						<input type="text" id="nombre_apellido_buscar">
+					</div>
+
+					<div class="campo-container col-md-4 col-sm-12">
+						<label for="edad_buscar">Edad</label>
+						<input type="text" id="edad_buscar">
+					</div>
+
+					<div class="campo-container col-md-8 col-sm-12">
+						<label for="direccion_buscar">Dirección</label>
+						<input type="text" id="direccion_buscar">
+					</div>
+
+					<div class="campo-container col-md-4 col-sm-12">
+						<label>Nivel Educacional</label>
+						<select id="nivel_educacional_buscar">
+							<option value="0"></option>
+							<option value="Primaria">Primaria</option>
+							<option value="Secundaria">Secundaria</option>
+							<option value="Preuniversitario">Preuniversitario</option>
+							<option value="Obrero calificado">Obrero calificado</option>
+							<option value="Técnico medio">Técnico medio</option>
+							<option value="Técnico medio superior">Técnico medio superior</option>
+							<option value="Nivel superior">Nivel superior</option>
+						</select>
+					</div>
+
+					<div class="campo-container col-md-8 col-sm-12">
+						<label for="diagnostico_buscar">Diagnóstico</label>
+						<input id="diagnostico_buscar" type="text">
+					</div>
+
+					<div class="campo-container col-md-2 col-sm-12">
+						<label for="manzana_buscar">Manzana</label>
+						<input type="text" id="manzana_buscar">
+					</div>
+
+					<div class="campo-container col-md-2 col-sm-12">
+						<label>Grupo Disp.</label>
+						<select id="grupo_disp_buscar">
+							<option value="0"></option>
+							<option value="I">I</option>
+							<option value="II">II</option>
+							<option value="III">III</option>
+							<option value="IV">IV</option>
+						</select>
+					</div>
+
+					<div class="campo-container col-md-8 col-sm-12">
+						<label for="labor_buscar">Ocupación</label>
+						<input id="labor_buscar" type="text">
+					</div>
+
+					<div class="col-md-4 col-sm-12">
+						<div class="flex">
+							<div class="radio-container col-md-6">								
+								<input type="radio" name="sexo_buscar" id="hombre_buscar">
+								<label for="hombre_buscar">Masculino</label>
+							</div>
+							<div class="radio-container col-md-6">								
+								<input type="radio" name="sexo_buscar" id="mujer_buscar">
+								<label for="mujer_buscar">Femenino</label>
+							</div>		
+						</div>	
+					</div>
+
+					<div class="div-button col-md-4 col-sm-12">
+						<button class="btn btn-buscar" id="btn_buscar">Buscar</button>
+					</div>
+				</form>
 
 			</div>
 

@@ -326,6 +326,7 @@ const obtenerPacientes = () => {
 
         data.datos.forEach( paciente => {
             var fila = document.createElement('tr');
+            fila.setAttribute('data-id', paciente.id_pac)
 			fila.classList.add(`grupo${paciente.grupo_disponible_pac}`);
 
             switch(+paciente.grupo_disponible_pac) {
@@ -369,6 +370,7 @@ const obtenerPacientes = () => {
             `;
 
             tablaPacientes.appendChild(fila);
+            listaPermanente.push(fila)
 
             var filaResponsive = document.createElement('div');
             filaResponsive.classList.add('fila-paciente',`grupo${paciente.grupo_disponible_pac}`);
@@ -436,8 +438,9 @@ const obtenerPacientes = () => {
 		habilitarBotonesEditar(botonesEditarResponsive);
         habilitarBotonesEliminar(botonesEliminarResponsive);
 
-        pacientesEnTabla = tablaPacientes.childNodes;
-        console.log(pacientesEnTabla);
+        // pacientesEnTabla = tablaPacientes.childNodes;
+        // listaPermanente = pacientesEnTabla.slice();
+        console.log(listaPermanente);
 
     });
 }
@@ -529,22 +532,36 @@ const rellenarCamposFormEdit = (id) => {
     });
 }
 
+const mostrarResultadosBusqueda = (array) => {
+    tablaPacientes.innerHTML = ``;
+    array.forEach( fila => {
+        tablaPacientes.appendChild(fila);
+    });
+}
+
+/*********************
+ *  FUNCIONES - FIN  *
+ *********************/
+
 const formAgregar = document.querySelector('#form-agregar');
+const formBuscar = document.querySelector('#form-buscar');
+const searchIcon = document.querySelector('.fa-search');
 const cancelarEditar = document.querySelector('#form-agregar i.cerrar-form');
+const cancelarBuscar = document.querySelector('#form-buscar i.cerrar-form');
 const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
-let pacientesEnTabla;
+let pacientesEnTabla = [];
+let listaPermanente = [];
 
 /*********************** 
  *    LEER PACIENTE    *
  ***********************/
- obtenerPacientes();
-
+obtenerPacientes();
 
  /******************************** 
   *   AGREGAR - EDITAR PACIENTE  *
   ********************************/
- formAgregar.addEventListener('submit', e =>{
+formAgregar.addEventListener('submit', e =>{
     e.preventDefault();
     if (formAgregar.classList.contains('editar')) {
     	var datosPacienteEditar = validarYGuardar(formAgregar);
@@ -566,7 +583,159 @@ let pacientesEnTabla;
     }
  });
 
- cancelarEditar.addEventListener('click', function() {
+ /************************ 
+  *   BUSCAR PACIENTES   *
+  ************************/
+formBuscar.addEventListener('submit', function(e) {
+    e.preventDefault();
+    let inputs = formBuscar.querySelectorAll('input');
+    let selects = formBuscar.querySelectorAll('select');
+    let sexo;
+    let buscado = [];
+    let buscadoCount = 0;
+    let resultadosPreliminares = [];
+    let resultadoFinal = [];
+    console.log('inputs', inputs);
+    console.log('selects', selects);
+
+    
+    if(inputs[6].checked){
+        sexo = 'M';
+    } else if(inputs[7].checked){
+        sexo = 'F';
+    }
+
+    
+    if(inputs[0].value){
+        buscado.push(inputs[0].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if(sexo != null){
+        buscado.push(sexo);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if (selects[1].value != '0') {
+        buscado.push(selects[1].value)
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+
+    if (inputs[2].value) {
+        buscado.push(inputs[2].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if (inputs[1].value != '') {
+        buscado.push(inputs[1].value);
+    } else {
+        buscado.push('');
+    }
+
+    if (selects[0].value != '0') {
+        buscado.push(selects[0].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if (inputs[5].value) {
+        buscado.push(inputs[5].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if (inputs[4].value) {
+        buscado.push(inputs[4].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    if (inputs[3].value) {
+        buscado.push(inputs[3].value);
+        buscadoCount++;
+    } else {
+        buscado.push('');
+    }
+
+    console.log('Buscado', buscado);
+    console.log('pacientes', listaPermanente);
+
+    
+    listaPermanente.forEach( fila => {
+        let contadorInterno = 0;
+        for(var i = 0; i < 9; i++){
+            if (i == 4 || buscado[i] === '')
+                continue;
+
+            let valorTabla = fila.children[i].textContent.toLowerCase();
+            let valorBuscado = buscado[i].toLowerCase();
+            
+            if(valorTabla.indexOf(valorBuscado) > -1){
+                console.log(fila.children[i].textContent);
+                console.log('coincidencia');
+                contadorInterno++;
+            }
+        }
+        if(contadorInterno == buscadoCount){
+            console.log(`fila con total coincidencia id=${fila.getAttribute('data-id')}`);
+            resultadosPreliminares.push(fila);
+        }
+        console.log(fila);    
+    });
+
+    if(buscado[4] === ''){
+        resultadoFinal = resultadosPreliminares;
+    } else if(buscado[4].length <= 2){
+        console.log('una edad');
+        resultadosPreliminares.forEach( fila => {
+            if(fila.children[4].textContent == buscado[4])
+                resultadoFinal.push(fila);
+        });
+    } else {
+        console.log('entre dos edades');
+        let edades = buscado[4].split('-');
+        console.log(edades[0], '-', edades[1]);
+        resultadosPreliminares.forEach( fila => {
+            if (+fila.children[4].textContent >= +edades[0] && 
+                +fila.children[4].textContent <= +edades[1]) {
+                resultadoFinal.push(fila);
+            }
+        });
+    }
+
+    console.log(resultadoFinal);
+
+    mostrarResultadosBusqueda(resultadoFinal);
+
+
+});
+
+searchIcon.addEventListener('click', function(e) {
+    Swal.fire({
+       title: 'Modo Búsqueda',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+     formAgregar.classList.add('d-none');
+     formBuscar.classList.remove('d-none');
+     formBuscar.reset();
+     tablaPacientes.innerHTML = ``;
+ });
+
+cancelarEditar.addEventListener('click', function() {
     Swal.fire({
        title: 'No se guardaron los cambios',
        type: 'info',
@@ -576,5 +745,18 @@ let pacientesEnTabla;
         formAgregar.classList.remove('editar');
         formAgregar.querySelector('.cerrar-form').classList.add('d-none');
         formAgregar.reset();
+    });
+});
+
+cancelarBuscar.addEventListener('click', function() {
+    obtenerPacientes();
+    Swal.fire({
+       title: 'Saliendo del modo Búsqueda',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    }).then(()=>{
+        formBuscar.classList.add('d-none');
+        formAgregar.classList.remove('d-none');
     });
 });
