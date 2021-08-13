@@ -5,6 +5,7 @@
     --enfermo: #dc3545;
     --riesgo: #ffc107;
     --discapacitado: #007bff;
+    --btnColor: #005e9e;
 }
 
 /*Utiles*/
@@ -45,6 +46,16 @@
 
     100%{
         transform: rotate(180deg);
+    }
+}
+
+@keyframes loader {
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
     }
 }
 
@@ -146,7 +157,7 @@ a{
 }
 
 .btn-guardar, .btn-buscar{
-    background-color: #005e9e;
+    background-color: var(--btnColor);
     color: white;
 }
 
@@ -224,6 +235,32 @@ select {
 .d-none{
     display: none !important;
     overflow: hidden;
+}
+
+.loader-container {
+    position: fixed;
+    bottom: 2rem;
+    left: .5rem;
+    width: 50px;
+    height: 50px;
+    z-index: 99999;
+    /*display: none;*/
+}
+
+.loader {
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 6px solid var(--colorPrincipal);
+    border-left-color: white;
+    border-radius: 50%;
+    animation: loader .8s linear infinite;
+    -webkit-animation: loader .8s linear infinite;
+    -moz-animation: loader .8s linear infinite;
 }
 
 /*********************** 
@@ -481,7 +518,7 @@ form button{
 }
 
 #form-agregar i:hover, #form-buscar i:hover{
-    color: #005e9e;
+    color: var(--btnColor);
     cursor: pointer;
     transform: scale(1.2);
 }

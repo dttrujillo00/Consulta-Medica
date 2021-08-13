@@ -1,3 +1,16 @@
+const formAgregar = document.querySelector('#form-agregar');
+const formBuscar = document.querySelector('#form-buscar');
+const searchIcon = document.querySelector('.fa-search');
+const cancelarEditar = document.querySelector('#form-agregar i.cerrar-form');
+const cancelarBuscar = document.querySelector('#form-buscar i.cerrar-form');
+const tablaPacientes = document.querySelector('.table tbody');
+const tablaResponsive = document.querySelector('.tabla-responsive');
+const encabezadoTabla = document.querySelector('.encabezado-vista h2');
+const iconLoader = document.querySelector('.loader-container');
+let listaPermanente = [];
+let listaPermanenteResponsive = [];
+let modoBusqueda = false;
+
 /***************
  * FUNCIONES   *
  ***************/
@@ -16,11 +29,16 @@ const eliminarPaciente = (e) => {
         }).then((result) => {
             if(result.value) {
                 var idPaciente = e.target.parentElement.id;
+                iconLoader.classList.remove('d-none');
 
                 fetch(`modelos/pacientes/eliminar_paciente.php?id_pac=${idPaciente}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.respuesta === 'Correcto') {
+                        iconLoader.classList.add('d-none');
+                        if (modoBusqueda) {
+                            obtenerPacientes();
+                        }
                         // Esto es para eliminar el paciente de la vista movil
                         // Aqui realmente estoy guardando los botones de eliminar de cada fila
                         // Para obtener el id del paciente
@@ -74,7 +92,7 @@ const romanize = (number) => {
 
 const editarPaciente = (datos) => {
     // console.log(datos.get('nombre_apellido'));
-
+    iconLoader.classList.remove('d-none');
     fetch('modelos/pacientes/editar_paciente.php',{
         method: 'POST',
         body: datos
@@ -82,7 +100,11 @@ const editarPaciente = (datos) => {
     .then(res => res.json())
     .then(data => {
         if(data.respuesta === 'Correcto') {
-            obtenerPacientes();
+            iconLoader.classList.add('d-none');
+
+            // if(!modoBusqueda)
+                obtenerPacientes();
+
             Swal.fire({
                 type: 'success',
                 title: 'Se guardaron los cambios',
@@ -92,12 +114,17 @@ const editarPaciente = (datos) => {
                 formAgregar.classList.remove('editar');
                 formAgregar.querySelector('.cerrar-form').classList.add('d-none');
                 formAgregar.reset();
+                if(modoBusqueda){
+                    formAgregar.classList.add('d-none');
+                    formBuscar.classList.remove('d-none');
+                }
             });
         }
     })
 }
 
 const agregarPaciente = (datos) => {
+    iconLoader.classList.remove('d-none');
     // console.log(typeof datos.get('nivel_educacional'));
     
     var sexoVistaPaciente, nivelEducacionalVistaPaciente;
@@ -121,10 +148,10 @@ const agregarPaciente = (datos) => {
             nivelEducacionalVistaPaciente = 'Obrero calificado';
             break;
         case 5:
-            nivelEducacionalVistaPaciente = 'Técnico medio';
+            nivelEducacionalVistaPaciente = 'Tecnico medio';
             break;
         case 6:
-            nivelEducacionalVistaPaciente = 'Técnico medio superior';
+            nivelEducacionalVistaPaciente = 'Tecnico medio superior';
             break;
         case 7:
             nivelEducacionalVistaPaciente = 'Nivel superior';
@@ -138,6 +165,7 @@ const agregarPaciente = (datos) => {
     .then(res => res.json())
     .then(data => {
         if(data.respuesta === 'Correcto') {
+            iconLoader.classList.add('d-none');
             var nuevaFila = document.createElement('tr');
             nuevaFila.classList.add(`grupo${datos.get('grupo_disp')}`);
 
@@ -164,6 +192,8 @@ const agregarPaciente = (datos) => {
             `;  
 
             tablaPacientes.appendChild(nuevaFila);
+            listaPermanente.push(nuevaFila);
+            
             Swal.fire({
                 title: 'OK',
                 text: 'Paciente guardado exitosamente',
@@ -176,6 +206,7 @@ const agregarPaciente = (datos) => {
 
             // ACTUALIZAR VISTA DE PACIENTES EN DISEÑO RESPONSIVE
             var nuevaFilaResponsive = document.createElement('div');
+            nuevaFilaResponsive.setAttribute('data-id', data.datos.id_insertado);
             nuevaFilaResponsive.classList.add('fila-paciente', `grupo${datos.get('grupo_disp')}`);
 
             nuevaFilaResponsive.innerHTML = `
@@ -231,6 +262,7 @@ const agregarPaciente = (datos) => {
             `;
 
             tablaResponsive.appendChild(nuevaFilaResponsive);
+            listaPermanenteResponsive.push(nuevaFilaResponsive);
 
         } else if(data.respuesta === 'Existente'){
             Swal.fire({
@@ -316,11 +348,18 @@ const validarYGuardar = (form) => {
 }
 
 const obtenerPacientes = () => {
+    iconLoader.classList.remove('d-none');
     fetch('modelos/pacientes/obtener_pacientes.php')
     .then(res => res.json())
     .then(data => {
     	tablaPacientes.innerHTML = ``;
     	tablaResponsive.innerHTML = ``;
+        while(listaPermanente[0]){
+            listaPermanente.pop();
+        }
+        while(listaPermanenteResponsive[0]){
+            listaPermanenteResponsive.pop();
+        }
 
         let grupo = null;
 
@@ -370,9 +409,10 @@ const obtenerPacientes = () => {
             `;
 
             tablaPacientes.appendChild(fila);
-            listaPermanente.push(fila)
+            listaPermanente.push(fila);
 
             var filaResponsive = document.createElement('div');
+            filaResponsive.setAttribute('data-id', paciente.id_pac);
             filaResponsive.classList.add('fila-paciente',`grupo${paciente.grupo_disponible_pac}`);
 
             filaResponsive.innerHTML = `
@@ -427,6 +467,7 @@ const obtenerPacientes = () => {
             `;
 
             tablaResponsive.appendChild(filaResponsive);
+            listaPermanenteResponsive.push(filaResponsive);
         });
 
         const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
@@ -437,10 +478,11 @@ const obtenerPacientes = () => {
         habilitarBotonesEliminar(botonesEliminar);
 		habilitarBotonesEditar(botonesEditarResponsive);
         habilitarBotonesEliminar(botonesEliminarResponsive);
+        iconLoader.classList.add('d-none');
 
-        // pacientesEnTabla = tablaPacientes.childNodes;
-        // listaPermanente = pacientesEnTabla.slice();
-        console.log(listaPermanente);
+        if (modoBusqueda) {
+            buscarPacientes();
+        }
 
     });
 }
@@ -448,6 +490,11 @@ const obtenerPacientes = () => {
 const habilitarBotonesEditar = (array) => {
     array.forEach( boton => {
         boton.addEventListener('click', e => {
+            if (modoBusqueda) {
+                formBuscar.classList.add('d-none');
+                formAgregar.classList.remove('d-none');
+            }
+
             formAgregar.reset();
             formAgregar.classList.add('editar');
             formAgregar.querySelector('.cerrar-form').classList.remove('d-none');
@@ -464,11 +511,13 @@ const habilitarBotonesEliminar = (array) => {
 }
 
 const rellenarCamposFormEdit = (id) => {
+    iconLoader.classList.remove('d-none');
     const inputsFormEdit = document.querySelectorAll('#form-agregar input');
     const selectsFormEdit = document.querySelectorAll('#form-agregar select');
     fetch(`modelos/pacientes/obtener_paciente_unic.php?id=${id}`)
     .then(res => res.json())
     .then(data => {
+        iconLoader.classList.add('d-none');
         // console.log(inputsFormEdit);
         inputsFormEdit[0].value = data.datos.nombre_comp_pac;
         inputsFormEdit[1].value = data.datos.fecha_nac_pac;
@@ -498,10 +547,10 @@ const rellenarCamposFormEdit = (id) => {
             case 'Obrero calificado':
                 selectsFormEdit[0].selectedIndex = 3;
                 break;
-            case 'Técnico medio':
+            case 'Tecnico medio':
                 selectsFormEdit[0].selectedIndex = 4;
                 break;
-            case 'Técnico medio superior':
+            case 'Tecnico medio superior':
                 selectsFormEdit[0].selectedIndex = 5;
                 break;
             case 'Nivel superior':
@@ -532,62 +581,12 @@ const rellenarCamposFormEdit = (id) => {
     });
 }
 
-const mostrarResultadosBusqueda = (array) => {
-    tablaPacientes.innerHTML = ``;
-    array.forEach( fila => {
-        tablaPacientes.appendChild(fila);
-    });
-}
-
-/*********************
- *  FUNCIONES - FIN  *
- *********************/
-
-const formAgregar = document.querySelector('#form-agregar');
-const formBuscar = document.querySelector('#form-buscar');
-const searchIcon = document.querySelector('.fa-search');
-const cancelarEditar = document.querySelector('#form-agregar i.cerrar-form');
-const cancelarBuscar = document.querySelector('#form-buscar i.cerrar-form');
-const tablaPacientes = document.querySelector('.table tbody');
-const tablaResponsive = document.querySelector('.tabla-responsive');
-let pacientesEnTabla = [];
-let listaPermanente = [];
-
-/*********************** 
- *    LEER PACIENTE    *
- ***********************/
-obtenerPacientes();
-
- /******************************** 
-  *   AGREGAR - EDITAR PACIENTE  *
-  ********************************/
-formAgregar.addEventListener('submit', e =>{
-    e.preventDefault();
-    if (formAgregar.classList.contains('editar')) {
-    	var datosPacienteEditar = validarYGuardar(formAgregar);
-
-    	if(datosPacienteEditar){
-	        datosPacienteEditar.append('id_paciente', document.querySelector('#form-agregar #id-pac').value);
-	        datosPacienteEditar.append('manzana_vieja', document.querySelector('#form-agregar #manzana-vieja').value);
-	        datosPacienteEditar.append('direccion_vieja', document.querySelector('#form-agregar #direccion-vieja').value);
-	        // console.log(datosPacienteEditar);
-	        editarPaciente(datosPacienteEditar);
-	    }
-
-    } else {
-    	var datosPacienteAgregar = validarYGuardar(formAgregar);
-
-	    if(datosPacienteAgregar){
-	        agregarPaciente(datosPacienteAgregar);
-	    }
+const buscarPacientes = (e) => {
+    iconLoader.classList.remove('d-none');
+    // alert('Buscando');
+    if (e) {
+        e.preventDefault();
     }
- });
-
- /************************ 
-  *   BUSCAR PACIENTES   *
-  ************************/
-formBuscar.addEventListener('submit', function(e) {
-    e.preventDefault();
     let inputs = formBuscar.querySelectorAll('input');
     let selects = formBuscar.querySelectorAll('select');
     let sexo;
@@ -669,9 +668,6 @@ formBuscar.addEventListener('submit', function(e) {
         buscado.push('');
     }
 
-    console.log('Buscado', buscado);
-    console.log('pacientes', listaPermanente);
-
     
     listaPermanente.forEach( fila => {
         let contadorInterno = 0;
@@ -683,30 +679,30 @@ formBuscar.addEventListener('submit', function(e) {
             let valorBuscado = buscado[i].toLowerCase();
             
             if(valorTabla.indexOf(valorBuscado) > -1){
-                console.log(fila.children[i].textContent);
-                console.log('coincidencia');
+                // console.log(fila.children[i].textContent);
+                // console.log('coincidencia');
                 contadorInterno++;
             }
         }
         if(contadorInterno == buscadoCount){
-            console.log(`fila con total coincidencia id=${fila.getAttribute('data-id')}`);
+            // console.log(`fila con total coincidencia id=${fila.getAttribute('data-id')}`);
             resultadosPreliminares.push(fila);
         }
-        console.log(fila);    
+        // console.log(fila);    
     });
 
     if(buscado[4] === ''){
         resultadoFinal = resultadosPreliminares;
     } else if(buscado[4].length <= 2){
-        console.log('una edad');
+        // console.log('una edad');
         resultadosPreliminares.forEach( fila => {
             if(fila.children[4].textContent == buscado[4])
                 resultadoFinal.push(fila);
         });
     } else {
-        console.log('entre dos edades');
+        // console.log('entre dos edades');
         let edades = buscado[4].split('-');
-        console.log(edades[0], '-', edades[1]);
+        // console.log(edades[0], '-', edades[1]);
         resultadosPreliminares.forEach( fila => {
             if (+fila.children[4].textContent >= +edades[0] && 
                 +fila.children[4].textContent <= +edades[1]) {
@@ -715,12 +711,66 @@ formBuscar.addEventListener('submit', function(e) {
         });
     }
 
-    console.log(resultadoFinal);
+    // console.log(resultadoFinal);
+    encabezadoTabla.innerText = `Resultados de Búsqueda: ${resultadoFinal.length} coincidencia/s`;
 
     mostrarResultadosBusqueda(resultadoFinal);
+}
 
+const mostrarResultadosBusqueda = (array) => {
+    location.href = `${location.pathname}#encabezado-vista`;
+    tablaPacientes.innerHTML = ``;
+    tablaResponsive.innerHTML = ``;
+    array.forEach( fila => {
+        tablaPacientes.appendChild(fila);
+        listaPermanenteResponsive.forEach((filaResponsive) => {
+            if (filaResponsive.getAttribute('data-id') == fila.getAttribute('data-id')) {
+                tablaResponsive.appendChild(filaResponsive);
+            }
+        });
 
-});
+    });
+
+    iconLoader.classList.add('d-none');
+}
+
+/*********************
+ *  FUNCIONES - FIN  *
+ *********************/
+
+/*********************** 
+ *    LEER PACIENTE    *
+ ***********************/
+obtenerPacientes();
+
+ /******************************** 
+  *   AGREGAR - EDITAR PACIENTE  *
+  ********************************/
+formAgregar.addEventListener('submit', e => {
+    e.preventDefault();
+    if (formAgregar.classList.contains('editar')) {
+    	var datosPacienteEditar = validarYGuardar(formAgregar);
+
+    	if(datosPacienteEditar){
+	        datosPacienteEditar.append('id_paciente', document.querySelector('#form-agregar #id-pac').value);
+	        datosPacienteEditar.append('manzana_vieja', document.querySelector('#form-agregar #manzana-vieja').value);
+	        datosPacienteEditar.append('direccion_vieja', document.querySelector('#form-agregar #direccion-vieja').value);
+	        editarPaciente(datosPacienteEditar);
+	    }
+
+    } else {
+    	var datosPacienteAgregar = validarYGuardar(formAgregar);
+
+	    if(datosPacienteAgregar){
+	        agregarPaciente(datosPacienteAgregar);
+	    }
+    }
+ });
+
+ /************************ 
+  *   BUSCAR PACIENTES   *
+  ************************/
+formBuscar.addEventListener('submit', buscarPacientes);
 
 searchIcon.addEventListener('click', function(e) {
     Swal.fire({
@@ -729,10 +779,14 @@ searchIcon.addEventListener('click', function(e) {
        showConfirmButton: false,
        timer: 1500
     });
-     formAgregar.classList.add('d-none');
-     formBuscar.classList.remove('d-none');
-     formBuscar.reset();
-     tablaPacientes.innerHTML = ``;
+    modoBusqueda = true;
+    formAgregar.classList.add('d-none');
+    formBuscar.classList.remove('d-none');
+    formBuscar.reset();
+    tablaPacientes.innerHTML = ``;
+    tablaResponsive.innerHTML = ``;
+    window.scroll(0, 100);
+    encabezadoTabla.innerText = 'Resultados de Búsqueda';
  });
 
 cancelarEditar.addEventListener('click', function() {
@@ -749,6 +803,8 @@ cancelarEditar.addEventListener('click', function() {
 });
 
 cancelarBuscar.addEventListener('click', function() {
+    modoBusqueda = false;
+    encabezadoTabla.innerText = 'Pacientes';
     obtenerPacientes();
     Swal.fire({
        title: 'Saliendo del modo Búsqueda',

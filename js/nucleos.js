@@ -180,7 +180,7 @@ const rellenarCamposFormEdit = (nucleo) => {
 			case 'Funcional':
 			camposFormEdit[12].checked = true;
 			break;
-			case 'Riesgo de Disfunción':
+			case 'Riesgo de Disfuncion':
 			camposFormEdit[13].checked = true;
 			break;
 			case 'Disfuncional':
