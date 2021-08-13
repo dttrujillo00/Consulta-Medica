@@ -40,6 +40,11 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 						<i class="fa fa-trash-o"></i>
 					</span>
 				</td>
+				<td>
+					<span class="icono-miembros" id="${nucleo.idNuc}">
+						<i class="fa fa-group"></i>
+					</span>
+				</td>
 			`;
 
 			bodyTable.appendChild(fila);
@@ -89,6 +94,9 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 					</span>
 					<span class="icono-eliminar" id="${nucleo.idNuc}">
 						<i class="fa fa-trash-o"></i>
+					</span>
+					<span class="icono-miembros" id="${nucleo.idNuc}">
+						<i class="fa fa-group"></i>
 					</span>
 				</div>
 			</div>

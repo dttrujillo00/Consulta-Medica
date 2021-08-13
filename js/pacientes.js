@@ -582,11 +582,13 @@ const rellenarCamposFormEdit = (id) => {
 }
 
 const buscarPacientes = (e) => {
+    console.log('buscando');
     iconLoader.classList.remove('d-none');
-    // alert('Buscando');
+
     if (e) {
         e.preventDefault();
     }
+
     let inputs = formBuscar.querySelectorAll('input');
     let selects = formBuscar.querySelectorAll('select');
     let sexo;
@@ -594,17 +596,15 @@ const buscarPacientes = (e) => {
     let buscadoCount = 0;
     let resultadosPreliminares = [];
     let resultadoFinal = [];
-    console.log('inputs', inputs);
-    console.log('selects', selects);
 
-    
+    // COMPROBANDO SI LOS INPUT DEL SEXO ESTAN ACTIVOS
     if(inputs[6].checked){
         sexo = 'M';
     } else if(inputs[7].checked){
         sexo = 'F';
     }
 
-    
+    // GUARDANDO LOS VALORES DE LOS INPUTS Y LOS SELECT EN UN ARRAY
     if(inputs[0].value){
         buscado.push(inputs[0].value);
         buscadoCount++;
@@ -668,29 +668,37 @@ const buscarPacientes = (e) => {
         buscado.push('');
     }
 
-    
+    // RECORRO CADA FILA EN LA TABLA
     listaPermanente.forEach( fila => {
         let contadorInterno = 0;
+        // POR CADA FILA RECORRO CADA UNA DE SUS COLUMNAS EN BUSCA DE COINCIDENCIAS
         for(var i = 0; i < 9; i++){
+            // SI ES EL CAMPO EDAD, SALTARLO PARA UN ANALISIS POSTERIOR
             if (i == 4 || buscado[i] === '')
                 continue;
+            // *************
 
             let valorTabla = fila.children[i].textContent.toLowerCase();
             let valorBuscado = buscado[i].toLowerCase();
             
             if(valorTabla.indexOf(valorBuscado) > -1){
-                // console.log(fila.children[i].textContent);
-                // console.log('coincidencia');
                 contadorInterno++;
+                // SI HAY COINCIDENCIAS EN EL CAMPO GRUPO DISP Y EL TAMAÑO 
+                // DE LA CADENA COINCIDE TENERLO EN CUENTA, DE OTRA MANERA NO
+                if(i == 2 && valorTabla.length != valorBuscado.length){
+                    contadorInterno--;
+                }
             }
         }
+
+        // SI LA FILA COINCIDE CON TODOS LOS VALORES BUSCADOS, GUARDAR RESULTADOS
         if(contadorInterno == buscadoCount){
-            // console.log(`fila con total coincidencia id=${fila.getAttribute('data-id')}`);
             resultadosPreliminares.push(fila);
         }
-        // console.log(fila);    
+
     });
 
+    // MANEJANDO EL CAMPO EDAD
     if(buscado[4] === ''){
         resultadoFinal = resultadosPreliminares;
     } else if(buscado[4].length <= 2){
@@ -718,6 +726,7 @@ const buscarPacientes = (e) => {
 }
 
 const mostrarResultadosBusqueda = (array) => {
+    console.log('mostrando resultados');
     location.href = `${location.pathname}#encabezado-vista`;
     tablaPacientes.innerHTML = ``;
     tablaResponsive.innerHTML = ``;
