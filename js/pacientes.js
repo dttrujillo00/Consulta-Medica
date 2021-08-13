@@ -10,6 +10,7 @@ const iconLoader = document.querySelector('.loader-container');
 let listaPermanente = [];
 let listaPermanenteResponsive = [];
 let modoBusqueda = false;
+let url = window.location.href;
 
 /***************
  * FUNCIONES   *
@@ -484,6 +485,19 @@ const obtenerPacientes = () => {
             buscarPacientes();
         }
 
+        if (url.indexOf('direccionNucleo') > -1) {
+            url = url.replace('%20', " ");
+            var index = url.indexOf('direccionNucleo');
+            console.log('index', index);
+            console.log(url.slice(index+16));
+            let direccion = url.slice(index+16);
+            entrarModoBusqueda();
+            document.querySelector('#direccion_buscar').value = direccion;
+            // formBuscar.submit();
+            buscarPacientes();
+            console.log(url);
+        }
+
     });
 }
 
@@ -727,7 +741,13 @@ const buscarPacientes = (e) => {
 
 const mostrarResultadosBusqueda = (array) => {
     console.log('mostrando resultados');
-    location.href = `${location.pathname}#encabezado-vista`;
+    Swal.fire({
+       title: 'Búsqueda finalizada',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+    location.href = `${location.href}#encabezado-vista`;
     tablaPacientes.innerHTML = ``;
     tablaResponsive.innerHTML = ``;
     array.forEach( fila => {
@@ -743,9 +763,33 @@ const mostrarResultadosBusqueda = (array) => {
     iconLoader.classList.add('d-none');
 }
 
+const entrarModoBusqueda = () => {
+    Swal.fire({
+       title: 'Modo Búsqueda',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+    modoBusqueda = true;
+    formAgregar.classList.add('d-none');
+    formBuscar.classList.remove('d-none');
+    formBuscar.reset();
+    tablaPacientes.innerHTML = ``;
+    tablaResponsive.innerHTML = ``;
+    window.scroll(0, 100);
+    encabezadoTabla.innerText = 'Resultados de Búsqueda';
+}
+
 /*********************
  *  FUNCIONES - FIN  *
  *********************/
+ // window.addEventListener('DOMContentLoaded', () => {
+ //    if (url.indexOf('direccionNucleo') > -1) {
+ //        url = url.replace('%20', " ");
+ //        entrarModoBusqueda();
+ //        console.log(url);
+ //    }
+ // });
 
 /*********************** 
  *    LEER PACIENTE    *
@@ -781,22 +825,7 @@ formAgregar.addEventListener('submit', e => {
   ************************/
 formBuscar.addEventListener('submit', buscarPacientes);
 
-searchIcon.addEventListener('click', function(e) {
-    Swal.fire({
-       title: 'Modo Búsqueda',
-       type: 'info',
-       showConfirmButton: false,
-       timer: 1500
-    });
-    modoBusqueda = true;
-    formAgregar.classList.add('d-none');
-    formBuscar.classList.remove('d-none');
-    formBuscar.reset();
-    tablaPacientes.innerHTML = ``;
-    tablaResponsive.innerHTML = ``;
-    window.scroll(0, 100);
-    encabezadoTabla.innerText = 'Resultados de Búsqueda';
- });
+searchIcon.addEventListener('click', entrarModoBusqueda);
 
 cancelarEditar.addEventListener('click', function() {
     Swal.fire({
@@ -814,6 +843,11 @@ cancelarEditar.addEventListener('click', function() {
 cancelarBuscar.addEventListener('click', function() {
     modoBusqueda = false;
     encabezadoTabla.innerText = 'Pacientes';
+
+    if(url.indexOf('direccionNucleo') > -1){
+        location.href = 'index.html';
+    }
+
     obtenerPacientes();
     Swal.fire({
        title: 'Saliendo del modo Búsqueda',
@@ -824,4 +858,8 @@ cancelarBuscar.addEventListener('click', function() {
         formBuscar.classList.add('d-none');
         formAgregar.classList.remove('d-none');
     });
+});
+
+document.querySelector('h1').addEventListener('click', () => {
+    location.href = 'index.html?';
 });

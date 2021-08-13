@@ -41,7 +41,7 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 					</span>
 				</td>
 				<td>
-					<span class="icono-miembros" id="${nucleo.idNuc}">
+					<span class="icono-miembros" data-direc="${nucleo.dirNuc}">
 						<i class="fa fa-group"></i>
 					</span>
 				</td>
@@ -95,7 +95,7 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 					<span class="icono-eliminar" id="${nucleo.idNuc}">
 						<i class="fa fa-trash-o"></i>
 					</span>
-					<span class="icono-miembros" id="${nucleo.idNuc}">
+					<span class="icono-miembros" data-direc="${nucleo.dirNuc}">
 						<i class="fa fa-group"></i>
 					</span>
 				</div>
@@ -105,16 +105,25 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 			bodyTableResponsive.appendChild(filaResponsive);
 		});
 
-		const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
-		const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
-		const botonesEditarResponsive = document.querySelectorAll('.tabla-responsive .icono-editar');
-		const botonesEliminarResponsive = document.querySelectorAll('.tabla-responsive .icono-eliminar');
-		habilitarBotonesEditar(botonesEditar);
-		habilitarBotonesEditar(botonesEditarResponsive);
-		habilitarBotonesEliminar(botonesEliminar);
-		habilitarBotonesEliminar(botonesEliminarResponsive);
+		habilitarBotones();
 	})
 }
+
+const habilitarBotones = () => {
+	const botonesEditar = document.querySelectorAll('table tbody .icono-editar');
+	const botonesEliminar = document.querySelectorAll('table tbody .icono-eliminar');
+	const botonesMiembros = document.querySelectorAll('table tbody .icono-miembros');
+	const botonesEditarResponsive = document.querySelectorAll('.tabla-responsive .icono-editar');
+	const botonesEliminarResponsive = document.querySelectorAll('.tabla-responsive .icono-eliminar');
+	const botonesMiembrosResponsive = document.querySelectorAll('.tabla-responsive .icono-miembros');
+	habilitarBotonesEditar(botonesEditar);
+	habilitarBotonesEditar(botonesEditarResponsive);
+	habilitarBotonesEliminar(botonesEliminar);
+	habilitarBotonesEliminar(botonesEliminarResponsive);
+	habilitarBotonesMiembros(botonesMiembros);
+	habilitarBotonesMiembros(botonesMiembrosResponsive);
+}
+
 const obtenerNucleoUnic = (id) => {
 	fetch(`../modelos/nucleos/obtener_nucleo_unic.php?id=${id}`)
 	.then(response => response.json())
@@ -233,6 +242,15 @@ const rellenarCamposFormEdit = (nucleo) => {
 				selectEvaluacionForm.selectedIndex = 2;
 		}
 	}
+}
+
+const habilitarBotonesMiembros = (array) => {
+	array.forEach((boton) => {
+		boton.addEventListener('click', e => {
+			let direccionNuc = e.target.parentElement.getAttribute('data-direc');
+			window.location.href = `../index.html?direccionNucleo=${direccionNuc}`;
+		})
+	} );
 }
 
 const habilitarBotonesEditar = (array) => {
@@ -358,3 +376,7 @@ obtenerNucleos();
  		}
  	});
  });
+
+document.querySelector('h1').addEventListener('click', () => {
+    location.href = '../index.html';
+});
