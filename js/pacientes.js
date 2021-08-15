@@ -10,6 +10,7 @@ const iconLoader = document.querySelector('.loader-container');
 let listaPermanente = [];
 let listaPermanenteResponsive = [];
 let modoBusqueda = false;
+let url = window.location.href;
 
 /***************
  * FUNCIONES   *
@@ -484,6 +485,19 @@ const obtenerPacientes = () => {
             buscarPacientes();
         }
 
+        if (url.indexOf('direccionNucleo') > -1) {
+            url = url.replace('%20', " ");
+            var index = url.indexOf('direccionNucleo');
+            console.log('index', index);
+            console.log(url.slice(index+16));
+            let direccion = url.slice(index+16);
+            entrarModoBusqueda();
+            document.querySelector('#direccion_buscar').value = direccion;
+            // formBuscar.submit();
+            buscarPacientes();
+            console.log(url);
+        }
+
     });
 }
 
@@ -582,11 +596,13 @@ const rellenarCamposFormEdit = (id) => {
 }
 
 const buscarPacientes = (e) => {
+    console.log('buscando');
     iconLoader.classList.remove('d-none');
-    // alert('Buscando');
+
     if (e) {
         e.preventDefault();
     }
+
     let inputs = formBuscar.querySelectorAll('input');
     let selects = formBuscar.querySelectorAll('select');
     let sexo;
@@ -594,17 +610,15 @@ const buscarPacientes = (e) => {
     let buscadoCount = 0;
     let resultadosPreliminares = [];
     let resultadoFinal = [];
-    console.log('inputs', inputs);
-    console.log('selects', selects);
 
-    
+    // COMPROBANDO SI LOS INPUT DEL SEXO ESTAN ACTIVOS
     if(inputs[6].checked){
         sexo = 'M';
     } else if(inputs[7].checked){
         sexo = 'F';
     }
 
-    
+    // GUARDANDO LOS VALORES DE LOS INPUTS Y LOS SELECT EN UN ARRAY
     if(inputs[0].value){
         buscado.push(inputs[0].value);
         buscadoCount++;
@@ -668,29 +682,37 @@ const buscarPacientes = (e) => {
         buscado.push('');
     }
 
-    
+    // RECORRO CADA FILA EN LA TABLA
     listaPermanente.forEach( fila => {
         let contadorInterno = 0;
+        // POR CADA FILA RECORRO CADA UNA DE SUS COLUMNAS EN BUSCA DE COINCIDENCIAS
         for(var i = 0; i < 9; i++){
+            // SI ES EL CAMPO EDAD, SALTARLO PARA UN ANALISIS POSTERIOR
             if (i == 4 || buscado[i] === '')
                 continue;
+            // *************
 
             let valorTabla = fila.children[i].textContent.toLowerCase();
             let valorBuscado = buscado[i].toLowerCase();
             
             if(valorTabla.indexOf(valorBuscado) > -1){
-                // console.log(fila.children[i].textContent);
-                // console.log('coincidencia');
                 contadorInterno++;
+                // SI HAY COINCIDENCIAS EN EL CAMPO GRUPO DISP Y EL TAMAÑO 
+                // DE LA CADENA COINCIDE TENERLO EN CUENTA, DE OTRA MANERA NO
+                if(i == 2 && valorTabla.length != valorBuscado.length){
+                    contadorInterno--;
+                }
             }
         }
+
+        // SI LA FILA COINCIDE CON TODOS LOS VALORES BUSCADOS, GUARDAR RESULTADOS
         if(contadorInterno == buscadoCount){
-            // console.log(`fila con total coincidencia id=${fila.getAttribute('data-id')}`);
             resultadosPreliminares.push(fila);
         }
-        // console.log(fila);    
+
     });
 
+    // MANEJANDO EL CAMPO EDAD
     if(buscado[4] === ''){
         resultadoFinal = resultadosPreliminares;
     } else if(buscado[4].length <= 2){
@@ -718,7 +740,14 @@ const buscarPacientes = (e) => {
 }
 
 const mostrarResultadosBusqueda = (array) => {
-    location.href = `${location.pathname}#encabezado-vista`;
+    console.log('mostrando resultados');
+    Swal.fire({
+       title: 'Búsqueda finalizada',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+    location.href = `${location.href}#encabezado-vista`;
     tablaPacientes.innerHTML = ``;
     tablaResponsive.innerHTML = ``;
     array.forEach( fila => {
@@ -734,9 +763,33 @@ const mostrarResultadosBusqueda = (array) => {
     iconLoader.classList.add('d-none');
 }
 
+const entrarModoBusqueda = () => {
+    Swal.fire({
+       title: 'Modo Búsqueda',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+    modoBusqueda = true;
+    formAgregar.classList.add('d-none');
+    formBuscar.classList.remove('d-none');
+    formBuscar.reset();
+    tablaPacientes.innerHTML = ``;
+    tablaResponsive.innerHTML = ``;
+    window.scroll(0, 100);
+    encabezadoTabla.innerText = 'Resultados de Búsqueda';
+}
+
 /*********************
  *  FUNCIONES - FIN  *
  *********************/
+ // window.addEventListener('DOMContentLoaded', () => {
+ //    if (url.indexOf('direccionNucleo') > -1) {
+ //        url = url.replace('%20', " ");
+ //        entrarModoBusqueda();
+ //        console.log(url);
+ //    }
+ // });
 
 /*********************** 
  *    LEER PACIENTE    *
@@ -772,22 +825,7 @@ formAgregar.addEventListener('submit', e => {
   ************************/
 formBuscar.addEventListener('submit', buscarPacientes);
 
-searchIcon.addEventListener('click', function(e) {
-    Swal.fire({
-       title: 'Modo Búsqueda',
-       type: 'info',
-       showConfirmButton: false,
-       timer: 1500
-    });
-    modoBusqueda = true;
-    formAgregar.classList.add('d-none');
-    formBuscar.classList.remove('d-none');
-    formBuscar.reset();
-    tablaPacientes.innerHTML = ``;
-    tablaResponsive.innerHTML = ``;
-    window.scroll(0, 100);
-    encabezadoTabla.innerText = 'Resultados de Búsqueda';
- });
+searchIcon.addEventListener('click', entrarModoBusqueda);
 
 cancelarEditar.addEventListener('click', function() {
     Swal.fire({
@@ -805,6 +843,11 @@ cancelarEditar.addEventListener('click', function() {
 cancelarBuscar.addEventListener('click', function() {
     modoBusqueda = false;
     encabezadoTabla.innerText = 'Pacientes';
+
+    if(url.indexOf('direccionNucleo') > -1){
+        location.href = 'index.html';
+    }
+
     obtenerPacientes();
     Swal.fire({
        title: 'Saliendo del modo Búsqueda',
@@ -815,4 +858,8 @@ cancelarBuscar.addEventListener('click', function() {
         formBuscar.classList.add('d-none');
         formAgregar.classList.remove('d-none');
     });
+});
+
+document.querySelector('h1').addEventListener('click', () => {
+    location.href = 'index.html?';
 });

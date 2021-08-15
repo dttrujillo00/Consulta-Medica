@@ -622,9 +622,10 @@ table {
 }
 
 .table {
-    width: 100%;
+    max-width: 100%;
     margin-bottom: 1rem;
     color: #212529;
+    overflow: scroll;
 }
 
 .table th,
@@ -665,13 +666,19 @@ tr span i{
 
 .icono-editar:hover i{
     cursor: pointer;
-    color: #28a745; /*VERDE*/
+    color: var(--sano); 
     background-color: transparent;
 }
 
 .icono-eliminar:hover i{
     cursor: pointer;
-    color: #dc3545; /*ROJO*/
+    color: var(--enfermo);
+    background-color: transparent;
+}
+
+.icono-miembros:hover i {
+    cursor: pointer;
+    color: var(--btnColor);
     background-color: transparent;
 }
 
@@ -923,12 +930,21 @@ ESTILOS RESPONSIVE
 
     .campo .acciones span:hover{
         background-color: transparent;
-        color: #28a745; /*VERDE*/
     }
 
-    .campo .acciones span:last-child:hover{
-        background-color: transparent;
-        color: #dc3545; /*ROJO*/
+    .campo .acciones .icono-editar:hover i{
+        /*background-color: transparent;*/
+        color: var(--sano); /*VERDE*/
+    }
+
+    .campo .acciones .icono-eliminar:hover i{
+        /*background-color: transparent;*/
+        color: var(--enfermo); /*ROJO*/
+    }
+
+    .campo .acciones .icono-miembros:hover i{
+        /*background-color: transparent;*/
+        color: var(--btnColor);
     }
 
     .campo .acciones span:last-child{
@@ -1057,18 +1073,18 @@ ESTILOS RESPONSIVE
 /* FLECHA DE HACER SCROLL */
 
 .scroll-up i{
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        z-index: 2000;
-        background-color: var(--colorPrincipal);
-        border-radius: 50%;
-        color: white;
-        font-size: 2.5rem;
-        box-shadow: 1px 2px 3px var(--colorPrincipal);
-        padding: .2rem;
-        transform: scale(0);
-        transition: all .3s;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 2000;
+    background-color: var(--colorPrincipal);
+    border-radius: 50%;
+    color: white;
+    font-size: 2.5rem;
+    box-shadow: 1px 2px 3px var(--colorPrincipal);
+    padding: .2rem;
+    transform: scale(0);
+    transition: all .3s;
 }
 
 .scroll-up i:hover{

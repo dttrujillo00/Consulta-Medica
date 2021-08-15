@@ -14,7 +14,8 @@ try{
     $result = $statement->fetchAll(); 
 
     $respuesta = array(
-        'respuesta' => 'Correcto'
+        'respuesta' => 'Correcto',
+        'datos' => $result
         );
     }
 catch (Exception $e) {
