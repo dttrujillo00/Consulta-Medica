@@ -16,6 +16,10 @@
 		<i class="fa fa-arrow-up"></i>
 	</div>
 
+	<div class="loader-container d-none">
+		<div class="loader"></div>
+	</div>
+
 	<section class="panel-de-notificaciones">
 
 		<div class="header-panel-notificaciones">
@@ -154,7 +158,7 @@
 
 				<ul>
 					<li><a href="../index.html" class="fa fa-user"></a></li>
-					<li class="active"><a href="#" class="fa fa-home"></a></li>
+					<li class="active"><a href="./nucleos.html" class="fa fa-home"></a></li>
 					<li><a href="./graficos.html" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
@@ -172,8 +176,8 @@
 				
 					<form class="form-agregar editar" id="form-editar">
 
-						<h2 class="col-md-12">Editar Núcleo</h2>
-
+						<h2 class="col-md-12 h2-editar">Editar Núcleo</h2>
+						<i class="fa fa-close cerrar-form"></i>
 						<input type="hidden">
 
 						<input  
@@ -309,6 +313,25 @@
 						</div>
 
 					</form>	
+
+					<form class="form-buscar d-none" id="form-buscar">
+						<h2 class="col-md-12 col-sm-12">Buscar Núcleos</h2>
+						<i class="fa fa-close cerrar-form"></i>
+
+						<input  
+						placeholder="Dirección..." 
+						type="text" 
+						id="direccion-nucleo">
+
+						<input  
+						placeholder="Manzana..." 
+						type="text" 
+						id="manzana-nucleo">
+
+						<div class="div-button col-md-4 col-sm-12">
+							<button class="btn btn-buscar" id="btn_buscar">Buscar</button>
+						</div>
+					</form>
 				
 			</div>
 		</div>

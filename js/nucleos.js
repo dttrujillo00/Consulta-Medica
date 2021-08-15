@@ -1,24 +1,35 @@
-const bodyTable = document.querySelector('.table tbody');
-const bodyTableResponsive = document.querySelector('.tabla-responsive');
+const tablaNucleo = document.querySelector('.table tbody');
+const tablaNucleoResponsive = document.querySelector('.tabla-responsive');
 const contFormEdit = document.querySelector('.cont-form-edit-nuc');
-const formEditNucleo = document.querySelector('#form-editar');
+const formEditar = document.querySelector('#form-editar');
 const camposFormEdit = document.querySelectorAll('#form-editar input');
+const cancelarEditar = document.querySelector('#form-editar i.cerrar-form');
+const cancelarBuscar = document.querySelector('#form-buscar i.cerrar-form');
 const selectEvaluacionForm = document.querySelector('#select-evaluacion');
+const iconLoader = document.querySelector('.loader-container');
+const formBuscar = document.querySelector('#form-buscar');
+const searchIcon = document.querySelector('.fa-search');
+const encabezadoTabla = document.querySelector('.encabezado-vista h2');
+let modoBusqueda = false;
+let listaPermanente = [];
+let listaPermanenteResponsive = [];
 
 /************************
  *       FUNCIONES      *		
  ************************/
  const obtenerNucleos = () => {
+	iconLoader.classList.remove('d-none');
 	fetch('../modelos/nucleos/obtener_nucleo.php')
 	.then(res => res.json())
 	.then(data => {
 		// let contenidoTabla;
-		bodyTable.innerHTML = ``;
-		bodyTableResponsive.innerHTML = ``;
+		tablaNucleo.innerHTML = ``;
+		tablaNucleoResponsive.innerHTML = ``;
 		
 		data.datos.forEach((nucleo) => {
 			// console.log(nucleo);
 			var fila = document.createElement('tr');
+			fila.setAttribute('data-id',nucleo.idNuc)
 			fila.classList.add('grupo1');
 
 			fila.innerHTML = `
@@ -47,9 +58,11 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 				</td>
 			`;
 
-			bodyTable.appendChild(fila);
+			tablaNucleo.appendChild(fila);
+			listaPermanente.push(fila);
 
 			var filaResponsive = document.createElement('div');
+			filaResponsive.setAttribute('data-id', nucleo.idNuc);
 			filaResponsive.classList.add('grupo1', 'fila-paciente');
 
 			filaResponsive.innerHTML = `
@@ -102,8 +115,11 @@ const selectEvaluacionForm = document.querySelector('#select-evaluacion');
 			</div>
 			`;
 
-			bodyTableResponsive.appendChild(filaResponsive);
+			tablaNucleoResponsive.appendChild(filaResponsive);
+			listaPermanenteResponsive.push(filaResponsive);
 		});
+
+		iconLoader.classList.add('d-none');
 
 		habilitarBotones();
 	})
@@ -125,9 +141,11 @@ const habilitarBotones = () => {
 }
 
 const obtenerNucleoUnic = (id) => {
+	iconLoader.classList.remove('d-none');
 	fetch(`../modelos/nucleos/obtener_nucleo_unic.php?id=${id}`)
 	.then(response => response.json())
 	.then(data => {
+		iconLoader.classList.add('d-none');
 		if(data.respuesta == 'Correcto'){
 			contFormEdit.classList.remove('smallDot');
 			window.scroll(0, 100);
@@ -257,7 +275,7 @@ const habilitarBotonesEditar = (array) => {
 	array.forEach((boton) => {
 		boton.addEventListener('click', (e) => {
 			// console.log(e.target);
-			formEditNucleo.reset();
+			formEditar.reset();
 			let idNucleo = e.target.parentElement.id;
 			obtenerNucleoUnic(idNucleo);//Esta funcion se hace otra llamada a otra funcion
 									//Que rellena los campos del formulario
@@ -313,6 +331,87 @@ const habilitarBotonesEliminar = (array) => {
  });
 }
 
+const entrarModoBusqueda = () => {
+    Swal.fire({
+       title: 'Modo Búsqueda',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    });
+    modoBusqueda = true;
+    formEditar.classList.add('d-none');
+    formBuscar.classList.remove('d-none');
+    formBuscar.reset();
+    tablaNucleo.innerHTML = ``;
+    tablaNucleoResponsive.innerHTML = ``;
+    window.scroll(0, 100);
+	contFormEdit.classList.remove('smallDot');
+    encabezadoTabla.innerText = 'Resultados de Búsqueda';
+}
+
+const buscarNucleos = (e) => {
+	e.preventDefault();
+	iconLoader.classList.remove('d-none');
+
+	let inputs = formBuscar.querySelectorAll('input');
+	let buscado = [];
+	let buscadoCount = 0;
+	let resultadoFinal = [];
+
+	inputs.forEach( input => {
+		let value = input.value.trim();
+		if(value != ''){
+			buscado.push(value);
+			buscadoCount++;
+		} else {
+			buscado.push('nullEmpty');
+		}
+	});
+
+	listaPermanente.forEach( fila => {
+		let contadorInterno = 0;
+		for(var i = 0; i < 2; i++){
+			let valorTabla = fila.children[i].textContent.toLowerCase();
+            let valorBuscado = buscado[i].toLowerCase();
+
+			if(valorTabla.indexOf(valorBuscado) > -1){
+				contadorInterno++;
+			}
+		}
+
+		if(contadorInterno == buscadoCount){
+			resultadoFinal.push(fila);
+		}
+
+		encabezadoTabla.innerText = `Resultados de Búsqueda: ${resultadoFinal.length} coincidencia/s`;
+
+		mostrarResultadosBusqueda(resultadoFinal);
+	});
+}
+
+const mostrarResultadosBusqueda = (array) => {
+	Swal.fire({
+		title: 'Búsqueda finalizada',
+		type: 'info',
+		showConfirmButton: false,
+		timer: 1500
+	 });
+
+	 tablaNucleo.innerHTML = '';
+	 tablaNucleoResponsive.innerHTML = '';
+
+	 array.forEach( fila => {
+		 tablaNucleo.appendChild(fila);
+		 listaPermanenteResponsive.forEach( filaResponsive => {
+			if(filaResponsive.getAttribute('data-id') == fila.getAttribute('data-id')){
+				tablaNucleoResponsive.appendChild(filaResponsive);
+			}
+		 });
+	 });
+
+	 iconLoader.classList.add('d-none');
+}
+
 /************************
  *     LEER NUCLEOS     *		
  ************************/
@@ -321,7 +420,7 @@ obtenerNucleos();
 /************************
  *   GUARDAR NUCLEO      *		
  ************************/
- formEditNucleo.addEventListener('submit', function(e) {
+ formEditar.addEventListener('submit', function(e) {
  	e.preventDefault();
 
  	let datos = new FormData();
@@ -354,12 +453,14 @@ obtenerNucleos();
 
  	// console.log(datos.get('funcionamiento'));
 
+	iconLoader.classList.remove('d-none');
  	fetch('../modelos/nucleos/modelo_nucleo.php', {
  		method: 'POST',
  		body: datos
  	})
  	.then(response => response.json())
  	.then(data => {
+		iconLoader.classList.add('d-none');
  		if(data.respuesta == 'Existente' || data.respuesta == 'Correcto'){
 			contFormEdit.classList.add('smallDot');
 			obtenerNucleos();
@@ -376,6 +477,39 @@ obtenerNucleos();
  		}
  	});
  });
+
+ formBuscar.addEventListener('submit', buscarNucleos);
+
+searchIcon.addEventListener('click', entrarModoBusqueda);
+
+cancelarEditar.addEventListener('click', function() {
+    Swal.fire({
+       title: 'No se guardaron los cambios',
+       type: 'info',
+       showConfirmButton: false,
+       timer: 1500
+    }).then(()=>{
+        contFormEdit.classList.add('smallDot');
+    });
+});
+
+cancelarBuscar.addEventListener('click', () => {
+	modoBusqueda = false;
+	encabezadoTabla.innerText = 'Núcleos';
+
+	obtenerNucleos();
+
+	Swal.fire({
+		title: 'Saliendo del modo Búsqueda',
+		type: 'info',
+		showConfirmButton: false,
+		timer: 1500
+	 }).then(()=>{
+		formBuscar.classList.add('d-none');
+		formEditar.classList.remove('d-none');
+		contFormEdit.classList.add('smallDot');
+	 });
+});
 
 document.querySelector('h1').addEventListener('click', () => {
     location.href = '../index.html';

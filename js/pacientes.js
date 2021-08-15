@@ -103,8 +103,6 @@ const editarPaciente = (datos) => {
         if(data.respuesta === 'Correcto') {
             iconLoader.classList.add('d-none');
 
-            // if(!modoBusqueda)
-                obtenerPacientes();
 
             Swal.fire({
                 type: 'success',
@@ -119,6 +117,7 @@ const editarPaciente = (datos) => {
                     formAgregar.classList.add('d-none');
                     formBuscar.classList.remove('d-none');
                 }
+                obtenerPacientes();
             });
         }
     })
@@ -486,11 +485,11 @@ const obtenerPacientes = () => {
         }
 
         if (url.indexOf('direccionNucleo') > -1) {
-            url = url.replace('%20', " ");
             var index = url.indexOf('direccionNucleo');
             console.log('index', index);
             console.log(url.slice(index+16));
             let direccion = url.slice(index+16);
+            direccion = direccion.replace("%20"," ");
             entrarModoBusqueda();
             document.querySelector('#direccion_buscar').value = direccion;
             // formBuscar.submit();
@@ -620,7 +619,7 @@ const buscarPacientes = (e) => {
 
     // GUARDANDO LOS VALORES DE LOS INPUTS Y LOS SELECT EN UN ARRAY
     if(inputs[0].value){
-        buscado.push(inputs[0].value);
+        buscado.push(inputs[0].value.trim());
         buscadoCount++;
     } else {
         buscado.push('');
@@ -642,14 +641,14 @@ const buscarPacientes = (e) => {
 
 
     if (inputs[2].value) {
-        buscado.push(inputs[2].value);
+        buscado.push(inputs[2].value.trim());
         buscadoCount++;
     } else {
         buscado.push('');
     }
 
     if (inputs[1].value != '') {
-        buscado.push(inputs[1].value);
+        buscado.push(inputs[1].value.trim());
     } else {
         buscado.push('');
     }
@@ -662,21 +661,21 @@ const buscarPacientes = (e) => {
     }
 
     if (inputs[5].value) {
-        buscado.push(inputs[5].value);
+        buscado.push(inputs[5].value.trim());
         buscadoCount++;
     } else {
         buscado.push('');
     }
 
     if (inputs[4].value) {
-        buscado.push(inputs[4].value);
+        buscado.push(inputs[4].value.trim());
         buscadoCount++;
     } else {
         buscado.push('');
     }
 
     if (inputs[3].value) {
-        buscado.push(inputs[3].value);
+        buscado.push(inputs[3].value.trim());
         buscadoCount++;
     } else {
         buscado.push('');
@@ -747,7 +746,6 @@ const mostrarResultadosBusqueda = (array) => {
        showConfirmButton: false,
        timer: 1500
     });
-    location.href = `${location.href}#encabezado-vista`;
     tablaPacientes.innerHTML = ``;
     tablaResponsive.innerHTML = ``;
     array.forEach( fila => {
@@ -861,5 +859,5 @@ cancelarBuscar.addEventListener('click', function() {
 });
 
 document.querySelector('h1').addEventListener('click', () => {
-    location.href = 'index.html?';
+    location.href = 'index.html';
 });

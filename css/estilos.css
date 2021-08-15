@@ -116,6 +116,10 @@ h1{
     font-family: 'Open-sans-bold';
 }
 
+h1:hover{
+    cursor: pointer;
+}
+
 h2{
     display: block;
 }
@@ -389,13 +393,6 @@ ESTILOS CUADRO AGREGAR PACIENTE
     margin: 0 auto;
 }
 
-.form-agregar, .form-buscar{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-}
-
 .btn-desplegable{
    text-align: center;
    background-color: var(--colorPrincipal);
@@ -438,6 +435,14 @@ ESTILOS CUADRO AGREGAR PACIENTE
     cursor: pointer;
 }
 
+.form-agregar, .form-buscar{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 .form-agregar h2{
     text-align: center;
     margin-bottom: 1rem;
@@ -447,6 +452,20 @@ ESTILOS CUADRO AGREGAR PACIENTE
 .form-buscar h2{
     text-align: center;
     margin-bottom: 1rem;
+}
+
+.form-agregar i, .form-buscar i{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.5rem;
+    transition: transform .2s;
+}
+
+.form-agregar i:hover, .form-buscar i:hover{
+    color: var(--btnColor);
+    cursor: pointer;
+    transform: scale(1.2);
 }
 
 .form-agregar.editar .h2-editar {
@@ -503,24 +522,6 @@ form button{
     width: 100%;
     display: flex;
     justify-content: space-between;
-}
-
-#form-agregar, #form-buscar{
-    position: relative;
-}
-
-#form-agregar i, #form-buscar i{
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 1.5rem;
-    transition: transform .2s;
-}
-
-#form-agregar i:hover, #form-buscar i:hover{
-    color: var(--btnColor);
-    cursor: pointer;
-    transform: scale(1.2);
 }
 
  /*********************** 
