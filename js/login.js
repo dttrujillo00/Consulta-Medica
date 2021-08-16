@@ -1,43 +1,54 @@
 const formularioLogin = document.querySelector('form');
-const inputs = document.querySelectorAll('form input');
+const usuario = document.getElementById('usuario');
+const password = document.getElementById('password');
 const submitBoton = document.querySelector('button.btn');
 const respuestaSpan = document.querySelector('.respuesta');
 const iconoOjo = document.getElementById('icono-ojo');
+let formularioValido = true;
 
-
-formularioLogin.addEventListener('submit', function(e) {
-	e.preventDefault();
-
-	if(validar(inputs)){
-		let data = new FormData();
-
-		data.append('user', inputs[0].value);
-		data.append('password', inputs[1].value);
-
-		modificarBotonUI(enviarDatos(data));
-	}
-});
-
-function validar(inputs) {
-
-	if(inputs[0].value.trim() === ''){
-		inputs[0].className = 'error';
-		return false;
-	} else {
-		inputs[0].className = 'correcto';
-	}
-
-	if(inputs[1].value.trim() === ''){
-		inputs[1].className = 'error';
-		return false;
-	} else {
-		inputs[1].className = 'correcto';
-	}
-
-	return true;
+const showError = (input, message) => {
+	const inputContainer = input.parentElement;
+	inputContainer.className = 'input-container error';
+	const small = inputContainer.querySelector('small');
+	small.innerText = message;
 }
 
-function enviarDatos(data) {
+const showSuccess = (input) => {
+	const inputContainer = input.parentElement;
+
+	inputContainer.className = 'input-container success';
+}
+
+function checkRequired(inputArr) {
+	inputArr.forEach( input => {
+		if(input.value.trim() === ''){
+			showError(input, `${getFieldName(input)} es requerido`);
+			formularioValido = false;
+		} else {
+			showSuccess(input);
+		}
+	});
+}
+
+const getFieldName = (input) => {
+	return input.id.charAt(0).toUpperCase() + input.id.slice(1);
+}
+
+const checkLength = (input, min) => {
+	if(input.value.length < min){
+		showError(input, `${getFieldName(input)} debe tener más de ${min} caracteres`);
+		formularioValido = false;
+	} else {
+		showSuccess(input);
+	}
+}
+
+function prepareSend(inputArr) {
+	let data = new FormData();
+
+	data.append('usuario', inputArr[0].value);
+	data.append('password', inputArr[1].value);
+
 	return true;
 }
 
@@ -67,10 +78,26 @@ iconoOjo.addEventListener('click', function(){
 	if (iconoOjo.classList.contains('fa-eye-slash')) {
 		iconoOjo.classList.remove('fa-eye-slash');
 		iconoOjo.classList.add('fa-eye');
-		inputs[1].type = 'text';
+		password.type = 'text';
 	} else {
 		iconoOjo.classList.remove('fa-eye');
 		iconoOjo.classList.add('fa-eye-slash');
-		inputs[1].type = 'password';
+		password.type = 'password';
 	}
+});
+
+
+
+formularioLogin.addEventListener('submit', function(e) {
+	e.preventDefault();
+
+	checkRequired([usuario, password]);
+	checkLength(usuario, 5);
+	checkLength(password, 8);
+
+	if (formularioValido) {
+		modificarBotonUI(prepareSend([usuario, password]));
+	}
+
+	formularioValido = true;
 });
