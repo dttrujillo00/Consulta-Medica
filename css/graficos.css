@@ -1,0 +1,57 @@
+@import url(estilos.css);
+
+.contenedor-graficos{
+     display: flex;
+     flex-wrap: wrap;
+     flex-direction: column;
+ }
+ .grafico{
+    margin: auto;
+    border-left: 1px solid rgb(6, 152, 87);
+    transform: rotate(-90deg);
+    max-width: 200px;
+    position: relative;
+ }
+
+ .grafico h2{
+     transform: rotate(90deg);
+     position: absolute;
+     right: -170px;
+     top: 50%;
+ }
+
+ .grafico ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;  
+ }
+
+.grafico ul li{
+    background-color: var(--colorPrincipal);
+    height: 20px; 
+    position: relative;
+    text-align: right;
+    width: 0;
+    transition: all 1s;
+    border-radius: 0 5px 5px 0;
+ }
+
+.grafico ul li:after{
+    content: attr(data-content);
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 5px;
+    right: -25px;
+    transform: rotate(90deg);
+    font-weight: bold;
+}
+
+ .grafico ul li p{
+    position: absolute;
+    transform: rotate(90deg);
+    left: -20px;
+    font-weight: bold;
+    
+ }
