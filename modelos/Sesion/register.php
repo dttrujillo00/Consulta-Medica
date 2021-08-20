@@ -6,16 +6,14 @@
     $nick = filter_var($_GET['nick'], FILTER_SANITIZE_STRING);
     $number = filter_var($_GET['number'], FILTER_SANITIZE_STRING);
     $pass = filter_var($_GET['pass'], FILTER_SANITIZE_STRING);
-    $rol = filter_var($_GET['rol'], FILTER_SANITIZE_STRING);
     $consult = filter_var($_GET['consult'], FILTER_SANITIZE_STRING);
+    $rol = filter_var($_GET['rol'], FILTER_SANITIZE_STRING);
 
     $hash = password_hash($pass, PASSWORD_DEFAULT);
     try{
-        $statement = $pdo->prepare('INSERT INTO usuario WHERE nombre_usuario = ?, alias_usuario = ?, numero usuario = ?, contrasenna = ?, id_cons = ?');
-        $statement->execute(array($user, $nick, $number, $pass, $consult));		
-        $id_user = $pdo->lastInsertId();
-        $statement = $pdo->prepare('INSERT INTO usuario_rol WHERE id_us = ?, id_rol = ?');
-        $statement->execute(array($id_user, $rol));		
+        $statement = $pdo->prepare('INSERT INTO usuario WHERE nombre_usuario = ?, alias_usuario = ?, numero usuario = ?, contrasenna = ?, id_cons = ?, id_rol = ?');
+        $statement->execute(array($user, $nick, $number, $pass, $consult, $rol));		
+        $id_user = $pdo->lastInsertId();		
 		
         $respuesta = array(
 			'respuesta' => 'Correcto',
