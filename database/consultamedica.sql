@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-08-2021 a las 05:43:22
+-- Tiempo de generación: 20-08-2021 a las 04:52:56
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -452,21 +452,32 @@ CREATE TABLE `tipo_plan` (
 
 CREATE TABLE `usuario` (
   `id_us` int(10) NOT NULL,
-  `nombre_usuario` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre_usuario` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
+  `alias_usuario` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `numerio_usuario` int(10) NOT NULL,
-  `contraseña` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `id_cons` int(10) DEFAULT NULL,
-  `id_rol` int(10) NOT NULL
+  `contrasenna` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `id_cons` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_us`, `nombre_usuario`, `numerio_usuario`, `contraseña`, `id_cons`, `id_rol`) VALUES
-(0, 'AdministradorPrincipal', -1, 'Administrador123*', NULL, 0),
-(1, 'JefePrueba', -2, 'Jefe012**', 0, 1),
-(2, 'MedicoPrueba', -3, 'Medico012*', 0, 2);
+INSERT INTO `usuario` (`id_us`, `nombre_usuario`, `alias_usuario`, `numerio_usuario`, `contrasenna`, `id_cons`) VALUES
+(0, 'Juan', 'AdministradorPrincipal', -1, 'Administrador123*', NULL),
+(1, 'Maria', 'JefePrueba', -2, 'Jefe012**', 0),
+(2, 'Pepa', 'MedicoPrueba', -3, 'Medico012*', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usuario_rol`
+--
+
+CREATE TABLE `usuario_rol` (
+  `id_us` int(10) NOT NULL,
+  `id_rol` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Índices para tablas volcadas
@@ -668,9 +679,16 @@ ALTER TABLE `tipo_plan`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_us`),
   ADD UNIQUE KEY `numerio_usuario` (`numerio_usuario`),
-  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
-  ADD KEY `id_rol` (`id_rol`),
+  ADD UNIQUE KEY `nombre_usuario` (`alias_usuario`),
   ADD KEY `id_cons` (`id_cons`) USING BTREE;
+
+--
+-- Indices de la tabla `usuario_rol`
+--
+ALTER TABLE `usuario_rol`
+  ADD PRIMARY KEY (`id_us`,`id_rol`),
+  ADD KEY `id_us` (`id_us`,`id_rol`),
+  ADD KEY `usuario_rol_ibfk_1` (`id_rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -856,8 +874,14 @@ ALTER TABLE `rol_privilegio`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`),
-  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`);
+
+--
+-- Filtros para la tabla `usuario_rol`
+--
+ALTER TABLE `usuario_rol`
+  ADD CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`id_us`) REFERENCES `usuario` (`id_us`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
