@@ -110,7 +110,7 @@ function sendData(url, data, method) {
 		body: data,
 		method: method
 	})
-	.then(res => res.json())
+	.then(res => res.text())
 	.then(data => {
 		console.log(data);
 		if(data.respuesta === 'Correcto'){

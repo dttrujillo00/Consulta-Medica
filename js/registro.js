@@ -47,7 +47,7 @@ formulario.addEventListener('submit', function(e) {
 
 	if (formularioValido) {
 		let data = prepareData([nombreCompleto, nombreUsuario, password, numeroMedico, consultorio, rol], 'registro');
-		sendData('../modelos/Sesion.register.php',data, 'POST');
+		sendData('../modelos/Sesion/register.php',data, 'POST');
 
 	}
 
