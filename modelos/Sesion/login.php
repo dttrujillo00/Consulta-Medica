@@ -11,9 +11,9 @@
 
     try{
         if($type  == 'user'){
-            $statement = $pdo->prepare('SELECT u.nombre_usuario AS usuario, u.numero_usuario AS numero_usuario, u.contrasenna AS contrasenna, r.rol AS rol, c.numero_consultorio AS consultorio FROM usuario u LEFT JOIN consultorio c ON u.id_cons = c.id_cons LEFT JOIN rol r ON u.id_rol = r.id_rol WHERE alias_usuario = ?');
+            $statement = $pdo->prepare('SELECT u.nombre_usuario AS usuario, u.numero_usuario AS numero_usuario, u.contrasenna AS contrasenna, r.rol AS rol, c.id_cons AS consultorio FROM usuario u LEFT JOIN consultorio c ON u.id_cons = c.id_cons LEFT JOIN rol r ON u.id_rol = r.id_rol WHERE alias_usuario = ?');
         } else {
-            $statement = $pdo->prepare('SELECT u.nombre_usuario AS usuario, u.numero_usuario AS numero_usuario, u.contrasenna AS contrasenna, r.rol AS rol, c.numero_consultorio AS consultorio FROM usuario u LEFT JOIN consultorio c ON u.id_cons = c.id_cons LEFT JOIN rol r ON u.id_rol = r.id_rol WHERE numero_usuario = ?');
+            $statement = $pdo->prepare('SELECT u.nombre_usuario AS usuario, u.numero_usuario AS numero_usuario, u.contrasenna AS contrasenna, r.rol AS rol, c.id_cons AS consultorio FROM usuario u LEFT JOIN consultorio c ON u.id_cons = c.id_cons LEFT JOIN rol r ON u.id_rol = r.id_rol WHERE numero_usuario = ?');
         }
         $statement->execute(array($user));		
         $result = $statement->fetch();
