@@ -20,7 +20,7 @@
             $statement->execute(array($consult));		
             $id_cons = $pdo->lastInsertId();		
         }else{
-            $id_cons = $tabla_cons['id_cons']
+            $id_cons = $tabla_cons['id_cons'];
         }
         $statement = $pdo->prepare('INSERT INTO usuario SET nombre_usuario = ?, alias_usuario = ?, numero usuario = ?, contrasenna = ?, id_cons = ?, id_rol = ?');
         $statement->execute(array($user, $nick, $number, $hash, $id_cons, $rol));		
