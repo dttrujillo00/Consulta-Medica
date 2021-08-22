@@ -21,12 +21,12 @@
 		$statement = $pdo->prepare('INSERT INTO paciente (nombre_comp_pac, edad_pac, fecha_nac_pac, labor_pac, diagnostico_pac, grupo_disponible_pac, sexo, nivel_educacional) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 		$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp, $id_sexo, $nivel_educacional));		
 		$id_pac = $pdo->lastInsertId();
-		$statement = $pdo->prepare('SELECT id_nuc FROM nucleo WHERE dir_nuc= ? and no_nuc = ?');
-		$statement->execute(array($direccion, $manzana));
+		$statement = $pdo->prepare('SELECT id_nuc FROM nucleo WHERE dir_nuc= ? and no_nuc = ? and id_cons = ?');
+		$statement->execute(array($direccion, $manzana, $_SESSION['consultorio']));
 		$tabla_nucleo=$statement->fetch();     
 		if($tabla_nucleo == null){
-			$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
-			$statement->execute(array($direccion, $manzana));
+			$statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc, id_cons) VALUES (?,?,?)');
+			$statement->execute(array($direccion, $manzana, $_SESSION['consultorio']));
 			$id_nuc = $pdo->lastInsertId();
 		}else{
 			$id_nuc = $tabla_nucleo["id_nuc"];
