@@ -17,25 +17,26 @@
 
 		<form>
 			<div class="input-container">
-				<input class="neutro" id="usuario" type="text" placeholder="@usuario o número de médico">
+				<input class="neutro" id="nick" type="text" placeholder="@usuario o número de médico">
 				<small>Error Message</small>
 				
 			</div>
 
 			<div class="input-container">
 				
-				<input class="neutro" id="password" type="password" placeholder="contraseña">
+				<input class="neutro" id="pass" type="password" placeholder="contraseña">
 				<i class="fa fa-eye-slash" id="icono-ojo"></i>
 				<small>Error Message</small>
 			</div>	
 
 
-		    <button class="btn" id="">Iniciar sesión</button>
+		    <button class="btn">Iniciar sesión</button>
 		</form>
 
 		<span class="respuesta"></span>
 	</div>
 
+	<script src="../js/funcionesLogin.js"></script>
 	<script src="../js/login.js"></script>
 	
 </body>
