@@ -266,7 +266,7 @@ const habilitarBotonesMiembros = (array) => {
 	array.forEach((boton) => {
 		boton.addEventListener('click', e => {
 			let direccionNuc = e.target.parentElement.getAttribute('data-direc');
-			window.location.href = `../index.html?direccionNucleo=${direccionNuc}`;
+			window.location.href = `../index.php?direccionNucleo=${direccionNuc}`;
 		})
 	} );
 }
@@ -512,5 +512,5 @@ cancelarBuscar.addEventListener('click', () => {
 });
 
 document.querySelector('h1').addEventListener('click', () => {
-    location.href = '../index.html';
+    location.href = '../index.php';
 });

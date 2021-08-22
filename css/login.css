@@ -44,6 +44,7 @@ body:after {
 	box-shadow: 0 0 10px black;
 	width: 360px;
 	border-radius: 10px;
+	max-height: 100vh;
 }
 
 .form-container h2 {
@@ -60,7 +61,7 @@ body:after {
 
 }
 
-.form-container form .input-container {
+.input-container {
 	flex: 0 0 100%;
 	margin-bottom: 2rem;
 	display: flex;
@@ -69,7 +70,11 @@ body:after {
 	position: relative;
 }
 
-.form-container form input {
+.select-container {
+	margin-bottom: 0;
+}
+
+.input-container input {
 	border: none;
 	width: 90%;
 	padding: 3px;
@@ -78,13 +83,23 @@ body:after {
 	font-family: 'Open-sans-regular';
 }
 
-.form-container form input:focus {
+.input-container input:focus {
 	border-color: #777;
 }
 
-.form-container form input::placeholder{
+.input-container input::placeholder{
 	font-family: 'Open-sans-regular';
 	font-weight: bold;
+}
+
+.input-container select {
+	width: 90%;
+	appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-bottom: 2px solid #f0f0f0; 
+    padding: .3rem;
 }
 
 .input-container.success input {

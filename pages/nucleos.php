@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (!$_SESSION['usuario']) {
+	header('location:pages/login.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -158,9 +167,9 @@
 	        <div class="contenido-sub-header">
 
 				<ul>
-					<li><a href="../index.html" class="fa fa-user"></a></li>
-					<li class="active"><a href="./nucleos.html" class="fa fa-home"></a></li>
-					<li><a href="./graficos.html" class="fa fa-calendar-o"> C/T</a></li>
+					<li><a href="../index.php" class="fa fa-user"></a></li>
+					<li class="active"><a href="./nucleos.php" class="fa fa-home"></a></li>
+					<li><a href="./graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>
 
 	        </div>

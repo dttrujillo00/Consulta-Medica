@@ -843,7 +843,7 @@ cancelarBuscar.addEventListener('click', function() {
     encabezadoTabla.innerText = 'Pacientes';
 
     if(url.indexOf('direccionNucleo') > -1){
-        location.href = 'index.html';
+        location.href = 'index.php';
     }
 
     obtenerPacientes();
@@ -859,5 +859,5 @@ cancelarBuscar.addEventListener('click', function() {
 });
 
 document.querySelector('h1').addEventListener('click', () => {
-    location.href = 'index.html';
+    location.href = 'index.php';
 });
