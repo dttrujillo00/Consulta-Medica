@@ -25,7 +25,7 @@
                 // die();
             }
             else{
-                if($pass == $result['contrasenna']){
+                if(password_verify($pass, $result['contrasenna'])){
                     $_SESSION['usuario'] = $result['usuario'];
                     $_SESSION['rol'] = $result['rol'];
                     $_SESSION['consultorio'] = $result['consultorio'];

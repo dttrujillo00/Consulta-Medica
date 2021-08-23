@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-08-2021 a las 07:12:39
+-- Tiempo de generación: 23-08-2021 a las 02:51:24
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -104,7 +104,9 @@ CREATE TABLE `consultorio` (
 --
 
 INSERT INTO `consultorio` (`id_cons`, `numero_consultorio`) VALUES
-(0, 1);
+(2, 1),
+(3, 3),
+(4, 2);
 
 -- --------------------------------------------------------
 
@@ -357,18 +359,6 @@ CREATE TABLE `privilegios` (
   `numero_privilegio` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Volcado de datos para la tabla `privilegios`
---
-
-INSERT INTO `privilegios` (`id_priv`, `privilegio`, `numero_privilegio`) VALUES
-(0, 'Agregar medico', 1),
-(1, 'Agregar Jefe', 2),
-(2, 'Administrar pacientes', 3),
-(3, 'Administrar nucleos', 4),
-(4, 'Acceso a estadisticas', 5),
-(5, 'Administrar contraseñas', 6);
-
 -- --------------------------------------------------------
 
 --
@@ -399,19 +389,6 @@ CREATE TABLE `rol_privilegio` (
   `id_priv` int(10) NOT NULL,
   `id_rol` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `rol_privilegio`
---
-
-INSERT INTO `rol_privilegio` (`id_priv`, `id_rol`) VALUES
-(0, 0),
-(0, 1),
-(1, 0),
-(2, 2),
-(3, 2),
-(4, 1),
-(5, 0);
 
 -- --------------------------------------------------------
 
@@ -454,7 +431,7 @@ CREATE TABLE `usuario` (
   `id_us` int(10) NOT NULL,
   `nombre_usuario` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
   `alias_usuario` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
-  `numerio_usuario` int(10) NOT NULL,
+  `numero_usuario` int(10) NOT NULL,
   `contrasenna` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `id_cons` int(10) DEFAULT NULL,
   `id_rol` int(10) NOT NULL
@@ -464,10 +441,11 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_us`, `nombre_usuario`, `alias_usuario`, `numerio_usuario`, `contrasenna`, `id_cons`, `id_rol`) VALUES
-(0, 'Juan', 'AdministradorPrincipal', -1, 'Administrador123*', NULL, 0),
-(1, 'Maria', 'JefePrueba', -2, 'Jefe012**', 0, 1),
-(2, 'Pepa', 'MedicoPrueba', -3, 'Medico012*', 0, 2);
+INSERT INTO `usuario` (`id_us`, `nombre_usuario`, `alias_usuario`, `numero_usuario`, `contrasenna`, `id_cons`, `id_rol`) VALUES
+(1, 'Henriiii', 'henri', 123456789, '$2y$10$VpEH3EN/RJqkmzLBTKnXGuG', 3, 2),
+(10, 'Henriiii', 'henrii', 12345, '$2y$10$2B7/MwOcum3aCXisaJZc0ul', 4, 2),
+(13, 'Henriiii', 'henriii', 123876, '$2y$10$M8aiQASH2/gOHT0etHoyhu/', 4, 2),
+(14, 'Henriiii', 'henriiiiii', 9876, '$2y$10$Uh9SKvV5pVof0SRM2jhSUuH', 4, 2);
 
 --
 -- Índices para tablas volcadas
@@ -668,9 +646,10 @@ ALTER TABLE `tipo_plan`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id_us`),
-  ADD UNIQUE KEY `numerio_usuario` (`numerio_usuario`),
+  ADD UNIQUE KEY `numerio_usuario` (`numero_usuario`),
   ADD UNIQUE KEY `nombre_usuario` (`alias_usuario`),
   ADD KEY `id_cons` (`id_cons`) USING BTREE,
+  ADD KEY `id_cons_2` (`id_cons`),
   ADD KEY `id_rol` (`id_rol`);
 
 --
@@ -694,6 +673,12 @@ ALTER TABLE `cdr`
 --
 ALTER TABLE `circunscripcion`
   MODIFY `id_cir` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `consultorio`
+--
+ALTER TABLE `consultorio`
+  MODIFY `id_cons` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluacion`
@@ -756,6 +741,18 @@ ALTER TABLE `planificacion`
   MODIFY `id_plan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `privilegios`
+--
+ALTER TABLE `privilegios`
+  MODIFY `id_priv` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `rol`
+--
+ALTER TABLE `rol`
+  MODIFY `id_rol` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `satis_ingreso`
 --
 ALTER TABLE `satis_ingreso`
@@ -766,6 +763,12 @@ ALTER TABLE `satis_ingreso`
 --
 ALTER TABLE `tipo_plan`
   MODIFY `id_tp` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_us` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
@@ -857,8 +860,8 @@ ALTER TABLE `rol_privilegio`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`),
-  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
+  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`),
+  ADD CONSTRAINT `usuario_ibfk_4` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
