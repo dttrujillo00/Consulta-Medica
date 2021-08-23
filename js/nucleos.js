@@ -10,6 +10,7 @@ const iconLoader = document.querySelector('.loader-container');
 const formBuscar = document.querySelector('#form-buscar');
 const searchIcon = document.querySelector('.fa-search');
 const encabezadoTabla = document.querySelector('.encabezado-vista h2');
+const cerrarSesion = document.getElementById('cerrar-sesion');
 let modoBusqueda = false;
 let listaPermanente = [];
 let listaPermanenteResponsive = [];
@@ -17,11 +18,12 @@ let listaPermanenteResponsive = [];
 /************************
  *       FUNCIONES      *		
  ************************/
- const obtenerNucleos = () => {
+const obtenerNucleos = () => {
 	iconLoader.classList.remove('d-none');
 	fetch('../modelos/nucleos/obtener_nucleo.php')
 	.then(res => res.json())
 	.then(data => {
+		console.log(data);
 		// let contenidoTabla;
 		tablaNucleo.innerHTML = ``;
 		tablaNucleoResponsive.innerHTML = ``;
@@ -509,6 +511,16 @@ cancelarBuscar.addEventListener('click', () => {
 		formEditar.classList.remove('d-none');
 		contFormEdit.classList.add('smallDot');
 	 });
+});
+
+ // CERRAR SESION
+    
+
+cerrarSesion.addEventListener('click', (e) => {
+    fetch('../modelos/Sesion/cerrarSesion.php')
+    .then(() => {
+    window.location.href = '../pages/login.php';
+    })
 });
 
 document.querySelector('h1').addEventListener('click', () => {

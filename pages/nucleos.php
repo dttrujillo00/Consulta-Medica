@@ -149,6 +149,9 @@ if (!$_SESSION['usuario']) {
             
             <nav class="nav-botones-header">
                 <ul>
+                	<li id="cerrar-sesion">
+                		<i class="fa fa-power-off"></i>
+                	</li>
                     <li>
                     	<i class="fa fa-search"></i>
                 	</li>

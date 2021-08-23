@@ -7,6 +7,7 @@ const tablaPacientes = document.querySelector('.table tbody');
 const tablaResponsive = document.querySelector('.tabla-responsive');
 const encabezadoTabla = document.querySelector('.encabezado-vista h2');
 const iconLoader = document.querySelector('.loader-container');
+const cerrarSesion = document.getElementById('cerrar-sesion');
 let listaPermanente = [];
 let listaPermanenteResponsive = [];
 let modoBusqueda = false;
@@ -15,7 +16,6 @@ let url = window.location.href;
 /***************
  * FUNCIONES   *
  ***************/
-
 const eliminarPaciente = (e) => {
     if(e.target.parentElement.classList.contains('icono-eliminar')){
         Swal.fire({
@@ -164,6 +164,7 @@ const agregarPaciente = (datos) => {
     })
     .then(res => res.json())
     .then(data => {
+        console.log(data);
         if(data.respuesta === 'Correcto') {
             iconLoader.classList.add('d-none');
             var nuevaFila = document.createElement('tr');
@@ -352,6 +353,7 @@ const obtenerPacientes = () => {
     fetch('modelos/pacientes/obtener_pacientes.php')
     .then(res => res.json())
     .then(data => {
+        console.log(data);
     	tablaPacientes.innerHTML = ``;
     	tablaResponsive.innerHTML = ``;
         while(listaPermanente[0]){
@@ -856,6 +858,14 @@ cancelarBuscar.addEventListener('click', function() {
         formBuscar.classList.add('d-none');
         formAgregar.classList.remove('d-none');
     });
+});
+
+// CERRAR SESION
+cerrarSesion.addEventListener('click', (e) => {
+    fetch('modelos/Sesion/cerrarSesion.php')
+    .then(() => {
+        window.location.href = 'pages/login.php';
+    })
 });
 
 document.querySelector('h1').addEventListener('click', () => {

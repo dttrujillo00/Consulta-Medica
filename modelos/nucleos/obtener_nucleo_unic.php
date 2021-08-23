@@ -2,6 +2,8 @@
 
 require_once('../../database/conexion.php');
 
+session_start();
+
 $id_nucleo_edit = $_GET['id'];
 
 try{

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+	const cerrarSesion = document.getElementById('cerrar-sesion');
 	const actualizarAnchoGrafico = (graficos) => {
 		var height = window.innerWidth;
 		var width = window.innerHeight / 2;
@@ -48,5 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
          cerrarPanel.addEventListener('click', function(){
             panel.classList.remove('mostrar-panel-notificaciones');
          });
+
+         cerrarSesion.addEventListener('click', (e) => {
+    		fetch('../modelos/Sesion/cerrarSesion.php')
+    		.then(() => {
+        	window.location.href = '../pages/login.php';
+    	});
+});
 
 });

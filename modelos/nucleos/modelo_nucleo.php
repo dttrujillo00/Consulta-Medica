@@ -2,6 +2,8 @@
 	// INSTANCIANDO LA CONEXION 
 	require_once('../../database/conexion.php');
 
+	session_start();
+
     $id_nuc = filter_var($_POST['idNuc'], FILTER_SANITIZE_STRING);
 	$direccion = filter_var($_POST['direccion'], FILTER_SANITIZE_STRING);
 	$manzana = filter_var($_POST['manzana'], FILTER_SANITIZE_STRING);

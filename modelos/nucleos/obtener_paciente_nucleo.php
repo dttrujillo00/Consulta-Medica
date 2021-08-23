@@ -4,6 +4,8 @@
 
 require_once('database/conexion.php');
 
+session_start();
+
 
 $id_nuc = filter_var($_POST['id_nuc'], FILTER_SANITIZE_STRING);
 

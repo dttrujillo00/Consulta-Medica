@@ -3,6 +3,8 @@
 	require_once('../../database/conexion.php');
 	require_once('../../funciones/funciones.php');
 
+	session_start();
+
 
 	$nombre_apellido = filter_var($_POST['nombre_apellido'], FILTER_SANITIZE_STRING);
 	$fecha_nacimiento = filter_var($_POST['fecha_nacimiento'], FILTER_SANITIZE_STRING);
