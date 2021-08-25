@@ -14,7 +14,7 @@ if (!$_SESSION['usuario']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="rgb(6, 152, 87)">
     
-    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/generales.css">
     <link rel="stylesheet" href="../css/graficos.css">
     <link rel="stylesheet" href="../css/elegant-icons.css">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
@@ -141,8 +141,15 @@ if (!$_SESSION['usuario']) {
             
             <nav class="nav-botones-header">
                 <ul>
-                	<li id="cerrar-sesion">
-                		<i class="fa fa-power-off"></i>
+                	<li id="info-usuario" class="info-usuario">
+                		<i class="fa fa-user"></i>
+                		<div class="info">
+                			<p>Nombre completo: <span><?php echo($_SESSION['usuario']) ?></span></p>
+                			<p>Consultorio: <span><?php echo($_SESSION['consultorio']) ?></span></p>
+                			<div id="cerrar-sesion" title="Cerrar sesión">
+                				<i class="fa fa-power-off"></i>
+                			</div>
+                		</div>
                 	</li>
                     <li>
                     	<i class="fa fa-bell campana"></i>

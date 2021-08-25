@@ -5,6 +5,8 @@ if (!$_SESSION['usuario']) {
 	header('location:pages/login.php');
 }
 
+// var_dump($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -149,15 +151,22 @@ if (!$_SESSION['usuario']) {
             
             <nav class="nav-botones-header">
                 <ul>
-                	<li id="cerrar-sesion">
-                		<i class="fa fa-power-off"></i>
+                	<li id="info-usuario" class="info-usuario">
+                		<i class="fa fa-user"></i>
+                		<div class="info">
+                			<p>Nombre completo: <span><?php echo($_SESSION['usuario']) ?></span></p>
+                			<p>Consultorio: <span><?php echo($_SESSION['consultorio']) ?></span></p>
+                			<div id="cerrar-sesion" title="Cerrar sesión">
+                				<i class="fa fa-power-off"></i>
+                			</div>
+                		</div>
                 	</li>
                     <li>
                     	<i class="fa fa-search"></i>
                 	</li>
                     <li>
                     	<i class="fa fa-bell campana"></i>
-                    	<span>12</span>
+                    	<span class="notificaciones">12</span>
                 	</li>
                 </ul>
             </nav>
@@ -170,7 +179,7 @@ if (!$_SESSION['usuario']) {
 	        <div class="contenido-sub-header">
 
 				<ul>
-					<li class="active"><a href="index.php" class="fa fa-user"></a></li>
+					<li class="active"><a href="index.php" class="fa fa-group"></a></li>
 					<li><a href="pages/nucleos.php" class="fa fa-home"></a></li>
 					<li><a href="pages/graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>

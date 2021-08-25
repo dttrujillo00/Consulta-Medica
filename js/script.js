@@ -1,13 +1,14 @@
-(function(){
     document.addEventListener('DOMContentLoaded', function(){
         const navegacionSubHeader = document.querySelectorAll('.contenido-sub-header ul li'),
               btnColapsarForm = document.querySelector('.btn-desplegable'),
-              tablaResponsive = document.querySelector('.tabla-responsive');
+              tablaResponsive = document.querySelector('.tabla-responsive'),
+              infoUsuario = document.querySelector('#info-usuario .info'),
+              infoUsuarioBtn = document.querySelector('#info-usuario i');;
         var flagbodyDesplegar = false;
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
         tablaResponsive.addEventListener('click', e => {
-          console.log(e.target);
+          // console.log(e.target);
           var filaActivada = e.target.parentElement.parentElement;
           if(e.target.classList.contains('fa-caret-down')){
                 e.target.classList.add('rotar');
@@ -75,6 +76,11 @@
 
          })
 
+         // INFO USUARIO ANIMATION
+         infoUsuarioBtn.addEventListener('click', function(e) {
+           infoUsuario.classList.toggle('mostrar');
+         });
+
          // NOTIFICACIONES
          const campana = document.querySelector('.nav-botones-header ul li:last-child'),
             panel = document.querySelector('.panel-de-notificaciones'),
@@ -88,4 +94,3 @@
             panel.classList.remove('mostrar-panel-notificaciones');
          });
     });
-})();

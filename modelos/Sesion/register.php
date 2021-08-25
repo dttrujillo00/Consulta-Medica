@@ -16,7 +16,7 @@
         $existe=$statement->fetch();
         if($existe == null)
         {
-            print("no error");
+            // print("no error");
             $statement = $pdo->prepare('SELECT id_cons FROM consultorio WHERE numero_consultorio = ?');
             $statement->execute(array($consult));
             $tabla_cons=$statement->fetch();
@@ -39,7 +39,7 @@
                 );
             }
             else{
-                print("error");
+                // print("error");
                 $respuesta = array(
                     'respuesta' => 'Error, numero de usuario o nick duplicado',
                     );

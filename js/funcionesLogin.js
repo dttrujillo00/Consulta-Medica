@@ -105,18 +105,18 @@ function prepareData(inputArr, accion) {
 	return formData;
 }
 
-function sendData(url, data, method) {
+function sendData(url, data, method, accion) {
 	fetch(url,{
 		body: data,
 		method: method
 	})
 	.then(res => res.json())
 	.then(data => {
-		console.log(data);
+		// console.log(data);
 		if(data.respuesta === 'Correcto'){
-			modificarBotonUI(submitBoton, true, 'login');
+			modificarBotonUI(submitBoton, true, accion);
 		} else {
-			modificarBotonUI(submitBoton, false, 'login');
+			modificarBotonUI(submitBoton, false, accion);
 			if (data.respuesta === 'Password incorrecta') {
 				showError(password, 'Contraseña incorrecta');
 			}

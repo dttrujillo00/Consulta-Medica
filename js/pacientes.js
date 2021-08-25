@@ -164,7 +164,7 @@ const agregarPaciente = (datos) => {
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         if(data.respuesta === 'Correcto') {
             iconLoader.classList.add('d-none');
             var nuevaFila = document.createElement('tr');
@@ -353,7 +353,7 @@ const obtenerPacientes = () => {
     fetch('modelos/pacientes/obtener_pacientes.php')
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
     	tablaPacientes.innerHTML = ``;
     	tablaResponsive.innerHTML = ``;
         while(listaPermanente[0]){
@@ -488,15 +488,15 @@ const obtenerPacientes = () => {
 
         if (url.indexOf('direccionNucleo') > -1) {
             var index = url.indexOf('direccionNucleo');
-            console.log('index', index);
-            console.log(url.slice(index+16));
+            // console.log('index', index);
+            // console.log(url.slice(index+16));
             let direccion = url.slice(index+16);
             direccion = direccion.replace("%20"," ");
             entrarModoBusqueda();
             document.querySelector('#direccion_buscar').value = direccion;
             // formBuscar.submit();
             buscarPacientes();
-            console.log(url);
+            // console.log(url);
         }
 
     });
@@ -597,7 +597,7 @@ const rellenarCamposFormEdit = (id) => {
 }
 
 const buscarPacientes = (e) => {
-    console.log('buscando');
+    // console.log('buscando');
     iconLoader.classList.remove('d-none');
 
     if (e) {
@@ -741,7 +741,7 @@ const buscarPacientes = (e) => {
 }
 
 const mostrarResultadosBusqueda = (array) => {
-    console.log('mostrando resultados');
+    // console.log('mostrando resultados');
     Swal.fire({
        title: 'Búsqueda finalizada',
        type: 'info',
@@ -783,14 +783,7 @@ const entrarModoBusqueda = () => {
 /*********************
  *  FUNCIONES - FIN  *
  *********************/
- // window.addEventListener('DOMContentLoaded', () => {
- //    if (url.indexOf('direccionNucleo') > -1) {
- //        url = url.replace('%20', " ");
- //        entrarModoBusqueda();
- //        console.log(url);
- //    }
- // });
-
+ 
 /*********************** 
  *    LEER PACIENTE    *
  ***********************/
@@ -862,10 +855,23 @@ cancelarBuscar.addEventListener('click', function() {
 
 // CERRAR SESION
 cerrarSesion.addEventListener('click', (e) => {
-    fetch('modelos/Sesion/cerrarSesion.php')
-    .then(() => {
-        window.location.href = 'pages/login.php';
+    Swal.fire({
+        title: 'Cerrar sesión',
+        text: '¿Desea cerrar ls sesión?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, cerrar!'
     })
+    .then(result => {
+        if(result.value){
+            fetch('modelos/Sesion/cerrarSesion.php')
+            .then(() => {
+                window.location.href = 'pages/login.php';
+            }); 
+        }
+    });
 });
 
 document.querySelector('h1').addEventListener('click', () => {

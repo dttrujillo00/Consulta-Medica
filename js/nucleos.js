@@ -23,7 +23,7 @@ const obtenerNucleos = () => {
 	fetch('../modelos/nucleos/obtener_nucleo.php')
 	.then(res => res.json())
 	.then(data => {
-		console.log(data);
+		// console.log(data);
 		// let contenidoTabla;
 		tablaNucleo.innerHTML = ``;
 		tablaNucleoResponsive.innerHTML = ``;
@@ -513,14 +513,25 @@ cancelarBuscar.addEventListener('click', () => {
 	 });
 });
 
- // CERRAR SESION
-    
-
+// CERRAR SESION
 cerrarSesion.addEventListener('click', (e) => {
-    fetch('../modelos/Sesion/cerrarSesion.php')
-    .then(() => {
-    window.location.href = '../pages/login.php';
+    Swal.fire({
+        title: 'Cerrar sesión',
+        text: '¿Desea cerrar ls sesión?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, cerrar!'
     })
+    .then(result => {
+        if(result.value){
+            fetch('modelos/Sesion/cerrarSesion.php')
+            .then(() => {
+                window.location.href = '../pages/login.php';
+            }); 
+        }
+    });
 });
 
 document.querySelector('h1').addEventListener('click', () => {

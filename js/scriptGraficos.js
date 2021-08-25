@@ -50,11 +50,25 @@ document.addEventListener('DOMContentLoaded', function () {
             panel.classList.remove('mostrar-panel-notificaciones');
          });
 
-         cerrarSesion.addEventListener('click', (e) => {
-    		fetch('../modelos/Sesion/cerrarSesion.php')
-    		.then(() => {
-        	window.location.href = '../pages/login.php';
-    	});
+// CERRAR SESION
+cerrarSesion.addEventListener('click', (e) => {
+    Swal.fire({
+        title: 'Cerrar sesión',
+        text: '¿Desea cerrar ls sesión?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '¡Sí, cerrar!'
+    })
+    .then(result => {
+        if(result.value){
+            fetch('modelos/Sesion/cerrarSesion.php')
+            .then(() => {
+                window.location.href = 'pages/login.php';
+            }); 
+        }
+    });
 });
 
 });

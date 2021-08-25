@@ -18,7 +18,7 @@ formulario.addEventListener('submit', function(e) {
 
 	if (formularioValido) {
 		let data = prepareData([usuario, password], 'login');
-		sendData('../modelos/Sesion/login.php', data, 'POST');
+		sendData('../modelos/Sesion/login.php', data, 'POST', 'login');
 	}
 
 	formularioValido = true;
