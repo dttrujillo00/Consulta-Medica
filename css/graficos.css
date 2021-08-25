@@ -55,3 +55,22 @@
     font-weight: bold;
     
  }
+
+ @media screen and (min-width: 450px){
+    .grafico{
+        height: 430px !important;
+    }
+}
+
+@media screen and (min-width: 900px){
+    .contenedor-graficos{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .grafico h2{
+        right: -150px;
+    }
+}

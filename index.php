@@ -16,7 +16,7 @@ if (!$_SESSION['usuario']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="rgb(6, 152, 87)">
     
-    <link rel="stylesheet" href="css/pacientes.css">
+    <link rel="stylesheet" href="css/estilos.css">
     <link rel="stylesheet" href="css/elegant-icons.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
 

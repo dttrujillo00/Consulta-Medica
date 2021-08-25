@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
 	const cerrarSesion = document.getElementById('cerrar-sesion');
+    const infoUsuario = document.querySelector('#info-usuario .info');
+    const infoUsuarioBtn = document.querySelector('#info-usuario i');
+
+    // INFO USUARIO ANIMATION
+    infoUsuarioBtn.addEventListener('click', function(e) {
+    infoUsuario.classList.toggle('mostrar');
+    });
+
+    infoUsuario.classList.add('mostrar');
+    setTimeout(() => infoUsuario.classList.remove('mostrar'), 2000);
+
 	const actualizarAnchoGrafico = (graficos) => {
 		var height = window.innerWidth;
 		var width = window.innerHeight / 2;

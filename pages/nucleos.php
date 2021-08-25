@@ -15,7 +15,7 @@ if (!$_SESSION['usuario']) {
     <meta name="theme-color" content="rgb(6, 152, 87)">
     
     <link rel="stylesheet" href="../css/estilos.css">
-    <link rel="stylesheet" href="../css/generales.css">
+    <!-- <link rel="stylesheet" href="../css/generales.css"> -->
     <!-- <link rel="stylesheet" href="../css/nucleos.css"> -->
     <link rel="stylesheet" href="../css/elegant-icons.css">
     <link rel="stylesheet" href="../css/font-awesome.min.css">
@@ -165,7 +165,7 @@ if (!$_SESSION['usuario']) {
                 	</li>
                     <li>
                     	<i class="fa fa-bell campana"></i>
-                    	<span>12</span>
+                    	<span class="notificaciones">12</span>
                 	</li>
                 </ul>
             </nav>
@@ -178,7 +178,7 @@ if (!$_SESSION['usuario']) {
 	        <div class="contenido-sub-header">
 
 				<ul>
-					<li><a href="../index.php" class="fa fa-user"></a></li>
+					<li><a href="../index.php" class="fa fa-group"></a></li>
 					<li class="active"><a href="./nucleos.php" class="fa fa-home"></a></li>
 					<li><a href="./graficos.php" class="fa fa-calendar-o"> C/T</a></li>
 				</ul>

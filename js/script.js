@@ -3,7 +3,7 @@
               btnColapsarForm = document.querySelector('.btn-desplegable'),
               tablaResponsive = document.querySelector('.tabla-responsive'),
               infoUsuario = document.querySelector('#info-usuario .info'),
-              infoUsuarioBtn = document.querySelector('#info-usuario i');;
+              infoUsuarioBtn = document.querySelector('#info-usuario i');
         var flagbodyDesplegar = false;
 
         // OCULTAR Y MOSTRAR FILA EN DISEÑO MÓVIL
@@ -80,6 +80,9 @@
          infoUsuarioBtn.addEventListener('click', function(e) {
            infoUsuario.classList.toggle('mostrar');
          });
+
+         infoUsuario.classList.add('mostrar');
+         setTimeout(() => infoUsuario.classList.remove('mostrar'), 2000);
 
          // NOTIFICACIONES
          const campana = document.querySelector('.nav-botones-header ul li:last-child'),
