@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if ($_SESSION['rol'] != 'Administrador') {
-	header('location:../index.php');
-}
+// if ($_SESSION['rol'] != 'Administrador') {
+// 	header('location:../index.php');
+// }
 
 ?>
 
