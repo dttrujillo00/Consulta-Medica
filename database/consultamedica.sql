@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-08-2021 a las 05:01:54
+-- Tiempo de generación: 27-08-2021 a las 20:28:17
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -96,17 +96,9 @@ CREATE TABLE `cir_cdr` (
 
 CREATE TABLE `consultorio` (
   `id_cons` int(10) NOT NULL,
-  `numero_consultorio` int(10) NOT NULL
+  `numero_consultorio` int(10) NOT NULL,
+  `id_pol` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `consultorio`
---
-
-INSERT INTO `consultorio` (`id_cons`, `numero_consultorio`) VALUES
-(2, 1),
-(3, 3),
-(4, 2);
 
 -- --------------------------------------------------------
 
@@ -350,6 +342,17 @@ CREATE TABLE `planificacion_tipo_plan` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `policlinico`
+--
+
+CREATE TABLE `policlinico` (
+  `id_pol` int(10) NOT NULL,
+  `nombre_pol` varchar(60) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `privilegios`
 --
 
@@ -432,20 +435,10 @@ CREATE TABLE `usuario` (
   `nombre_usuario` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
   `alias_usuario` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `numero_usuario` int(10) NOT NULL,
-  `contrasenna` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `contrasenna` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `id_cons` int(10) DEFAULT NULL,
   `id_rol` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id_us`, `nombre_usuario`, `alias_usuario`, `numero_usuario`, `contrasenna`, `id_cons`, `id_rol`) VALUES
-(1, 'Henriiii', 'henri', 123456789, '$2y$10$VpEH3EN/RJqkmzLBTKnXGuG', 3, 2),
-(10, 'Henriiii', 'henrii', 12345, '$2y$10$2B7/MwOcum3aCXisaJZc0ul', 4, 2),
-(13, 'Henriiii', 'henriii', 123876, '$2y$10$M8aiQASH2/gOHT0etHoyhu/', 4, 2),
-(14, 'Henriiii', 'henriiiiii', 9876, '$2y$10$Uh9SKvV5pVof0SRM2jhSUuH', 4, 2);
 
 --
 -- Índices para tablas volcadas
@@ -489,7 +482,8 @@ ALTER TABLE `cir_cdr`
 -- Indices de la tabla `consultorio`
 --
 ALTER TABLE `consultorio`
-  ADD PRIMARY KEY (`id_cons`);
+  ADD PRIMARY KEY (`id_cons`),
+  ADD KEY `id_pol` (`id_pol`);
 
 --
 -- Indices de la tabla `evaluacion`
@@ -568,7 +562,7 @@ ALTER TABLE `nucleo`
   ADD KEY `nucleo_ibfk_4` (`satis_ingreso`),
   ADD KEY `nucleo_ibfk_5` (`funcionamiento_nucleo`),
   ADD KEY `nucleo_ibfk_6` (`eval_nuc`),
-  ADD KEY `id_cons` (`id_cons`);
+  ADD KEY `nucleo_ibfk_7` (`id_cons`);
 
 --
 -- Indices de la tabla `nucleo_pac`
@@ -610,6 +604,12 @@ ALTER TABLE `planificacion_tipo_plan`
   ADD KEY `id_tp` (`id_tp`);
 
 --
+-- Indices de la tabla `policlinico`
+--
+ALTER TABLE `policlinico`
+  ADD PRIMARY KEY (`id_pol`);
+
+--
 -- Indices de la tabla `privilegios`
 --
 ALTER TABLE `privilegios`
@@ -627,7 +627,7 @@ ALTER TABLE `rol`
 --
 ALTER TABLE `rol_privilegio`
   ADD PRIMARY KEY (`id_priv`,`id_rol`),
-  ADD KEY `id_rol` (`id_rol`);
+  ADD KEY `rol_privilegio_ibfk_2` (`id_rol`);
 
 --
 -- Indices de la tabla `satis_ingreso`
@@ -650,7 +650,7 @@ ALTER TABLE `usuario`
   ADD UNIQUE KEY `nombre_usuario` (`alias_usuario`),
   ADD KEY `id_cons` (`id_cons`) USING BTREE,
   ADD KEY `id_cons_2` (`id_cons`),
-  ADD KEY `id_rol` (`id_rol`);
+  ADD KEY `usuario_ibfk_4` (`id_rol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -741,6 +741,12 @@ ALTER TABLE `planificacion`
   MODIFY `id_plan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `policlinico`
+--
+ALTER TABLE `policlinico`
+  MODIFY `id_pol` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `privilegios`
 --
 ALTER TABLE `privilegios`
@@ -789,6 +795,12 @@ ALTER TABLE `cir_cdr`
   ADD CONSTRAINT `cir_cdr_ibfk_2` FOREIGN KEY (`id_cir`) REFERENCES `circunscripcion` (`id_cir`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `consultorio`
+--
+ALTER TABLE `consultorio`
+  ADD CONSTRAINT `consultorio_ibfk_1` FOREIGN KEY (`id_pol`) REFERENCES `policlinico` (`id_pol`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `factor_riesgo_pac`
 --
 ALTER TABLE `factor_riesgo_pac`
@@ -819,7 +831,7 @@ ALTER TABLE `nucleo`
   ADD CONSTRAINT `nucleo_ibfk_4` FOREIGN KEY (`satis_ingreso`) REFERENCES `satis_ingreso` (`id_si`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `nucleo_ibfk_5` FOREIGN KEY (`funcionamiento_nucleo`) REFERENCES `funcionalidad` (`id_func`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `nucleo_ibfk_6` FOREIGN KEY (`eval_nuc`) REFERENCES `evaluacion` (`id_eval`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `nucleo_ibfk_7` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`);
+  ADD CONSTRAINT `nucleo_ibfk_7` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `nucleo_pac`
@@ -853,15 +865,15 @@ ALTER TABLE `planificacion_tipo_plan`
 -- Filtros para la tabla `rol_privilegio`
 --
 ALTER TABLE `rol_privilegio`
-  ADD CONSTRAINT `rol_privilegio_ibfk_1` FOREIGN KEY (`id_priv`) REFERENCES `privilegios` (`id_priv`),
-  ADD CONSTRAINT `rol_privilegio_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
+  ADD CONSTRAINT `rol_privilegio_ibfk_1` FOREIGN KEY (`id_priv`) REFERENCES `privilegios` (`id_priv`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rol_privilegio_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`),
-  ADD CONSTRAINT `usuario_ibfk_4` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
+  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`id_cons`) REFERENCES `consultorio` (`id_cons`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_ibfk_4` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
