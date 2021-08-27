@@ -26,28 +26,33 @@ session_start();
 
 		<form>
 			<div class="input-container">
-				<input class="neutro" id="user" type="text" placeholder="Nombre completo">
+				<input id="user" type="text" placeholder="Nombre completo">
 				<small>Error Message</small>
 			</div>
 
 			<div class="input-container">
-				<input class="neutro" id="nick" type="text" placeholder="Alias o nombre de usuario">
+				<input id="nick" type="text" placeholder="Alias o nombre de usuario">
 				<small>Error Message</small>
 			</div>
 
 			<div class="input-container">
-				<input class="neutro" id="number" type="number" placeholder="Número de médico" min="0">
+				<input id="number" type="number" placeholder="Número de médico" min="0">
 				<small>Error Message</small>
 			</div>
 
 			<div class="input-container">
-				<input class="neutro" id="pass" type="password" placeholder="Contraseña">
+				<input id="pass" type="password" placeholder="Contraseña">
 				<i class="fa fa-eye-slash" id="icono-ojo"></i>
 				<small>Error Message</small>
 			</div>
 
 			<div class="input-container">
-				<input class="neutro" id="consult" type="number" placeholder="Consultorio" min="0">
+				<input id="consult" type="number" placeholder="Consultorio" min="0">
+				<small>Error Message</small>
+			</div>
+
+			<div class="input-container">
+				<input id="policlinico" type="text" placeholder="Policlínico">
 				<small>Error Message</small>
 			</div>
 

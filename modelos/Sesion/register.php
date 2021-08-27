@@ -1,6 +1,7 @@
 <?php 
 	// INSTANCIANDO LA CONEXION 
 	require_once('../../database/conexion.php');
+    // var_dump($_POST);
         
     $user = filter_var($_POST['user'], FILTER_SANITIZE_STRING);
     $nick = filter_var($_POST['nick'], FILTER_SANITIZE_STRING);
