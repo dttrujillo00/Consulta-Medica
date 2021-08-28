@@ -26,7 +26,7 @@
                 $statement->execute(array($polic));		
                 $id_pol = $pdo->lastInsertId();		
             }else{
-                $id_pol = $tabla_pol['id_cons'];
+                $id_pol = $tabla_pol['id_pol'];
             }
             $statement = $pdo->prepare('SELECT id_cons FROM consultorio WHERE numero_consultorio = ? AND id_pol = ?');
             $statement->execute(array($consult, $id_pol));

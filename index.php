@@ -5,6 +5,14 @@ if (!$_SESSION['usuario']) {
 	header('location:pages/login.php');
 }
 
+	// INSTANCIANDO LA CONEXION 
+	require_once('database/conexion.php');
+
+// TRAER INFO DEL USUARIO ACTUAL
+$sentencia = $pdo->prepare('SELECT u.nombre_usuario AS usuario, c.numero_consultorio AS consultorio, p.nombre_pol AS policlinico FROM usuario u LEFT JOIN consultorio c ON u.id_cons = c.id_cons LEFT JOIN policlinico p ON c.id_pol = p.id_pol WHERE nombre_usuario = ? ');
+$sentencia->execute(array($_SESSION['usuario']));
+$resultInfoUser = $sentencia->fetch();
+
 // var_dump($_SESSION);
 
 ?>
@@ -154,8 +162,9 @@ if (!$_SESSION['usuario']) {
                 	<li id="info-usuario" class="info-usuario">
                 		<i class="fa fa-user"></i>
                 		<div class="info">
-                			<p>Nombre completo: <span><?php echo($_SESSION['usuario']) ?></span></p>
-                			<p>Consultorio: <span><?php echo($_SESSION['consultorio']) ?></span></p>
+                			<p>Nombre completo: <span><?php echo($resultInfoUser['usuario']) ?></span></p>
+                			<p>Consultorio: <span><?php echo($resultInfoUser['consultorio']) ?></span></p>
+                			<p>Policlínico: <span><?php echo($resultInfoUser['policlinico']) ?></span></p>
                 			<div id="cerrar-sesion" title="Cerrar sesión">
                 				<i class="fa fa-power-off"></i>
                 			</div>

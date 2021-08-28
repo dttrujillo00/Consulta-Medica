@@ -352,6 +352,7 @@ header{
 .info-usuario .info p span {
     font-weight: bold;
     font-style: normal;
+    text-align: left;
 }
 
 .info-usuario .info div{

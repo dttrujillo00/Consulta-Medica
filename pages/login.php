@@ -15,7 +15,7 @@
 	<div class="form-container">
 		<h2>Inicio de Sesión</h2>
 
-		<form>
+		<form class="login">
 			<div class="input-container">
 				<input class="neutro" id="nick" type="text" placeholder="@usuario o número de médico">
 				<small>Error Message</small>

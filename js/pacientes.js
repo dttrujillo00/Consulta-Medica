@@ -100,6 +100,7 @@ const editarPaciente = (datos) => {
     })
     .then(res => res.json())
     .then(data => {
+        // console.log(data);
         if(data.respuesta === 'Correcto') {
             iconLoader.classList.add('d-none');
 

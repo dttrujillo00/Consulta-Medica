@@ -24,48 +24,53 @@ session_start();
 	<div class="form-container">
 		<h2>Crear Cuenta</h2>
 
-		<form>
-			<div class="input-container">
-				<input id="user" type="text" placeholder="Nombre completo">
-				<small>Error Message</small>
+		<form class="registro">
+			<div class="col-6">
+				<div class="input-container">
+					<input id="user" type="text" placeholder="Nombre completo">
+					<small>Error Message</small>
+				</div>
+
+				<div class="input-container">
+					<input id="nick" type="text" placeholder="Alias o nombre de usuario">
+					<small>Error Message</small>
+				</div>
+
+				<div class="input-container">
+					<input id="pass" type="password" placeholder="Contraseña">
+					<i class="fa fa-eye-slash" id="icono-ojo"></i>
+					<small>Error Message</small>
+				</div>
+
+				<div class="input-container select-container">
+					<select id="rol">
+						<option value="2">Médico / Enfermera</option>
+						<option value="1">Jefe</option>
+						<option value="0">Administrador</option>
+					</select>
+				</div>
 			</div>
 
-			<div class="input-container">
-				<input id="nick" type="text" placeholder="Alias o nombre de usuario">
-				<small>Error Message</small>
+			<div class="col-6">
+				<div class="input-container">
+					<input id="number" type="number" placeholder="Número de médico" min="0">
+					<small>Error Message</small>
+				</div>
+
+				<div class="input-container">
+					<input id="consult" type="number" placeholder="Consultorio" min="0">
+					<small>Error Message</small>
+				</div>
+
+				<div class="input-container">
+					<input id="policlinico" type="text" placeholder="Policlínico">
+					<small>Error Message</small>
+				</div>	
+
+				<div class="input-container">
+		    		<button class="btn" id="">Crear Cuenta</button>
+				</div>
 			</div>
-
-			<div class="input-container">
-				<input id="number" type="number" placeholder="Número de médico" min="0">
-				<small>Error Message</small>
-			</div>
-
-			<div class="input-container">
-				<input id="pass" type="password" placeholder="Contraseña">
-				<i class="fa fa-eye-slash" id="icono-ojo"></i>
-				<small>Error Message</small>
-			</div>
-
-			<div class="input-container">
-				<input id="consult" type="number" placeholder="Consultorio" min="0">
-				<small>Error Message</small>
-			</div>
-
-			<div class="input-container">
-				<input id="policlinico" type="text" placeholder="Policlínico">
-				<small>Error Message</small>
-			</div>
-
-			<div class="input-container select-container">
-				<select id="rol">
-					<option value="2">Médico / Enfermera</option>
-					<option value="1">Jefe</option>
-					<option value="0">Administrador</option>
-				</select>
-			</div>	
-
-
-		    <button class="btn" id="">Crear Cuenta</button>
 		</form>
 
 		<span class="respuesta"></span>

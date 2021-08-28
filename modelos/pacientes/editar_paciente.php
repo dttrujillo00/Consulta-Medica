@@ -26,10 +26,13 @@
 		$statement = $pdo->prepare('UPDATE paciente SET nombre_comp_pac=?, edad_pac=?, fecha_nac_pac=?, labor_pac=?, diagnostico_pac=?, grupo_disponible_pac=?, sexo=?, nivel_educacional=? WHERE id_pac=?');
 		$statement->execute(array($nombre_apellido,$edad,$fecha_nacimiento,$labor,$diagnostico,$grupo_disp, $id_sexo, $nivel_educacional,$id_pac));		
         
-        if($direccion_vieja != $direccion || $manzana_vieja != $manzana){                
+        if($direccion_vieja != $direccion || $manzana_vieja != $manzana){echo "Modificando direccion, direccion " . $direccion;
             $statement = $pdo->prepare('INSERT INTO nucleo (dir_nuc, no_nuc) VALUES (?,?)');
             $statement->execute(array($direccion, $manzana));
             $id_nuc = $pdo->lastInsertId();
+
+            echo "id_nuc insertado " . $id_nuc;
+            echo "id_pac paciente " . $id_pac;
             $statement = $pdo->prepare('UPDATE nucleo_pac SET id_nuc=? WHERE id_pac=?');
             $statement->execute(array($id_nuc, $id_pac));
         }		
